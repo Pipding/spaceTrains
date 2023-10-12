@@ -52,6 +52,8 @@ int main(void)
 
         // Update
         pos = Vector3Add(pos, velocity);
+        cam.position = Vector3Add(pos, (Vector3){-50.0f, 50.0f, 0.0f});
+        cam.target = pos;
 
         UpdateCamera(&cam, CAMERA_THIRD_PERSON);
         // Draw
