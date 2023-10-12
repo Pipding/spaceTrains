@@ -1,31 +1,6 @@
-/*******************************************************************************************
-*
-*   raylib [core] example - Basic window
-*
-*   Welcome to raylib!
-*
-*   To test examples, just press F6 and execute raylib_compile_execute script
-*   Note that compiled executable is placed in the same folder as .c file
-*
-*   You can find all basic examples on C:\raylib\raylib\examples folder or
-*   raylib official webpage: www.raylib.com
-*
-*   Enjoy using raylib. :)
-*
-*   Example originally created with raylib 1.0, last time updated with raylib 1.0
-*
-*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software
-*
-*   Copyright (c) 2013-2023 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include "raylib.h"
+#include "raymath.h"
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
 int main(void)
 {
     // Initialization
@@ -49,6 +24,7 @@ int main(void)
     cam.projection = CAMERA_PERSPECTIVE;
 
     Vector3 pos = {0.f, 0.f, 0.f};
+    Vector3 velocity = (Vector3){0.f, 0.f, 0.f};
     BoundingBox bounds = GetMeshBoundingBox(model.meshes[0]);
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -57,10 +33,25 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        // Input
+        if (IsKeyDown(KEY_W)) {
+            velocity.x = 1;
+        } else if (IsKeyDown(KEY_S)) {
+            velocity.x = -1;
+        } else {
+            velocity.x = 0;
+        }
+
+        if (IsKeyDown(KEY_A)) {
+            velocity.z = -1;
+        } else if (IsKeyDown(KEY_D)) {
+            velocity.z = 1;
+        } else {
+            velocity.z = 0;
+        }
+
         // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+        pos = Vector3Add(pos, velocity);
 
         UpdateCamera(&cam, CAMERA_THIRD_PERSON);
         // Draw
