@@ -24,7 +24,9 @@ int main(void)
     duckModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = tex;
 
     Vector3 duckPos = {0.f, 0.f, 0.f};
-    Vector3 duckVelocity = (Vector3){0.f, 0.f, 0.f};
+    Vector3 duckVelocity = {0.f, 0.f, 0.f};
+    float duckAccelerationRate = 1.f;
+    float duckDecelerationRate = 0.5f;
     BoundingBox duckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
 
 
@@ -52,11 +54,15 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                duckVelocity.x = 1;
+                duckVelocity.x += duckAccelerationRate;
             } else if (IsKeyDown(KEY_S)) {
-                duckVelocity.x = -1;
-            } else {
-                duckVelocity.x = 0;
+                duckVelocity.x -= duckAccelerationRate;
+            } else if (duckVelocity.x != 0.f && abs(duckVelocity.x) <= duckDecelerationRate) {
+                duckVelocity.x = 0.f;
+            } else if (duckVelocity.x > 0) {
+                duckVelocity.x -= duckDecelerationRate;
+            } else if (duckVelocity.x < 0) {
+                    duckVelocity.x += duckDecelerationRate;
             }
 
             if (IsKeyDown(KEY_A)) {
