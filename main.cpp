@@ -1,8 +1,11 @@
 #include "raylib.h"
 #include "raymath.h"
 
+bool g_paused = false;
+
 int main(void)
 {
+
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 1280;
@@ -33,39 +36,51 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Input
-        if (IsKeyDown(KEY_W)) {
-            velocity.x = 1;
-        } else if (IsKeyDown(KEY_S)) {
-            velocity.x = -1;
-        } else {
-            velocity.x = 0;
+
+        if (IsKeyPressed(KEY_P)) {
+            g_paused = !g_paused;
         }
 
-        if (IsKeyDown(KEY_A)) {
-            velocity.z = -1;
-        } else if (IsKeyDown(KEY_D)) {
-            velocity.z = 1;
-        } else {
-            velocity.z = 0;
+        if (!g_paused) {
+            // Input
+            if (IsKeyDown(KEY_W)) {
+                velocity.x = 1;
+            } else if (IsKeyDown(KEY_S)) {
+                velocity.x = -1;
+            } else {
+                velocity.x = 0;
+            }
+
+            if (IsKeyDown(KEY_A)) {
+                velocity.z = -1;
+            } else if (IsKeyDown(KEY_D)) {
+                velocity.z = 1;
+            } else {
+                velocity.z = 0;
+            }
+
+            // Update
+            pos = Vector3Add(pos, velocity);
+            cam.position = Vector3Add(pos, (Vector3){-50.0f, 50.0f, 0.0f});
+            cam.target = pos;
+
+            UpdateCamera(&cam, CAMERA_THIRD_PERSON);
         }
-
-        // Update
-        pos = Vector3Add(pos, velocity);
-        cam.position = Vector3Add(pos, (Vector3){-50.0f, 50.0f, 0.0f});
-        cam.target = pos;
-
-        UpdateCamera(&cam, CAMERA_THIRD_PERSON);
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
-
         ClearBackground(RAYWHITE);
+        
         BeginMode3D(cam);
         DrawModel(model, pos, 1.f, WHITE);
         DrawGrid(20, 20.f);
         DrawBoundingBox(bounds, GREEN);
         EndMode3D();
+
+
+        if (g_paused) {
+            DrawText("Paused", 600, 340, 40, GREEN);
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------
