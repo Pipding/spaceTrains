@@ -1,6 +1,9 @@
 #include "raylib.h"
 #include "raymath.h"
 
+#include <string>
+#include <sstream>
+
 bool g_paused = false;
 
 int main(void)
@@ -10,6 +13,9 @@ int main(void)
     //--------------------------------------------------------------------------------------
     const int screenWidth = 1280;
     const int screenHeight = 720;
+
+    std::ostringstream oss;
+    std::string velocityOutput;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -24,6 +30,7 @@ int main(void)
     duckModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = tex;
 
     Vector3 duckPos = {0.f, 0.f, 0.f};
+    Vector3 duckRotation = {0.f, 0.f, 0.f};
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
     float duckAccelerationRate = 1.f;
     float duckDecelerationRate = 0.5f;
@@ -66,11 +73,11 @@ int main(void)
             }
 
             if (IsKeyDown(KEY_A)) {
-                duckVelocity.z = -1;
+                duckRotation.y += 0.1f;
+                duckModel.transform = MatrixRotateXYZ(duckRotation);
             } else if (IsKeyDown(KEY_D)) {
-                duckVelocity.z = 1;
-            } else {
-                duckVelocity.z = 0;
+                duckRotation.y -= 0.1f;
+                duckModel.transform = MatrixRotateXYZ(duckRotation);
             }
 
             // Update
@@ -87,10 +94,16 @@ int main(void)
         
         BeginMode3D(cam);
         DrawModel(duckModel, duckPos, 1.f, WHITE);
-        DrawGrid(20, 20.f);
+        DrawGrid(2000, 20.f);
         DrawBoundingBox(duckBounds, GREEN);
         EndMode3D();
 
+        oss.str("");
+        oss.clear();
+        oss << "Velocity: " << duckVelocity.x << ", " << duckVelocity.y;
+        velocityOutput = oss.str();
+
+        DrawText(velocityOutput.c_str(), 20, 20, 40, GREEN);
 
         if (g_paused) {
             DrawText("Paused", 600, 340, 40, GREEN);
