@@ -5,11 +5,13 @@
 #include <sstream>
 
 class Actor {
+  private:
+    Texture2D texture;
+    
   public:
     Vector3 position = {0.f, 0.f, 0.f};
     Vector3 rotation = {0.f, 0.f, 0.f};
     Model model;
-    Texture2D texture;
     float scale = 1.f;
     Color color = WHITE;
 
@@ -18,12 +20,21 @@ class Actor {
     Actor(Vector3 position, Model model, Texture texture) {
         this->position = position;
         this->model = model;
+        this->setTexture(texture);
+    }
+
+    void setTexture(Texture2D texture) {
         this->texture = texture;
         this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
     }
 
     void draw() {
       DrawModel(this->model, this->position, this->scale, this->color);
+    }
+
+    void unload() {
+        UnloadTexture(this->texture);
+        UnloadModel(this->model);
     }
 };
 
@@ -69,7 +80,6 @@ int main(void)
     Actor target({ 300.f, 0.f, 0.f }, LoadModel("assets/models/archery_target.obj"), LoadTexture("assets/textures/archery_target_albedo.png"));
     target.rotation = {0.f, -1.5f, 0.f};
     target.model.transform = MatrixRotateXYZ(target.rotation);
-    target.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = target.texture;
 
 
     //==================================================
@@ -182,10 +192,8 @@ int main(void)
         //----------------------------------------------------------------------------------
     }
 
-    UnloadModel(duck.model);
-    UnloadTexture(duck.texture);
-    UnloadModel(target.model);
-    UnloadTexture(target.texture);
+    duck.unload();
+    target.unload();
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
