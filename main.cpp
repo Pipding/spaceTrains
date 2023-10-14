@@ -41,8 +41,8 @@ int main(void)
 
 
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
-    Vector3 enemyBoxPos = { 120.0f, 0.f, 120.f };
-    Vector3 enemyBoxSize = { 50.0f, 100.0f, 50.0f };
+    Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
+    Vector3 upgradeTowerSize = { 50.0f, 100.0f, 50.0f };
 
     bool collision = false;
 
@@ -107,8 +107,8 @@ int main(void)
             collision = CheckCollisionBoxes(
                 currentDuckBounds,
                 (BoundingBox) {
-                    (Vector3){ enemyBoxPos.x - enemyBoxSize.x/2, enemyBoxPos.y - enemyBoxSize.y/2, enemyBoxPos.z - enemyBoxSize.z/2 },
-                    (Vector3){ enemyBoxPos.x + enemyBoxSize.x/2, enemyBoxPos.y + enemyBoxSize.y/2, enemyBoxPos.z + enemyBoxSize.z/2 }
+                    (Vector3){ upgradeTowerPos.x - upgradeTowerSize.x/2, upgradeTowerPos.y - upgradeTowerSize.y/2, upgradeTowerPos.z - upgradeTowerSize.z/2 },
+                    (Vector3){ upgradeTowerPos.x + upgradeTowerSize.x/2, upgradeTowerPos.y + upgradeTowerSize.y/2, upgradeTowerPos.z + upgradeTowerSize.z/2 }
                 }
             );
 
@@ -135,7 +135,7 @@ int main(void)
         ClearBackground(RAYWHITE);
         
         BeginMode3D(cam);
-        DrawCube(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, GRAY);
+        DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         DrawModel(duckModel, duckPos, 1.f, duckColor);
         DrawGrid(2000, 20.f);
         DrawBoundingBox(currentDuckBounds, GREEN);
