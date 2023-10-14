@@ -46,6 +46,16 @@ int main(void)
 
     bool collision = false;
 
+    //==================================================
+    // Moving target stuff
+    //==================================================
+    Model targetModel = LoadModel("assets/models/archery_target.obj"); // This model & texture come from https://www.cgtrader.com/items/642062/download-page
+    Texture2D targetTexture = LoadTexture("assets/textures/archery_target_albedo.png");
+    Vector3 targetRotation = {0.f, -1.5f, 0.f};
+    targetModel.transform = MatrixRotateXYZ(targetRotation);
+    targetModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = targetTexture;
+    Vector3 targetPos = { 300.f, -60.f, 0.f };
+
 
     //==================================================
     // Camera stuff
@@ -137,6 +147,7 @@ int main(void)
         BeginMode3D(cam);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         DrawModel(duckModel, duckPos, 1.f, duckColor);
+        DrawModel(targetModel, targetPos, 2.f, WHITE);
         DrawGrid(2000, 20.f);
         DrawBoundingBox(currentDuckBounds, GREEN);
         EndMode3D();
