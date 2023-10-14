@@ -6,8 +6,8 @@
 
 class Actor {
   public:
-    Vector3 position;
-    Vector3 rotation;
+    Vector3 position = {0.f, 0.f, 0.f};
+    Vector3 rotation = {0.f, 0.f, 0.f};
     Model model;
     Texture2D texture;
     float scale = 1.f;
