@@ -13,6 +13,15 @@ class Actor {
     float scale = 1.f;
     Color color = WHITE;
 
+    Actor(Model model, Texture texture) : Actor({0, 0, 0}, model, texture) { } // This is a delegated constructor https://en.wikipedia.org/wiki/C++11#Object_construction_improvement
+
+    Actor(Vector3 position, Model model, Texture texture) {
+        this->position = position;
+        this->model = model;
+        this->texture = texture;
+        this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
+    }
+
     void draw() {
       DrawModel(this->model, this->position, this->scale, this->color);
     }
@@ -38,11 +47,7 @@ int main(void)
 
     // Camera & model loading borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     // TODO: Remove the ducky (both code and assets)
-    Actor duck;
-    duck.model = LoadModel("assets/models/RubberDuck_LOD0.obj"); // This model & texture come from https://www.cgtrader.com/items/2033848/download-page
-    duck.texture = LoadTexture("assets/textures/RubberDuck_AlbedoTransparency.png");
-    duck.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = duck.texture;
-
+    Actor duck(LoadModel("assets/models/RubberDuck_LOD0.obj"), LoadTexture("assets/textures/RubberDuck_AlbedoTransparency.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
     float duckRotationRate = 0.05f;
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
     float duckAccelerationRate = .2f;
@@ -61,11 +66,8 @@ int main(void)
     //==================================================
     // Moving target stuff
     //==================================================
-    Actor target;
-    target.position = { 300.f, 0.f, 0.f };
+    Actor target({ 300.f, 0.f, 0.f }, LoadModel("assets/models/archery_target.obj"), LoadTexture("assets/textures/archery_target_albedo.png"));
     target.rotation = {0.f, -1.5f, 0.f};
-    target.model = LoadModel("assets/models/archery_target.obj"); // This model & texture come from https://www.cgtrader.com/items/642062/download-page
-    target.texture = LoadTexture("assets/textures/archery_target_albedo.png");
     target.model.transform = MatrixRotateXYZ(target.rotation);
     target.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = target.texture;
 
