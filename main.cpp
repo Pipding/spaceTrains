@@ -71,7 +71,7 @@ int main(void)
 
     // Camera & model loading borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     // TODO: Remove the ducky (both code and assets)
-    Actor duck(LoadModel("assets/models/RubberDuck_LOD0.obj"), LoadTexture("assets/textures/RubberDuck_AlbedoTransparency.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
+    Actor duck(LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
     float duckRotationRate = 0.05f;
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
     float duckAccelerationRate = .2f;
