@@ -32,7 +32,9 @@ int main(void)
     Vector3 duckRotation = {0.f, 0.f, 0.f};
     float duckRotationRate = 0.05f;
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
+    float duckAccelerationRate = .2f;
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
+    float duckTopSpeed = 20.f;
     BoundingBox originalDuckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
     BoundingBox currentDuckBounds = originalDuckBounds;
     Color duckColor = WHITE;
@@ -69,9 +71,9 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                duckVelocity = Vector3Add(duckVelocity, Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform));
+                duckVelocity = Vector3Add(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform), duckAccelerationRate));
             } else if (IsKeyDown(KEY_S)) {
-                duckVelocity = Vector3Subtract(duckVelocity, Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform));
+                duckVelocity = Vector3Subtract(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform), duckAccelerationRate));
             } else if (duckVelocity.x != 0.f || duckVelocity.z != 0.f) {
                 // The user is not pressing any buttons. Velocity should be decaying
                 if (duckVelocity.x != 0.f && abs(duckVelocity.x) < 0.1f) {
@@ -90,6 +92,8 @@ int main(void)
                     duckVelocity.z *= (1 - (1 / duckDecelerationRate));
                 }
             }
+
+            duckVelocity = Vector3Clamp(duckVelocity, (Vector3){-duckTopSpeed, 0.f, -duckTopSpeed}, (Vector3){duckTopSpeed, 0.f, duckTopSpeed});
 
             if (IsKeyDown(KEY_A)) {
                 duckRotation.y += duckRotationRate;
