@@ -26,15 +26,25 @@ class Actor {
         this->setTexture(texture);
     }
 
+    /**
+     * Update the texture applied to the model of the Actor
+     * @param texture   The texture to be applied to the model
+     */
     void setTexture(Texture2D texture) {
         this->texture = texture;
         this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
     }
 
+    /**
+     * Calls the raylib DrawModel function using the member variables of this Actor
+     */
     void draw() {
       DrawModel(this->model, this->position, this->scale, this->color);
     }
 
+    /**
+     * Unloads the texture and model used by this Actor from memory
+    */
     void unload() {
         UnloadTexture(this->texture);
         UnloadModel(this->model);
