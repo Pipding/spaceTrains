@@ -30,9 +30,11 @@ int main(void)
 
     Vector3 duckPos = {0.f, 0.f, 0.f};
     Vector3 duckRotation = {0.f, 0.f, 0.f};
+    float duckRotationRate = 0.05f;
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
-    BoundingBox duckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
+    BoundingBox originalDuckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
+    BoundingBox currentDuckBounds = originalDuckBounds;
 
 
     //==================================================
@@ -82,15 +84,19 @@ int main(void)
             }
 
             if (IsKeyDown(KEY_A)) {
-                duckRotation.y += 0.1f;
+                duckRotation.y += duckRotationRate;
                 duckModel.transform = MatrixRotateXYZ(duckRotation);
             } else if (IsKeyDown(KEY_D)) {
-                duckRotation.y -= 0.1f;
+                duckRotation.y -= duckRotationRate;
                 duckModel.transform = MatrixRotateXYZ(duckRotation);
             }
 
             // Update
             duckPos = Vector3Add(duckPos, duckVelocity);
+            // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
+            currentDuckBounds.min = Vector3Add(duckPos, originalDuckBounds.min);
+            currentDuckBounds.max = Vector3Add(duckPos, originalDuckBounds.max);
+
             cam.position = Vector3Add(duckPos, (Vector3){-50.0f, 50.0f, 0.0f});
             cam.target = duckPos;
 
@@ -104,7 +110,7 @@ int main(void)
         BeginMode3D(cam);
         DrawModel(duckModel, duckPos, 1.f, WHITE);
         DrawGrid(2000, 20.f);
-        DrawBoundingBox(duckBounds, GREEN);
+        DrawBoundingBox(currentDuckBounds, GREEN);
         EndMode3D();
 
         oss.str("");
