@@ -14,14 +14,14 @@
                 "args": [
                     "RAYLIB_PATH=C:/raylib/raylib",
                     "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "OBJS=*.cpp",
+                    "OBJS=*.cpp src/classes/Actor.cpp",
                     "BUILD_MODE=DEBUG"
                 ]
             },
             "osx": {
                 "args": [
                     "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "OBJS=*.cpp",
+                    "OBJS=*.cpp src/classes/Actor.cpp",
                     "BUILD_MODE=DEBUG"
                 ]
             },
@@ -31,7 +31,7 @@
                     "DESTDIR=/home/linuxbrew/.linuxbrew",
                     "RAYLIB_LIBTYPE=SHARED",
                     "EXAMPLE_RUNTIME_PATH=/home/linuxbrew/.linuxbrew/lib",
-                    "OBJS=*.cpp",
+                    "OBJS=*.cpp src/classes/Actor.cpp",
                     "BUILD_MODE=DEBUG"
                 ]
             },
@@ -52,13 +52,13 @@
                 "args": [
                     "RAYLIB_PATH=C:/raylib/raylib",
                     "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "OBJS=*.cpp"
+                    "OBJS=*.cpp src/classes/Actor.cpp",
                 ]
             },
             "osx": {
                 "args": [
                     "PROJECT_NAME=${fileBasenameNoExtension}",
-                    "OBJS=*.cpp"
+                    "OBJS=*.cpp src/classes/Actor.cpp",
                 ]
             },
             "linux": {
@@ -67,7 +67,7 @@
                     "DESTDIR=/home/linuxbrew/.linuxbrew",
                     "RAYLIB_LIBTYPE=SHARED",
                     "EXAMPLE_RUNTIME_PATH=/home/linuxbrew/.linuxbrew/lib",
-                    "OBJS=*.cpp"
+                    "OBJS=*.cpp src/classes/Actor.cpp",
                 ]
             },
             "problemMatcher": [
@@ -87,6 +87,7 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                "${fileDirname}\\src\\classes\\Actor.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

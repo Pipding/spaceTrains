@@ -1,55 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
-
+#include "src/classes/Actor.h"
 #include <string>
 #include <sstream>
-
-/**
- * Similar to the Actor class in Unreal Engine. Something which can be placed or spawned in the world
-*/
-class Actor {
-  private:
-    Texture2D texture;
-    
-  public:
-    Vector3 position = {0.f, 0.f, 0.f};
-    Vector3 rotation = {0.f, 0.f, 0.f};
-    Model model;
-    float scale = 1.f;
-    Color color = WHITE;
-
-    Actor(Model model, Texture texture) : Actor({0, 0, 0}, model, texture) { } // This is a delegated constructor https://en.wikipedia.org/wiki/C++11#Object_construction_improvement
-
-    Actor(Vector3 position, Model model, Texture texture) {
-        this->position = position;
-        this->model = model;
-        this->setTexture(texture);
-    }
-
-    /**
-     * Update the texture applied to the model of the Actor
-     * @param texture   The texture to be applied to the model
-     */
-    void setTexture(Texture2D texture) {
-        this->texture = texture;
-        this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
-    }
-
-    /**
-     * Calls the raylib DrawModel function using the member variables of this Actor
-     */
-    void draw() {
-      DrawModel(this->model, this->position, this->scale, this->color);
-    }
-
-    /**
-     * Unloads the texture and model used by this Actor from memory
-    */
-    void unload() {
-        UnloadTexture(this->texture);
-        UnloadModel(this->model);
-    }
-};
 
 bool g_paused = false;
 
@@ -184,7 +137,7 @@ int main(void)
         
         BeginMode3D(cam);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
-        DrawModel(duck.model, duck.position, 1.f, duck.color);
+        duck.draw();
         target.draw();
         DrawGrid(2000, 20.f);
         DrawBoundingBox(currentDuckBounds, GREEN);
