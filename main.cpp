@@ -10,6 +10,12 @@ class Actor {
     Vector3 rotation;
     Model model;
     Texture2D texture;
+    float scale = 1.f;
+    Color color = WHITE;
+
+    void draw() {
+      DrawModel(this->model, this->position, this->scale, this->color);
+    }
 };
 
 bool g_paused = false;
@@ -57,9 +63,8 @@ int main(void)
     //==================================================
     // Moving target stuff
     //==================================================
-
     Actor target;
-    target.position = { 300.f, -60.f, 0.f };
+    target.position = { 300.f, 0.f, 0.f };
     target.rotation = {0.f, -1.5f, 0.f};
     target.model = LoadModel("assets/models/archery_target.obj"); // This model & texture come from https://www.cgtrader.com/items/642062/download-page
     target.texture = LoadTexture("assets/textures/archery_target_albedo.png");
@@ -157,7 +162,7 @@ int main(void)
         BeginMode3D(cam);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         DrawModel(duckModel, duckPos, 1.f, duckColor);
-        DrawModel(target.model, target.position, 2.f, WHITE);
+        target.draw();
         DrawGrid(2000, 20.f);
         DrawBoundingBox(currentDuckBounds, GREEN);
         EndMode3D();
