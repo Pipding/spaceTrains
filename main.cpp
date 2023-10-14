@@ -8,7 +8,6 @@ bool g_paused = false;
 
 int main(void)
 {
-
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 1280;
@@ -32,8 +31,7 @@ int main(void)
     Vector3 duckPos = {0.f, 0.f, 0.f};
     Vector3 duckRotation = {0.f, 0.f, 0.f};
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
-    float duckAccelerationRate = 1.f;
-    float duckDecelerationRate = 0.5f;
+    float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     BoundingBox duckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
 
 
@@ -61,15 +59,26 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                duckVelocity.x += duckAccelerationRate;
+                duckVelocity = Vector3Add(duckVelocity, Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform));
             } else if (IsKeyDown(KEY_S)) {
-                duckVelocity.x -= duckAccelerationRate;
-            } else if (duckVelocity.x != 0.f && abs(duckVelocity.x) <= duckDecelerationRate) {
-                duckVelocity.x = 0.f;
-            } else if (duckVelocity.x > 0) {
-                duckVelocity.x -= duckDecelerationRate;
-            } else if (duckVelocity.x < 0) {
-                    duckVelocity.x += duckDecelerationRate;
+                duckVelocity = Vector3Subtract(duckVelocity, Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform));
+            } else if (duckVelocity.x != 0.f || duckVelocity.z != 0.f) {
+                // The user is not pressing any buttons. Velocity should be decaying
+                if (duckVelocity.x != 0.f && abs(duckVelocity.x) < 0.1f) {
+                    duckVelocity.x = 0.f;
+                }
+
+                if (duckVelocity.z != 0.f && abs(duckVelocity.z) < 0.1f) {
+                    duckVelocity.z = 0.f;
+                }
+
+                if (abs(duckVelocity.x) > 0) {
+                    duckVelocity.x *= (1 - (1 / duckDecelerationRate));
+                }
+
+                if (abs(duckVelocity.z) > 0) {
+                    duckVelocity.z *= (1 - (1 / duckDecelerationRate));
+                }
             }
 
             if (IsKeyDown(KEY_A)) {
@@ -100,7 +109,7 @@ int main(void)
 
         oss.str("");
         oss.clear();
-        oss << "Velocity: " << duckVelocity.x << ", " << duckVelocity.y;
+        oss << "Velocity: " << duckVelocity.x << ", " << duckVelocity.z;
         velocityOutput = oss.str();
 
         DrawText(velocityOutput.c_str(), 20, 20, 40, GREEN);
