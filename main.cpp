@@ -38,20 +38,18 @@ int main(void)
 
     // Camera & model loading borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     // TODO: Remove the ducky (both code and assets)
-    Model duckModel = LoadModel("assets/models/RubberDuck_LOD0.obj"); // This model & texture come from https://www.cgtrader.com/items/2033848/download-page
-    Texture2D tex = LoadTexture("assets/textures/RubberDuck_AlbedoTransparency.png");
-    duckModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = tex;
+    Actor duck;
+    duck.model = LoadModel("assets/models/RubberDuck_LOD0.obj"); // This model & texture come from https://www.cgtrader.com/items/2033848/download-page
+    duck.texture = LoadTexture("assets/textures/RubberDuck_AlbedoTransparency.png");
+    duck.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = duck.texture;
 
-    Vector3 duckPos = {0.f, 0.f, 0.f};
-    Vector3 duckRotation = {0.f, 0.f, 0.f};
     float duckRotationRate = 0.05f;
     Vector3 duckVelocity = {0.f, 0.f, 0.f};
     float duckAccelerationRate = .2f;
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float duckTopSpeed = 20.f;
-    BoundingBox originalDuckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
+    BoundingBox originalDuckBounds = GetMeshBoundingBox(duck.model.meshes[0]);
     BoundingBox currentDuckBounds = originalDuckBounds;
-    Color duckColor = WHITE;
 
 
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
@@ -96,9 +94,9 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                duckVelocity = Vector3Add(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform), duckAccelerationRate));
+                duckVelocity = Vector3Add(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duck.model.transform), duckAccelerationRate));
             } else if (IsKeyDown(KEY_S)) {
-                duckVelocity = Vector3Subtract(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duckModel.transform), duckAccelerationRate));
+                duckVelocity = Vector3Subtract(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duck.model.transform), duckAccelerationRate));
             } else if (duckVelocity.x != 0.f || duckVelocity.z != 0.f) {
                 // The user is not pressing any buttons. Velocity should be decaying
                 if (duckVelocity.x != 0.f && abs(duckVelocity.x) < 0.1f) {
@@ -121,11 +119,11 @@ int main(void)
             duckVelocity = Vector3Clamp(duckVelocity, (Vector3){-duckTopSpeed, 0.f, -duckTopSpeed}, (Vector3){duckTopSpeed, 0.f, duckTopSpeed});
 
             if (IsKeyDown(KEY_A)) {
-                duckRotation.y += duckRotationRate;
-                duckModel.transform = MatrixRotateXYZ(duckRotation);
+                duck.rotation.y += duckRotationRate;
+                duck.model.transform = MatrixRotateXYZ(duck.rotation);
             } else if (IsKeyDown(KEY_D)) {
-                duckRotation.y -= duckRotationRate;
-                duckModel.transform = MatrixRotateXYZ(duckRotation);
+                duck.rotation.y -= duckRotationRate;
+                duck.model.transform = MatrixRotateXYZ(duck.rotation);
             }
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
@@ -138,19 +136,19 @@ int main(void)
             );
 
             if (collision) {
-                duckColor = RED;
+                duck.color = RED;
             } else {
-                duckColor = WHITE;
+                duck.color = WHITE;
             }
 
             // Update
-            duckPos = Vector3Add(duckPos, duckVelocity);
+            duck.position = Vector3Add(duck.position, duckVelocity);
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
-            currentDuckBounds.min = Vector3Add(duckPos, originalDuckBounds.min);
-            currentDuckBounds.max = Vector3Add(duckPos, originalDuckBounds.max);
+            currentDuckBounds.min = Vector3Add(duck.position, originalDuckBounds.min);
+            currentDuckBounds.max = Vector3Add(duck.position, originalDuckBounds.max);
 
-            cam.position = Vector3Add(duckPos, (Vector3){-50.0f, 50.0f, 0.0f});
-            cam.target = duckPos;
+            cam.position = Vector3Add(duck.position, (Vector3){-50.0f, 50.0f, 0.0f});
+            cam.target = duck.position;
 
             UpdateCamera(&cam, CAMERA_THIRD_PERSON);
         }
@@ -161,7 +159,7 @@ int main(void)
         
         BeginMode3D(cam);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
-        DrawModel(duckModel, duckPos, 1.f, duckColor);
+        DrawModel(duck.model, duck.position, 1.f, duck.color);
         target.draw();
         DrawGrid(2000, 20.f);
         DrawBoundingBox(currentDuckBounds, GREEN);
@@ -182,7 +180,10 @@ int main(void)
         //----------------------------------------------------------------------------------
     }
 
-    UnloadModel(duckModel);
+    UnloadModel(duck.model);
+    UnloadTexture(duck.texture);
+    UnloadModel(target.model);
+    UnloadTexture(target.texture);
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
