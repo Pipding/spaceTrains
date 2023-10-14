@@ -4,6 +4,9 @@
 #include <string>
 #include <sstream>
 
+/**
+ * Similar to the Actor class in Unreal Engine. Something which can be placed or spawned in the world
+*/
 class Actor {
   private:
     Texture2D texture;
