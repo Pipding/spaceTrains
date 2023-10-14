@@ -35,6 +35,14 @@ int main(void)
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     BoundingBox originalDuckBounds = GetMeshBoundingBox(duckModel.meshes[0]);
     BoundingBox currentDuckBounds = originalDuckBounds;
+    Color duckColor = WHITE;
+
+
+    // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
+    Vector3 enemyBoxPos = { 120.0f, 0.f, 120.f };
+    Vector3 enemyBoxSize = { 50.0f, 100.0f, 50.0f };
+
+    bool collision = false;
 
 
     //==================================================
@@ -91,6 +99,21 @@ int main(void)
                 duckModel.transform = MatrixRotateXYZ(duckRotation);
             }
 
+            // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
+            collision = CheckCollisionBoxes(
+                currentDuckBounds,
+                (BoundingBox) {
+                    (Vector3){ enemyBoxPos.x - enemyBoxSize.x/2, enemyBoxPos.y - enemyBoxSize.y/2, enemyBoxPos.z - enemyBoxSize.z/2 },
+                    (Vector3){ enemyBoxPos.x + enemyBoxSize.x/2, enemyBoxPos.y + enemyBoxSize.y/2, enemyBoxPos.z + enemyBoxSize.z/2 }
+                }
+            );
+
+            if (collision) {
+                duckColor = RED;
+            } else {
+                duckColor = WHITE;
+            }
+
             // Update
             duckPos = Vector3Add(duckPos, duckVelocity);
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
@@ -108,7 +131,8 @@ int main(void)
         ClearBackground(RAYWHITE);
         
         BeginMode3D(cam);
-        DrawModel(duckModel, duckPos, 1.f, WHITE);
+        DrawCube(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, GRAY);
+        DrawModel(duckModel, duckPos, 1.f, duckColor);
         DrawGrid(2000, 20.f);
         DrawBoundingBox(currentDuckBounds, GREEN);
         EndMode3D();
