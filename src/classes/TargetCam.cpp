@@ -22,7 +22,25 @@ TargetCam::TargetCam(Actor* target, Vector3 offset) {
  * Update camera position & target vectors
 */
 void TargetCam::update() {
-    this->transformedOffset = Vector3Transform(this->targetOffset, this->target->model.transform);
-    this->camera.position = Vector3Add(this->target->position, this->transformedOffset);
+
+    Vector2 mouseDelta = GetMouseDelta();
+
+    if (mouseDelta.x < 0) {
+        this->mouseRotationAdjustment += this->mouseAdjustmentFactor;
+    } else if (mouseDelta.x > 0) {
+        this->mouseRotationAdjustment -= this->mouseAdjustmentFactor;
+    }
+
+    this->appliedRotation = MatrixRotateXYZ({0.f, mouseRotationAdjustment + this->target->rotation.y, 0.f});
+    this->appliedOffset = Vector3Transform(this->targetOffset, this->appliedRotation);
+    this->camera.position = Vector3Add(this->target->position, this->appliedOffset);
+
     this->camera.target = this->target->position;
+}
+
+/**
+ * Resets any adjustments which have been made to the camera rotation by the user
+*/
+void TargetCam::resetmouseRotationAdjustment() {
+    this->mouseRotationAdjustment = 0.f;
 }

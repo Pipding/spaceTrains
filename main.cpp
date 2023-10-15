@@ -50,7 +50,7 @@ int main(void)
     //==================================================
     // Camera stuff
     //==================================================
-    TargetCam targetCam(&duck, {-50.0f, 50.0f, 0.0f});
+    TargetCam targetCam(&duck, {-150.0f, 100.f, 0.0f});
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -65,6 +65,10 @@ int main(void)
 
         if (IsKeyPressed(KEY_M)) {
             _debug.toggleDrawBoundingBoxes();
+        }
+
+        if (IsKeyPressed(KEY_R)) {
+            targetCam.resetmouseRotationAdjustment();
         }
 
         if (!g_paused) {
