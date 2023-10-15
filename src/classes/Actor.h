@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "raymath.h"
+#include "src/globals/SpaceTrainDebug.h"
 
 /**
 * Similar to the Actor class in Unreal Engine. Something which can be placed or spawned in the world

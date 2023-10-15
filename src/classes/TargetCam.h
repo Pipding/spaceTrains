@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Actor.h"
+#include "src/globals/SpaceTrainDebug.h"
 
 /**
 * A camera which follows a given Actor with a given offset
