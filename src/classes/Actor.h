@@ -22,6 +22,8 @@ public:
     Actor(Vector3, Model, Texture2D);
 
     void setTexture(Texture2D);
+    void setRotation(Vector3);
+    void rotateBy(Vector3);
     BoundingBox getBounds();
 
     void update();

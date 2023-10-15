@@ -103,11 +103,9 @@ int main(void)
             duckVelocity = Vector3Clamp(duckVelocity, (Vector3){-duckTopSpeed, 0.f, -duckTopSpeed}, (Vector3){duckTopSpeed, 0.f, duckTopSpeed});
 
             if (IsKeyDown(KEY_A)) {
-                duck.rotation.y += duckRotationRate;
-                duck.model.transform = MatrixRotateXYZ(duck.rotation);
+                duck.rotateBy({0.f, duckRotationRate, 0.f});
             } else if (IsKeyDown(KEY_D)) {
-                duck.rotation.y -= duckRotationRate;
-                duck.model.transform = MatrixRotateXYZ(duck.rotation);
+                duck.rotateBy({0.f, -duckRotationRate, 0.f});
             }
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c

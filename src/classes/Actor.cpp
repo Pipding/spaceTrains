@@ -22,6 +22,23 @@ void Actor::setTexture(Texture2D texture) {
     this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
 }
 
+/**
+* Set the rotation of the Actor
+* @param rotation   Vector3 of angles in radians in x, y and z
+*/
+void Actor::setRotation(Vector3 rotation) {
+    this->rotation = rotation;
+    this->model.transform = MatrixRotateXYZ(this->rotation);
+}
+
+/**
+* Rotate the Actor by the given rotation vector
+* @param rotation   Vector3 of angles in radians in x, y and z
+*/
+void Actor::rotateBy(Vector3 rotation) {
+    this->setRotation(Vector3Add(this->rotation, rotation));
+}
+
 BoundingBox Actor::getBounds() {
     return this->bounds;
 }
