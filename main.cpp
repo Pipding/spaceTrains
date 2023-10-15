@@ -6,7 +6,6 @@
 #include <sstream>
 
 bool g_paused = false;
-static bool g_showBoundingBoxes = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
@@ -146,7 +145,6 @@ int main(void)
         duck.draw();
         target.draw();
         DrawGrid(2000, 20.f);
-        // DrawBoundingBox(duck.getBounds(), GREEN);
         EndMode3D();
 
         oss.str("");

@@ -13,8 +13,6 @@ Actor::Actor(Vector3 position, Model model, Texture2D texture) {
     this->update();
 }
 
-// TODO: Actors should manage their own bounds
-
 /**
  * Update the texture applied to the model of the Actor
  * @param texture   The texture to be applied to the model

@@ -24,4 +24,5 @@ class SpaceTrainDebug
         void operator=(SpaceTrainDebug const&)  = delete;
         bool toggleDrawBoundingBoxes();
         bool getDrawBoundingBoxes();
+        void setDrawBoundingBoxes(bool);
 };
