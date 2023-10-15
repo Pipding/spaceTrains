@@ -1,4 +1,7 @@
 #include "Actor.h"
+#include "src/globals/SpaceTrainDebug.h"
+
+static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
 Actor::Actor(Model model, Texture2D texture) : Actor({0, 0, 0}, model, texture) { } // This is a delegated constructor https://en.wikipedia.org/wiki/C++11#Object_construction_improvement
 
@@ -35,7 +38,10 @@ void Actor::update() {
  */
 void Actor::draw() {
     DrawModel(this->model, this->position, this->scale, this->color);
-    // TODO: When Actors manage their own bounds, this function should optionally draw bounding boxes
+
+    if (_debug.getDrawBoundingBoxes()) {
+        DrawBoundingBox(this->getBounds(), GREEN);
+    }
 }
 
 /**

@@ -1,11 +1,16 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "src/classes/Actor.h"
+#include "src/globals/SpaceTrainDebug.h"
 #include <string>
 #include <sstream>
 
 bool g_paused = false;
 static bool g_showBoundingBoxes = false;
+
+static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
+
+
 
 int main(void)
 {
@@ -68,7 +73,7 @@ int main(void)
         }
 
         if (IsKeyPressed(KEY_M)) {
-            g_showBoundingBoxes = !g_showBoundingBoxes;
+            _debug.toggleDrawBoundingBoxes();
         }
 
         if (!g_paused) {
@@ -141,7 +146,7 @@ int main(void)
         duck.draw();
         target.draw();
         DrawGrid(2000, 20.f);
-        DrawBoundingBox(duck.getBounds(), GREEN);
+        // DrawBoundingBox(duck.getBounds(), GREEN);
         EndMode3D();
 
         oss.str("");
