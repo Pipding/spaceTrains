@@ -23,18 +23,28 @@ TargetCam::TargetCam(Actor* target, Vector3 offset) {
 */
 void TargetCam::update() {
 
+    //==================================================
+    // User control
+    // TODO: Not a fan of user control being inside here
+    //==================================================
     Vector2 mouseDelta = GetMouseDelta();
 
     if (mouseDelta.x < 0) {
-        this->mouseRotationAdjustment += this->mouseAdjustmentFactor;
+        this->userCameraRotationAdjustment += this->mouseAdjustmentFactor;
     } else if (mouseDelta.x > 0) {
-        this->mouseRotationAdjustment -= this->mouseAdjustmentFactor;
+        this->userCameraRotationAdjustment -= this->mouseAdjustmentFactor;
     }
 
-    this->appliedRotation = MatrixRotateXYZ({0.f, mouseRotationAdjustment + this->target->rotation.y, 0.f});
-    this->appliedOffset = Vector3Transform(this->targetOffset, this->appliedRotation);
-    this->camera.position = Vector3Add(this->target->position, this->appliedOffset);
+    //==================================================
+    // Camera position calculation
+    //==================================================
+    if (userCameraRotationAdjustment == 0.f) {
+        this->defaultCameraRotation = this->target->rotation;
+    }
 
+    this->appliedOffset = calculateAppliedOffset();
+
+    this->camera.position = Vector3Add(this->target->position, this->appliedOffset);
     this->camera.target = this->target->position;
 }
 
@@ -42,5 +52,15 @@ void TargetCam::update() {
  * Resets any adjustments which have been made to the camera rotation by the user
 */
 void TargetCam::resetmouseRotationAdjustment() {
-    this->mouseRotationAdjustment = 0.f;
+    this->userCameraRotationAdjustment = 0.f;
+}
+
+/**
+ * Calculates the camera's offset from the target's position, accounting for
+ * user adjustment
+ * Note: This function will recalculate and update appliedRotation
+*/
+Vector3 TargetCam::calculateAppliedOffset() {
+    this->appliedRotation = MatrixRotateXYZ({0.f, userCameraRotationAdjustment + this->defaultCameraRotation.y, 0.f});
+    return Vector3Transform(this->targetOffset, this->appliedRotation);
 }
