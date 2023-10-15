@@ -28,6 +28,7 @@ public:
     void update() {
         this->camera.position = Vector3Add(this->target->position, this->targetOffset);
         this->camera.target = this->target->position;
+        UpdateCamera(&this->camera, CAMERA_THIRD_PERSON);
     }
 };
 
@@ -72,11 +73,6 @@ int main(void)
     // Camera stuff
     //==================================================
     TargetCam targetCam(&duck, {-50.0f, 50.0f, 0.0f});
-    // Camera cam = {0};
-    // cam.target = (Vector3){0.0f, 0.0f, 0.0f};
-    // cam.up = (Vector3){0.0f, 1.0f, 0.0f};
-    // cam.fovy = 90.f;
-    // cam.projection = CAMERA_PERSPECTIVE;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -145,12 +141,7 @@ int main(void)
             duck.position = Vector3Add(duck.position, duckVelocity);
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             duck.update();
-
-            // cam.position = Vector3Add(duck.position, (Vector3){-50.0f, 50.0f, 0.0f});
-            // cam.target = duck.position;
             targetCam.update();
-
-            UpdateCamera(&targetCam.camera, CAMERA_THIRD_PERSON);
         }
         // Draw
         //----------------------------------------------------------------------------------
