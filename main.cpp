@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "src/classes/Actor.h"
+#include "src/classes/TargetCam.h"
 #include "src/globals/SpaceTrainDebug.h"
 #include <string>
 #include <sstream>
@@ -8,29 +9,6 @@
 bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
-
-class TargetCam {
-public:
-    Camera camera = {0};
-    Actor* target;
-    Vector3 targetOffset;
-
-    TargetCam(Actor* target, Vector3 offset) {
-        this->target = target;
-        this->targetOffset = offset;
-        this->camera.up = {0.0f, 1.0f, 0.0f};
-        this->camera.fovy = 90.f;
-        this->camera.projection = CAMERA_PERSPECTIVE;
-
-        this->update();
-    }
-
-    void update() {
-        this->camera.position = Vector3Add(this->target->position, this->targetOffset);
-        this->camera.target = this->target->position;
-        UpdateCamera(&this->camera, CAMERA_THIRD_PERSON);
-    }
-};
 
 int main(void)
 {

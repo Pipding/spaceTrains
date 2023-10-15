@@ -1,5 +1,5 @@
 #include "Actor.h"
-#include "src/globals/SpaceTrainDebug.h"
+#include "src/globals/SpaceTrainDebug.h" // TODO: Should this be in Actor.h?
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
