@@ -8,6 +8,8 @@
 class Actor {
 private:
     Texture2D texture;
+    BoundingBox boundsOrigin;
+    BoundingBox bounds;
     
 public:
     Vector3 position = {0.f, 0.f, 0.f};
@@ -20,6 +22,9 @@ public:
     Actor(Vector3, Model, Texture2D);
 
     void setTexture(Texture2D);
+    BoundingBox getBounds();
+
+    void update();
     void draw();
     void unload();
 };

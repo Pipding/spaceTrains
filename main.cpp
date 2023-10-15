@@ -5,6 +5,7 @@
 #include <sstream>
 
 bool g_paused = false;
+static bool g_showBoundingBoxes = false;
 
 int main(void)
 {
@@ -30,9 +31,6 @@ int main(void)
     float duckAccelerationRate = .2f;
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float duckTopSpeed = 20.f;
-    BoundingBox originalDuckBounds = GetMeshBoundingBox(duck.model.meshes[0]);
-    BoundingBox currentDuckBounds = originalDuckBounds;
-
 
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
     Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
@@ -67,6 +65,10 @@ int main(void)
 
         if (IsKeyPressed(KEY_P)) {
             g_paused = !g_paused;
+        }
+
+        if (IsKeyPressed(KEY_M)) {
+            g_showBoundingBoxes = !g_showBoundingBoxes;
         }
 
         if (!g_paused) {
@@ -106,7 +108,7 @@ int main(void)
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
             collision = CheckCollisionBoxes(
-                currentDuckBounds,
+                duck.getBounds(),
                 (BoundingBox) {
                     (Vector3){ upgradeTowerPos.x - upgradeTowerSize.x/2, upgradeTowerPos.y - upgradeTowerSize.y/2, upgradeTowerPos.z - upgradeTowerSize.z/2 },
                     (Vector3){ upgradeTowerPos.x + upgradeTowerSize.x/2, upgradeTowerPos.y + upgradeTowerSize.y/2, upgradeTowerPos.z + upgradeTowerSize.z/2 }
@@ -122,8 +124,7 @@ int main(void)
             // Update
             duck.position = Vector3Add(duck.position, duckVelocity);
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
-            currentDuckBounds.min = Vector3Add(duck.position, originalDuckBounds.min);
-            currentDuckBounds.max = Vector3Add(duck.position, originalDuckBounds.max);
+            duck.update();
 
             cam.position = Vector3Add(duck.position, (Vector3){-50.0f, 50.0f, 0.0f});
             cam.target = duck.position;
@@ -140,7 +141,7 @@ int main(void)
         duck.draw();
         target.draw();
         DrawGrid(2000, 20.f);
-        DrawBoundingBox(currentDuckBounds, GREEN);
+        DrawBoundingBox(duck.getBounds(), GREEN);
         EndMode3D();
 
         oss.str("");
