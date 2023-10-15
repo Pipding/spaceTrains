@@ -14,14 +14,15 @@ TargetCam::TargetCam(Actor* target, Vector3 offset) {
     this->camera.fovy = 90.f;
     this->camera.projection = CAMERA_PERSPECTIVE;
 
-    this->update();
+    this->camera.position = Vector3Add(this->target->position, this->targetOffset);
+    this->camera.target = this->target->position;
 }
 
 /**
  * Update camera position & target vectors
 */
 void TargetCam::update() {
-    this->camera.position = Vector3Add(this->target->position, this->targetOffset);
+    this->rotatedOffset = Vector3Transform(this->targetOffset, MatrixRotateXYZ(this->target->rotation));
+    this->camera.position = Vector3Add(this->target->position, this->rotatedOffset);
     this->camera.target = this->target->position;
-    UpdateCamera(&this->camera, CAMERA_THIRD_PERSON);
 }

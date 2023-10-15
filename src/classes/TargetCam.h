@@ -16,4 +16,7 @@ public:
     TargetCam(Actor*, Vector3);
 
     void update();
+
+private:
+    Vector3 rotatedOffset;
 };
