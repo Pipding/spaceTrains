@@ -9,8 +9,6 @@ bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
-
-
 int main(void)
 {
     // Initialization
@@ -46,9 +44,7 @@ int main(void)
     // Moving target stuff
     //==================================================
     Actor target({ 300.f, 0.f, 0.f }, LoadModel("assets/models/archery_target.obj"), LoadTexture("assets/textures/archery_target_albedo.png"));
-    target.rotation = {0.f, -1.5f, 0.f};
-    target.model.transform = MatrixRotateXYZ(target.rotation);
-
+    target.setRotation({0.f, -1.5f, 0.f});
 
     //==================================================
     // Camera stuff
