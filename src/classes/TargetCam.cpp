@@ -22,7 +22,7 @@ TargetCam::TargetCam(Actor* target, Vector3 offset) {
  * Update camera position & target vectors
 */
 void TargetCam::update() {
-    this->rotatedOffset = Vector3Transform(this->targetOffset, MatrixRotateXYZ(this->target->rotation));
-    this->camera.position = Vector3Add(this->target->position, this->rotatedOffset);
+    this->transformedOffset = Vector3Transform(this->targetOffset, this->target->model.transform);
+    this->camera.position = Vector3Add(this->target->position, this->transformedOffset);
     this->camera.target = this->target->position;
 }

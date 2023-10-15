@@ -18,5 +18,5 @@ public:
     void update();
 
 private:
-    Vector3 rotatedOffset;
+    Vector3 transformedOffset;
 };
