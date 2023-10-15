@@ -2,8 +2,21 @@
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
+/**
+ * An object which can be spawned or placed in the world, similar to the class
+ * of the same name in Unreal Engine
+ * @param model     The 3D model representing the Actor in the world
+ * @param texture   The texture to be applied to model
+*/
 Actor::Actor(Model model, Texture2D texture) : Actor({0, 0, 0}, model, texture) { } // This is a delegated constructor https://en.wikipedia.org/wiki/C++11#Object_construction_improvement
 
+/**
+ * An object which can be spawned or placed in the world, similar to the class
+ * of the same name in Unreal Engine
+ * @param position  Initial location of the Actor in-world
+ * @param model     The 3D model representing the Actor in the world
+ * @param texture   The texture to be applied to model
+*/
 Actor::Actor(Vector3 position, Model model, Texture2D texture) {
     this->position = position;
     this->model = model;
@@ -38,17 +51,23 @@ void Actor::rotateBy(Vector3 rotation) {
     this->setRotation(Vector3Add(this->rotation, rotation));
 }
 
+/**
+ * Get the collision bounds of the Actor
+*/
 BoundingBox Actor::getBounds() {
     return this->bounds;
 }
 
+/**
+ * Update the Actor based on current state
+*/
 void Actor::update() {
     this->bounds.min = Vector3Add(this->position, this->boundsOrigin.min);
     this->bounds.max = Vector3Add(this->position, this->boundsOrigin.max);
 }
 
 /**
- * Calls the raylib DrawModel function using the member variables of this Actor
+ * Draw the actor by calling the raylib DrawModel function using the member variables of this Actor
  */
 void Actor::draw() {
     DrawModel(this->model, this->position, this->scale, this->color);
