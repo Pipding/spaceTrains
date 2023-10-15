@@ -20,7 +20,8 @@ int main(void)
     std::ostringstream oss;
     std::string velocityOutput;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "SPACE TRAIN");
+    DisableCursor();
 
     //==================================================
     // Duck stuff
