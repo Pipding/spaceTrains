@@ -9,6 +9,28 @@ bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
+class TargetCam {
+public:
+    Camera camera = {0};
+    Actor* target;
+    Vector3 targetOffset;
+
+    TargetCam(Actor* target, Vector3 offset) {
+        this->target = target;
+        this->targetOffset = offset;
+        this->camera.up = {0.0f, 1.0f, 0.0f};
+        this->camera.fovy = 90.f;
+        this->camera.projection = CAMERA_PERSPECTIVE;
+
+        this->update();
+    }
+
+    void update() {
+        this->camera.position = Vector3Add(this->target->position, this->targetOffset);
+        this->camera.target = this->target->position;
+    }
+};
+
 int main(void)
 {
     // Initialization
@@ -49,12 +71,12 @@ int main(void)
     //==================================================
     // Camera stuff
     //==================================================
-    Camera cam = {0};
-    cam.position = (Vector3){50.0f, 50.0f, 50.0f};
-    cam.target = (Vector3){0.0f, 0.0f, 0.0f};
-    cam.up = (Vector3){0.0f, 1.0f, 0.0f};
-    cam.fovy = 90.f;
-    cam.projection = CAMERA_PERSPECTIVE;
+    TargetCam targetCam(&duck, {-50.0f, 50.0f, 0.0f});
+    // Camera cam = {0};
+    // cam.target = (Vector3){0.0f, 0.0f, 0.0f};
+    // cam.up = (Vector3){0.0f, 1.0f, 0.0f};
+    // cam.fovy = 90.f;
+    // cam.projection = CAMERA_PERSPECTIVE;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -124,17 +146,18 @@ int main(void)
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             duck.update();
 
-            cam.position = Vector3Add(duck.position, (Vector3){-50.0f, 50.0f, 0.0f});
-            cam.target = duck.position;
+            // cam.position = Vector3Add(duck.position, (Vector3){-50.0f, 50.0f, 0.0f});
+            // cam.target = duck.position;
+            targetCam.update();
 
-            UpdateCamera(&cam, CAMERA_THIRD_PERSON);
+            UpdateCamera(&targetCam.camera, CAMERA_THIRD_PERSON);
         }
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
-        BeginMode3D(cam);
+        BeginMode3D(targetCam.camera);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         duck.draw();
         target.draw();
