@@ -36,6 +36,9 @@ int main(void)
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float duckTopSpeed = 20.f;
 
+    Actor duck2({-50.f, 0.f, 0.f}, LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png"));
+    // duck2 needs to follow duck
+
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
     Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
     Vector3 upgradeTowerSize = { 50.0f, 100.0f, 50.0f };
@@ -122,6 +125,21 @@ int main(void)
 
             // Update
             duck.position = Vector3Add(duck.position, duckVelocity);
+
+            // Updating duck2
+            // duck2 needs to be pulled toward duck. So the direction in which duck2 is being pulled is;
+            Vector3 duck2pulledDirection = Vector3Normalize(Vector3Subtract(duck.position, duck2.position));
+            // The vector offset of duck to duck2 will be the inverse of duck2pulledDirection
+            Vector3 invertedPulledDirection = Vector3Negate(duck2pulledDirection);
+            Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, 50.f);
+            duck2.position = Vector3Add(duck.position, scaledInvertedPulledDirection);
+
+            // Angle (in rads) between 2 vectors is given by atan2
+            float angleBetweenDucks = atan2(duck2pulledDirection.x, duck2pulledDirection.z);
+            // For whatever reason the angle is offset by 90 degrees so we need to subtract that. 1.5708rad = 90deg
+            // TODO: Probably should figure out why the angle is offset from what you expected
+            duck2.setRotation({0, angleBetweenDucks- 1.5708f, 0});
+            
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             duck.update();
             targetCam.update();
@@ -134,6 +152,7 @@ int main(void)
         BeginMode3D(targetCam.camera);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         duck.draw();
+        duck2.draw();
         target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
