@@ -9,9 +9,8 @@ bool g_paused = false;
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
 class TrainEngine {
-private:
-    Vector3 velocity = {0.f, 0.f, 0.f};
 public:
+    Vector3 velocity = {0.f, 0.f, 0.f};
     Actor actor;
     float accelerationRate = .2f;
     float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
@@ -24,6 +23,10 @@ public:
         this->decelerationRate = decelerationRate;
         this->topSpeed = topSpeed;
         this->rotationRate = rotationRate;
+    }
+
+    void rotateBy(Vector3 rotation) {
+        this->actor.rotateBy(rotation);
     }
 
     void draw() {
@@ -48,11 +51,6 @@ int main(void)
     // Camera & model loading borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     // TODO: Remove the ducky (both code and assets)
     Actor duck(LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
-    float duckRotationRate = 0.05f;
-    Vector3 duckVelocity = {0.f, 0.f, 0.f};
-    float duckAccelerationRate = .2f;
-    float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
-    float duckTopSpeed = 20.f;
 
     TrainEngine engine(duck, 0.2f, 20.f, 20.f, 0.05f);
 
@@ -74,7 +72,7 @@ int main(void)
     //==================================================
     // Camera stuff
     //==================================================
-    TargetCam targetCam(&duck, {-150.0f, 100.f, 0.0f});
+    TargetCam targetCam(&engine.actor, {-150.0f, 100.f, 0.0f});
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -98,39 +96,39 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                duckVelocity = Vector3Add(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duck.model.transform), duckAccelerationRate));
+                engine.velocity = Vector3Add(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.actor.model.transform), engine.accelerationRate));
             } else if (IsKeyDown(KEY_S)) {
-                duckVelocity = Vector3Subtract(duckVelocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, duck.model.transform), duckAccelerationRate));
-            } else if (duckVelocity.x != 0.f || duckVelocity.z != 0.f) {
+                engine.velocity = Vector3Subtract(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.actor.model.transform), engine.accelerationRate));
+            } else if (engine.velocity.x != 0.f || engine.velocity.z != 0.f) {
                 // The user is not pressing any buttons. Velocity should be decaying
-                if (duckVelocity.x != 0.f && abs(duckVelocity.x) < 0.1f) {
-                    duckVelocity.x = 0.f;
+                if (engine.velocity.x != 0.f && abs(engine.velocity.x) < 0.1f) {
+                    engine.velocity.x = 0.f;
                 }
 
-                if (duckVelocity.z != 0.f && abs(duckVelocity.z) < 0.1f) {
-                    duckVelocity.z = 0.f;
+                if (engine.velocity.z != 0.f && abs(engine.velocity.z) < 0.1f) {
+                    engine.velocity.z = 0.f;
                 }
 
-                if (abs(duckVelocity.x) > 0) {
-                    duckVelocity.x *= (1 - (1 / duckDecelerationRate));
+                if (abs(engine.velocity.x) > 0) {
+                    engine.velocity.x *= (1 - (1 / engine.decelerationRate));
                 }
 
-                if (abs(duckVelocity.z) > 0) {
-                    duckVelocity.z *= (1 - (1 / duckDecelerationRate));
+                if (abs(engine.velocity.z) > 0) {
+                    engine.velocity.z *= (1 - (1 / engine.decelerationRate));
                 }
             }
 
-            duckVelocity = Vector3Clamp(duckVelocity, (Vector3){-duckTopSpeed, 0.f, -duckTopSpeed}, (Vector3){duckTopSpeed, 0.f, duckTopSpeed});
+            engine.velocity = Vector3Clamp(engine.velocity, (Vector3){-engine.topSpeed, 0.f, -engine.topSpeed}, (Vector3){engine.topSpeed, 0.f, engine.topSpeed});
 
             if (IsKeyDown(KEY_A)) {
-                duck.rotateBy({0.f, duckRotationRate, 0.f});
+                engine.rotateBy({0.f, engine.rotationRate, 0.f});
             } else if (IsKeyDown(KEY_D)) {
-                duck.rotateBy({0.f, -duckRotationRate, 0.f});
+                engine.rotateBy({0.f, -engine.rotationRate, 0.f});
             }
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
             collision = CheckCollisionBoxes(
-                duck.getBounds(),
+                engine.actor.getBounds(),
                 (BoundingBox) {
                     (Vector3){ upgradeTowerPos.x - upgradeTowerSize.x/2, upgradeTowerPos.y - upgradeTowerSize.y/2, upgradeTowerPos.z - upgradeTowerSize.z/2 },
                     (Vector3){ upgradeTowerPos.x + upgradeTowerSize.x/2, upgradeTowerPos.y + upgradeTowerSize.y/2, upgradeTowerPos.z + upgradeTowerSize.z/2 }
@@ -138,21 +136,21 @@ int main(void)
             );
 
             if (collision) {
-                duck.color = RED;
+                engine.actor.color = RED;
             } else {
-                duck.color = WHITE;
+                engine.actor.color = WHITE;
             }
 
             // Update
-            duck.position = Vector3Add(duck.position, duckVelocity);
+            engine.actor.position = Vector3Add(engine.actor.position, engine.velocity);
 
             // Updating duck2
             // duck2 needs to be pulled toward duck. So the direction in which duck2 is being pulled is;
-            Vector3 duck2pulledDirection = Vector3Normalize(Vector3Subtract(duck.position, duck2.position));
+            Vector3 duck2pulledDirection = Vector3Normalize(Vector3Subtract(engine.actor.position, duck2.position));
             // The vector offset of duck to duck2 will be the inverse of duck2pulledDirection
             Vector3 invertedPulledDirection = Vector3Negate(duck2pulledDirection);
             Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, 50.f);
-            duck2.position = Vector3Add(duck.position, scaledInvertedPulledDirection);
+            duck2.position = Vector3Add(engine.actor.position, scaledInvertedPulledDirection);
 
             // Angle (in rads) between 2 vectors is given by atan2
             float angleBetweenDucks = atan2(duck2pulledDirection.x, duck2pulledDirection.z);
@@ -161,7 +159,7 @@ int main(void)
             duck2.setRotation({0, angleBetweenDucks- 1.5708f, 0});
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
-            duck.update();
+            engine.actor.update();
             targetCam.update();
         }
 
@@ -172,14 +170,14 @@ int main(void)
         
         BeginMode3D(targetCam.camera);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
-        duck.draw();
+        // duck.draw();
         duck2.draw();
         engine.draw();
         target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
 
-        DrawText(TextFormat("Velocity: %f, %f", duckVelocity.x, duckVelocity.z), 20, 20, 40, GREEN);
+        DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
 
         if (g_paused) {
             DrawText("Paused", 600, 340, 40, GREEN);
