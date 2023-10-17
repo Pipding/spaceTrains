@@ -8,6 +8,7 @@ static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
  * @param offset    Offset from the Actor's location where the camera should be by default
 */
 TargetCam::TargetCam(Actor* target, Vector3 offset) {
+    // Camera initialization borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     this->target = target;
     this->targetOffset = offset;
     this->camera.up = {0.0f, 1.0f, 0.0f};

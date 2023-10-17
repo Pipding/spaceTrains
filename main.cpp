@@ -36,26 +36,22 @@ public:
 
 int main(void)
 {
+    //==================================================
     // Initialization
-    //--------------------------------------------------------------------------------------
+    //==================================================
     const int screenWidth = 1280;
     const int screenHeight = 720;
 
     InitWindow(screenWidth, screenHeight, "SPACE TRAIN");
+    SetTargetFPS(60);
     DisableCursor();
 
-    //==================================================
-    // Duck stuff
-    //==================================================
-
-    // Camera & model loading borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     // TODO: Remove the ducky (both code and assets)
     Actor duck(LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
 
     TrainEngine engine(duck, 0.2f, 20.f, 20.f, 0.05f);
 
     Actor duck2({-50.f, 0.f, 0.f}, LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png"));
-    // duck2 needs to follow duck
 
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
     Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
@@ -73,9 +69,6 @@ int main(void)
     // Camera stuff
     //==================================================
     TargetCam targetCam(&engine.actor, {-150.0f, 100.f, 0.0f});
-
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
