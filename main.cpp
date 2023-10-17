@@ -8,6 +8,7 @@ bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
+// TODO: Extract this to its own file
 class TrainEngine {
 public:
     Vector3 velocity = {0.f, 0.f, 0.f};
@@ -16,6 +17,7 @@ public:
     float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float topSpeed = 20.f;
     float rotationRate = 0.05f;
+    // TODO: Add a rearAnchorPoint and/or rearAnchorPointOffset which will be the point the next train car "follows"
 
     TrainEngine(Actor actor, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate) {
         this->actor = actor;
@@ -133,14 +135,10 @@ int main(void)
             } else {
                 engine.actor.color = WHITE;
             }
-
-            // Update
             engine.actor.position = Vector3Add(engine.actor.position, engine.velocity);
 
             // Updating duck2
-            // duck2 needs to be pulled toward duck. So the direction in which duck2 is being pulled is;
             Vector3 duck2pulledDirection = Vector3Normalize(Vector3Subtract(engine.actor.position, duck2.position));
-            // The vector offset of duck to duck2 will be the inverse of duck2pulledDirection
             Vector3 invertedPulledDirection = Vector3Negate(duck2pulledDirection);
             Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, 50.f);
             duck2.position = Vector3Add(engine.actor.position, scaledInvertedPulledDirection);
@@ -180,12 +178,12 @@ int main(void)
         //----------------------------------------------------------------------------------
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
+    //==================================================
+    // De-initialization
+    //==================================================
     duck.unload();
     target.unload();
     CloseWindow();
-    //--------------------------------------------------------------------------------------
 
     return 0;
 }
