@@ -17,7 +17,6 @@ public:
     float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float topSpeed = 20.f;
     float rotationRate = 0.05f;
-    
 
     TrainEngine(Actor actor, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate) {
         this->actor = actor;
@@ -25,6 +24,10 @@ public:
         this->decelerationRate = decelerationRate;
         this->topSpeed = topSpeed;
         this->rotationRate = rotationRate;
+    }
+
+    void draw() {
+        this->actor.draw();
     }
 };
 
@@ -171,6 +174,7 @@ int main(void)
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         duck.draw();
         duck2.draw();
+        engine.draw();
         target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
@@ -185,12 +189,11 @@ int main(void)
         //----------------------------------------------------------------------------------
     }
 
-    duck.unload();
-    target.unload();
-
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
+    duck.unload();
+    target.unload();
+    CloseWindow();
     //--------------------------------------------------------------------------------------
 
     return 0;

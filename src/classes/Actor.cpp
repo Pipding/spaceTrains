@@ -3,6 +3,11 @@
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
 /**
+ * Default Actor constructor
+*/
+Actor::Actor() { }
+
+/**
  * An object which can be spawned or placed in the world, similar to the class
  * of the same name in Unreal Engine
  * @param model     The 3D model representing the Actor in the world
