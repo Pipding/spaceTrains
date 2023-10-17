@@ -8,6 +8,26 @@ bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
+class TrainEngine {
+private:
+    Vector3 velocity = {0.f, 0.f, 0.f};
+public:
+    Actor actor;
+    float accelerationRate = .2f;
+    float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
+    float topSpeed = 20.f;
+    float rotationRate = 0.05f;
+    
+
+    TrainEngine(Actor actor, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate) {
+        this->actor = actor;
+        this->accelerationRate = accelerationRate;
+        this->decelerationRate = decelerationRate;
+        this->topSpeed = topSpeed;
+        this->rotationRate = rotationRate;
+    }
+};
+
 int main(void)
 {
     // Initialization
@@ -30,6 +50,8 @@ int main(void)
     float duckAccelerationRate = .2f;
     float duckDecelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float duckTopSpeed = 20.f;
+
+    TrainEngine engine(duck, 0.2f, 20.f, 20.f, 0.05f);
 
     Actor duck2({-50.f, 0.f, 0.f}, LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png"));
     // duck2 needs to follow duck

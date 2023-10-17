@@ -19,6 +19,7 @@ public:
     float scale = 1.f;
     Color color = WHITE;
 
+    Actor();
     Actor(Model, Texture2D);
     Actor(Vector3, Model, Texture2D);
 
