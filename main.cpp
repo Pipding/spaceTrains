@@ -3,8 +3,6 @@
 #include "src/classes/Actor.h"
 #include "src/classes/TargetCam.h"
 #include "src/globals/SpaceTrainDebug.h"
-#include <string>
-#include <sstream>
 
 bool g_paused = false;
 
@@ -16,9 +14,6 @@ int main(void)
     //--------------------------------------------------------------------------------------
     const int screenWidth = 1280;
     const int screenHeight = 720;
-
-    std::ostringstream oss;
-    std::string velocityOutput;
 
     InitWindow(screenWidth, screenHeight, "SPACE TRAIN");
     DisableCursor();
@@ -139,11 +134,12 @@ int main(void)
             // For whatever reason the angle is offset by 90 degrees so we need to subtract that. 1.5708rad = 90deg
             // TODO: Probably should figure out why the angle is offset from what you expected
             duck2.setRotation({0, angleBetweenDucks- 1.5708f, 0});
-            
+
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             duck.update();
             targetCam.update();
         }
+
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
@@ -157,12 +153,7 @@ int main(void)
         DrawGrid(2000, 20.f);
         EndMode3D();
 
-        oss.str("");
-        oss.clear();
-        oss << "Velocity: " << duckVelocity.x << ", " << duckVelocity.z;
-        velocityOutput = oss.str();
-
-        DrawText(velocityOutput.c_str(), 20, 20, 40, GREEN);
+        DrawText(TextFormat("Velocity: %f, %f", duckVelocity.x, duckVelocity.z), 20, 20, 40, GREEN);
 
         if (g_paused) {
             DrawText("Paused", 600, 340, 40, GREEN);
