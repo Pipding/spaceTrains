@@ -2,39 +2,12 @@
 #include "raymath.h"
 #include "src/classes/Actor.h"
 #include "src/classes/TargetCam.h"
+#include "src/classes/TrainEngine.h"
 #include "src/globals/SpaceTrainDebug.h"
 
 bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
-
-// TODO: Extract this to its own file
-class TrainEngine {
-public:
-    Vector3 velocity = {0.f, 0.f, 0.f};
-    Actor actor;
-    float accelerationRate = .2f;
-    float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
-    float topSpeed = 20.f;
-    float rotationRate = 0.05f;
-    // TODO: Add a rearAnchorPoint and/or rearAnchorPointOffset which will be the point the next train car "follows"
-
-    TrainEngine(Actor actor, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate) {
-        this->actor = actor;
-        this->accelerationRate = accelerationRate;
-        this->decelerationRate = decelerationRate;
-        this->topSpeed = topSpeed;
-        this->rotationRate = rotationRate;
-    }
-
-    void rotateBy(Vector3 rotation) {
-        this->actor.rotateBy(rotation);
-    }
-
-    void draw() {
-        this->actor.draw();
-    }
-};
 
 int main(void)
 {
