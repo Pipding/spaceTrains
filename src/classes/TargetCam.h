@@ -17,7 +17,7 @@
 class TargetCam {    
 public:
     Camera camera = {0};
-    Vector3* target;
+    Actor* target;
 
     // The degree by which user adjustment rotates the camera on each update cycle
     float mouseAdjustmentFactor = 0.05f;
@@ -26,9 +26,9 @@ public:
     // start its life, and the point to which it should return to when reset
     Vector3 targetOffset;
 
-    TargetCam(Vector3*, Vector3);
+    TargetCam(Actor*, Vector3);
 
-    void update(Vector3);
+    void update();
     void resetmouseRotationAdjustment();
     Vector3 calculateAppliedOffset();
 

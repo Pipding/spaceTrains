@@ -33,5 +33,5 @@ void TrainEngine::rotateBy(Vector3 rotation) {
  * Draw the train by calling the draw function of its Actor
 */
 void TrainEngine::draw() {
-    this->actor->draw(this->position);
+    this->actor->draw();
 }

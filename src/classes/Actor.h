@@ -11,9 +11,9 @@ private:
     Texture2D texture;
     BoundingBox boundsOrigin;
     BoundingBox bounds;
-    Vector3 position = {0.f, 0.f, 0.f};
     
 public:
+    Vector3 position = {0.f, 0.f, 0.f};
     Vector3 rotation = {0.f, 0.f, 0.f};
     Model model;
     float scale = 1.f;
@@ -29,6 +29,6 @@ public:
     BoundingBox getBounds();
 
     void update();
-    void draw(Vector3 position);
+    void draw();
     void unload();
 };
