@@ -1,12 +1,12 @@
 #pragma once
 #include "raylib.h"
 #include "raymath.h"
-#include "Actor.h"
+#include "TrainComponent.h"
 
 /**
  * The front engine of a train. Driven by the player
 */
-class TrainEngine {
+class TrainEngine: public TrainComponent {
 public:
     Vector3 velocity = {0.f, 0.f, 0.f};
     Actor actor;
