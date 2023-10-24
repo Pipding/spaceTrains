@@ -1,6 +1,11 @@
 #include "TrainEngine.h"
 
 /**
+ * Default constructor for the TrainEngine
+*/
+TrainEngine::TrainEngine() { }
+
+/**
  * The front engine of a train. Driven by the player
  * @param actor             The visual representation of the train
  * @param accelerationRate  The rate at which the train accelerates

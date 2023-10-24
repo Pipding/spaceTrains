@@ -9,8 +9,40 @@ bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
+// TODO: Extract this to its own class
 class TrainCar {
+public:
+    TrainEngine* engine; // TODO: This needs to be a generic TrainComponent class, but that class doesn't exist yet
+    Actor actor;
+    Vector3 position = {0.f, 0.f, 0.f};
+    Vector3 rotation = {0.f, 0.f, 0.f};
 
+    TrainCar(TrainEngine* engine, Actor actor, Vector3 position = {0.f, 0.f, 0.f}, Vector3 rotation = {0.f, 0.f, 0.f}) {
+        this->engine = engine;
+        this->actor = actor;
+        this->position = position;
+        this->rotation = rotation;
+    }
+
+    void draw() {
+        this->actor.draw();
+    }
+
+    void update() {
+        this->actor.position = this->position;
+
+        // Figure out the rotation of this thing
+        Vector3 pulledDirection = Vector3Normalize(Vector3Subtract(this->engine->actor.position, this->actor.position));
+        Vector3 invertedPulledDirection = Vector3Negate(pulledDirection);
+        Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, 50.f);
+        this->position = Vector3Add(this->engine->actor.position, scaledInvertedPulledDirection);
+
+        // Angle (in rads) between 2 vectors is given by atan2
+        float angleBetweenDucks = atan2(pulledDirection.x, pulledDirection.z);
+        // For whatever reason the angle is offset by 90 degrees so we need to subtract that. 1.5708rad = 90deg
+        // TODO: Probably should figure out why the angle is offset from what you expected
+        this->actor.setRotation({0, angleBetweenDucks- 1.5708f, 0});
+    }
 };
 
 int main(void)
@@ -29,8 +61,7 @@ int main(void)
     Actor duck(LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
 
     TrainEngine engine(duck, 0.2f, 20.f, 20.f, 0.05f);
-
-    Actor duck2({-50.f, 0.f, 0.f}, LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png"));
+    TrainCar carriage(&engine, duck, {-50.f, 0.f, 0.f});
 
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
     Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
@@ -52,7 +83,7 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        const float deltaTime = GetFrameTime();
+        // const float deltaTime = GetFrameTime();
 
         if (IsKeyPressed(KEY_P)) {
             g_paused = !g_paused;
@@ -115,20 +146,9 @@ int main(void)
             }
             engine.actor.position = Vector3Add(engine.actor.position, engine.velocity);
 
-            // Updating duck2
-            Vector3 duck2pulledDirection = Vector3Normalize(Vector3Subtract(engine.actor.position, duck2.position));
-            Vector3 invertedPulledDirection = Vector3Negate(duck2pulledDirection);
-            Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, 50.f);
-            duck2.position = Vector3Add(engine.actor.position, scaledInvertedPulledDirection);
-
-            // Angle (in rads) between 2 vectors is given by atan2
-            float angleBetweenDucks = atan2(duck2pulledDirection.x, duck2pulledDirection.z);
-            // For whatever reason the angle is offset by 90 degrees so we need to subtract that. 1.5708rad = 90deg
-            // TODO: Probably should figure out why the angle is offset from what you expected
-            duck2.setRotation({0, angleBetweenDucks- 1.5708f, 0});
-
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.actor.update();
+            carriage.update();
             targetCam.update();
         }
 
@@ -139,9 +159,8 @@ int main(void)
         
         BeginMode3D(targetCam.camera);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
-        // duck.draw();
-        duck2.draw();
         engine.draw();
+        carriage.draw();
         target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();

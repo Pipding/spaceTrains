@@ -15,6 +15,7 @@ public:
     float topSpeed = 20.f;
     float rotationRate = 0.05f;
 
+    TrainEngine();
     TrainEngine(Actor, float, float, float, float);
 
     void rotateBy(Vector3);
