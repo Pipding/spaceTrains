@@ -9,6 +9,10 @@ bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
+class TrainCar {
+
+};
+
 int main(void)
 {
     //==================================================
@@ -48,6 +52,7 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        const float deltaTime = GetFrameTime();
 
         if (IsKeyPressed(KEY_P)) {
             g_paused = !g_paused;
