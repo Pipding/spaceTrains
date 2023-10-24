@@ -11,6 +11,7 @@ private:
     Texture2D texture;
     BoundingBox boundsOrigin;
     BoundingBox bounds;
+    Matrix transform = MatrixIdentity();
     
 public:
     Vector3 position = {0.f, 0.f, 0.f};
@@ -27,6 +28,7 @@ public:
     void setRotation(Vector3);
     void rotateBy(Vector3);
     BoundingBox getBounds();
+    Vector3 getForwardVector();
 
     void update();
     void draw();

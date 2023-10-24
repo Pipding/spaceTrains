@@ -68,9 +68,9 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                engine.velocity = Vector3Add(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.model.transform), engine.accelerationRate));
+                engine.velocity = Vector3Add(engine.velocity, Vector3Scale(engine.getForwardVector(), engine.accelerationRate));
             } else if (IsKeyDown(KEY_S)) {
-                engine.velocity = Vector3Subtract(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.model.transform), engine.accelerationRate));
+                engine.velocity = Vector3Subtract(engine.velocity, Vector3Scale(engine.getForwardVector(), engine.accelerationRate));
             } else if (engine.velocity.x != 0.f || engine.velocity.z != 0.f) {
                 // The user is not pressing any buttons. Velocity should be decaying
                 if (engine.velocity.x != 0.f && abs(engine.velocity.x) < 0.1f) {

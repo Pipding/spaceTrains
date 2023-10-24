@@ -45,7 +45,8 @@ void Actor::setTexture(Texture2D texture) {
 */
 void Actor::setRotation(Vector3 rotation) {
     this->rotation = rotation;
-    this->model.transform = MatrixRotateXYZ(this->rotation);
+    this->transform = MatrixRotateXYZ(this->rotation);
+    this->model.transform = this->transform;
 }
 
 /**
@@ -61,6 +62,13 @@ void Actor::rotateBy(Vector3 rotation) {
 */
 BoundingBox Actor::getBounds() {
     return this->bounds;
+}
+
+/**
+ * Get the forward vector of this Actor
+*/
+Vector3 Actor::getForwardVector() {
+    return Vector3Transform({1.f, 0.f, 0.f}, this->transform);
 }
 
 /**
