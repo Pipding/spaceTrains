@@ -7,7 +7,7 @@ static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
  * @param target    Pointer to the Actor to follow
  * @param offset    Offset from the Actor's location where the camera should be by default
 */
-TargetCam::TargetCam(Actor* target, Vector3 offset) {
+TargetCam::TargetCam(Vector3* target, Vector3 offset) {
     // Camera initialization borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     this->target = target;
     this->targetOffset = offset;
@@ -15,14 +15,14 @@ TargetCam::TargetCam(Actor* target, Vector3 offset) {
     this->camera.fovy = 90.f;
     this->camera.projection = CAMERA_PERSPECTIVE;
 
-    this->camera.position = Vector3Add(this->target->position, this->targetOffset);
-    this->camera.target = this->target->position;
+    this->camera.position = Vector3Add(*this->target, this->targetOffset);
+    this->camera.target = *this->target;
 }
 
 /**
  * Update camera position & target vectors
 */
-void TargetCam::update() {
+void TargetCam::update(Vector3 rotation) {
 
     //==================================================
     // User control
@@ -40,13 +40,13 @@ void TargetCam::update() {
     // Camera position calculation
     //==================================================
     if (userCameraRotationAdjustment == 0.f) {
-        this->defaultCameraRotation = this->target->rotation;
+        this->defaultCameraRotation = rotation;
     }
 
     this->appliedOffset = calculateAppliedOffset();
 
-    this->camera.position = Vector3Add(this->target->position, this->appliedOffset);
-    this->camera.target = this->target->position;
+    this->camera.position = Vector3Add(*this->target, this->appliedOffset);
+    this->camera.target = *this->target;
 }
 
 /**

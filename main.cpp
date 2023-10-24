@@ -43,7 +43,7 @@ int main(void)
     //==================================================
     // Camera stuff
     //==================================================
-    TargetCam targetCam(engine.actor, {-150.0f, 100.f, 0.0f});
+    TargetCam targetCam(&engine.position, {-150.0f, 100.f, 0.0f});
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -109,12 +109,12 @@ int main(void)
             } else {
                 engine.actor->color = WHITE;
             }
-            engine.actor->position = Vector3Add(engine.actor->position, engine.velocity);
+            engine.position = Vector3Add(engine.position, engine.velocity);
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.actor->update();
             carriage.update();
-            targetCam.update();
+            targetCam.update(engine.rotation);
         }
 
         // Draw
@@ -126,7 +126,7 @@ int main(void)
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         engine.draw();
         carriage.draw();
-        target.draw();
+        // target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
 

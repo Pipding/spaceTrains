@@ -74,8 +74,8 @@ void Actor::update() {
 /**
  * Draw the actor by calling the raylib DrawModel function using the member variables of this Actor
  */
-void Actor::draw() {
-    DrawModel(this->model, this->position, this->scale, this->color);
+void Actor::draw(Vector3 position) {
+    DrawModel(this->model, position, this->scale, this->color);
 
     if (_debug.getDrawBoundingBoxes()) {
         DrawBoundingBox(this->getBounds(), GREEN);
