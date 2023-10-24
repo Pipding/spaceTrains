@@ -9,14 +9,14 @@
 class TrainEngine: public TrainComponent {
 public:
     Vector3 velocity = {0.f, 0.f, 0.f};
-    Actor actor;
+    Actor* actor;
     float accelerationRate = .2f;
     float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float topSpeed = 20.f;
     float rotationRate = 0.05f;
 
     TrainEngine();
-    TrainEngine(Actor, float, float, float, float);
+    TrainEngine(Actor*, float, float, float, float);
 
     void rotateBy(Vector3);
     void draw();

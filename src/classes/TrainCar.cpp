@@ -17,10 +17,10 @@ void TrainCar::update() {
     this->actor.position = this->position;
 
     // Figure out the rotation of this thing
-    Vector3 pulledDirection = Vector3Normalize(Vector3Subtract(this->engine->actor.position, this->actor.position));
+    Vector3 pulledDirection = Vector3Normalize(Vector3Subtract(this->engine->actor->position, this->actor.position));
     Vector3 invertedPulledDirection = Vector3Negate(pulledDirection);
     Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, 50.f);
-    this->position = Vector3Add(this->engine->actor.position, scaledInvertedPulledDirection);
+    this->position = Vector3Add(this->engine->actor->position, scaledInvertedPulledDirection);
 
     // Angle (in rads) between 2 vectors is given by atan2
     float angleBetweenDucks = atan2(pulledDirection.x, pulledDirection.z);

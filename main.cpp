@@ -25,7 +25,7 @@ int main(void)
     // TODO: Remove the ducky (both code and assets)
     Actor duck(LoadModel("assets/models/ducky.obj"), LoadTexture("assets/textures/ducky_albedo.png")); // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
 
-    TrainEngine engine(duck, 0.2f, 20.f, 20.f, 0.05f);
+    TrainEngine engine(&duck, 0.2f, 20.f, 20.f, 0.05f);
     TrainCar carriage(&engine, duck, {-50.f, 0.f, 0.f});
 
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
@@ -43,7 +43,7 @@ int main(void)
     //==================================================
     // Camera stuff
     //==================================================
-    TargetCam targetCam(&engine.actor, {-150.0f, 100.f, 0.0f});
+    TargetCam targetCam(engine.actor, {-150.0f, 100.f, 0.0f});
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -65,9 +65,9 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                engine.velocity = Vector3Add(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.actor.model.transform), engine.accelerationRate));
+                engine.velocity = Vector3Add(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.actor->model.transform), engine.accelerationRate));
             } else if (IsKeyDown(KEY_S)) {
-                engine.velocity = Vector3Subtract(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.actor.model.transform), engine.accelerationRate));
+                engine.velocity = Vector3Subtract(engine.velocity, Vector3Scale(Vector3Transform({1.f, 0.f, 0.f}, engine.actor->model.transform), engine.accelerationRate));
             } else if (engine.velocity.x != 0.f || engine.velocity.z != 0.f) {
                 // The user is not pressing any buttons. Velocity should be decaying
                 if (engine.velocity.x != 0.f && abs(engine.velocity.x) < 0.1f) {
@@ -97,7 +97,7 @@ int main(void)
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
             collision = CheckCollisionBoxes(
-                engine.actor.getBounds(),
+                engine.actor->getBounds(),
                 (BoundingBox) {
                     (Vector3){ upgradeTowerPos.x - upgradeTowerSize.x/2, upgradeTowerPos.y - upgradeTowerSize.y/2, upgradeTowerPos.z - upgradeTowerSize.z/2 },
                     (Vector3){ upgradeTowerPos.x + upgradeTowerSize.x/2, upgradeTowerPos.y + upgradeTowerSize.y/2, upgradeTowerPos.z + upgradeTowerSize.z/2 }
@@ -105,14 +105,14 @@ int main(void)
             );
 
             if (collision) {
-                engine.actor.color = RED;
+                engine.actor->color = RED;
             } else {
-                engine.actor.color = WHITE;
+                engine.actor->color = WHITE;
             }
-            engine.actor.position = Vector3Add(engine.actor.position, engine.velocity);
+            engine.actor->position = Vector3Add(engine.actor->position, engine.velocity);
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
-            engine.actor.update();
+            engine.actor->update();
             carriage.update();
             targetCam.update();
         }
