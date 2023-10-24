@@ -1,7 +1,18 @@
 #include "TrainCar.h"
 
+/**
+ * Default TrainCar constructor
+*/
 TrainCar::TrainCar() { }
 
+/**
+ * A train car. Follows another TrainComponent and can be followed by another TrainCar
+ * @param model             The 3D model representing the TrainEngine in the world
+ * @param texture           The texture to be applied to model
+ * @param engine            Pointer to a TrainComponent which this car will follow
+ * @param position          Initial position of the train car
+ * @param rotation          Initial rotation of the train car
+*/
 TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, Vector3 rotation) {
     this->model = model;
     this->setTexture(texture);
@@ -10,6 +21,9 @@ TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vecto
     this->rotation = rotation;
 }
 
+/**
+ * Updates the train car to be pointing towards and following the TrainComponent assigned to the engine parameter
+*/
 void TrainCar::update() {
 
     // Figure out the rotation of this thing
@@ -26,4 +40,3 @@ void TrainCar::update() {
 
     Actor::update();
 }
-

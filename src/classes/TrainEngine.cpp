@@ -1,15 +1,16 @@
 #include "TrainEngine.h"
 
 /**
- * Default constructor for the TrainEngine
+ * Default TrainEngine constructor
 */
 TrainEngine::TrainEngine() { }
 
 /**
  * The front engine of a train. Driven by the player
- * @param actor             Pointer to an Actor which will act as the visual representation of the train
+ * @param model             The 3D model representing the TrainEngine in the world
+ * @param texture           The texture to be applied to model
  * @param accelerationRate  The rate at which the train accelerates
- * @param develerationRate  The rate at which the train decelerates
+ * @param decelerationRate  The rate at which the train decelerates
  * @param topSpeed          The max velocity of the train
  * @param rotationRate      How quickly can the train yaw
 */
