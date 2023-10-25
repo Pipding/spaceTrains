@@ -1,7 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "raymath.h"
-#include "IUpdatable.h"
+#include "src/interfaces/IUpdatable.h"
 #include "src/globals/SpaceTrainDebug.h"
 
 /**
