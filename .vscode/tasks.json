@@ -87,8 +87,6 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "${fileDirname}\\src\\classes\\Actor.cpp",
-                "${fileDirname}\\src\\globals\\SpaceTrainDebug.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
