@@ -22,3 +22,7 @@ TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate,
     this->topSpeed = topSpeed;
     this->rotationRate = rotationRate;
 }
+
+void TrainEngine::update() {
+    Actor::update();
+}

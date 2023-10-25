@@ -30,7 +30,7 @@ public:
     BoundingBox getBounds();
     Vector3 getForwardVector();
 
-    void update();
+    virtual void update() = 0;
     void draw();
     void unload();
 };

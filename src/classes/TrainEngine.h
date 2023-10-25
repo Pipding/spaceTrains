@@ -16,4 +16,6 @@ public:
 
     TrainEngine();
     TrainEngine(Model, Texture2D, float, float, float, float);
+
+    void update();
 };

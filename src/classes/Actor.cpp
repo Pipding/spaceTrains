@@ -27,7 +27,6 @@ Actor::Actor(Vector3 position, Model model, Texture2D texture) {
     this->model = model;
     this->setTexture(texture);
     this->boundsOrigin = GetMeshBoundingBox(this->model.meshes[0]);
-    this->update();
 }
 
 /**
