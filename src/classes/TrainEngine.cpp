@@ -3,7 +3,8 @@
 /**
  * Default TrainEngine constructor
 */
-TrainEngine::TrainEngine() { }
+TrainEngine::TrainEngine()
+: TrainComponent() { }
 
 /**
  * The front engine of a train. Driven by the player
@@ -14,9 +15,8 @@ TrainEngine::TrainEngine() { }
  * @param topSpeed          The max velocity of the train
  * @param rotationRate      How quickly can the train yaw
 */
-TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate) {
-    this->model = model;
-    this->setTexture(texture);
+TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate)
+: TrainComponent({0.f, 0.f, 0.f}, model, texture) {
     this->accelerationRate = accelerationRate;
     this->decelerationRate = decelerationRate;
     this->topSpeed = topSpeed;

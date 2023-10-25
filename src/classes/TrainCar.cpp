@@ -3,7 +3,8 @@
 /**
  * Default TrainCar constructor
 */
-TrainCar::TrainCar() { }
+TrainCar::TrainCar()
+: TrainComponent() { }
 
 /**
  * A train car. Follows another TrainComponent and can be followed by another TrainCar
@@ -13,11 +14,9 @@ TrainCar::TrainCar() { }
  * @param position          Initial position of the train car
  * @param rotation          Initial rotation of the train car
 */
-TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, Vector3 rotation) {
-    this->model = model;
-    this->setTexture(texture);
+TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, Vector3 rotation)
+: TrainComponent(position, model, texture) {
     this->engine = engine;
-    this->position = position;
     this->rotation = rotation;
 }
 
