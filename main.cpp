@@ -40,8 +40,8 @@ int main(void)
     //==================================================
     // Moving target stuff
     //==================================================
-    // Actor target({ 300.f, 0.f, 0.f }, LoadModel("assets/models/archery_target.obj"), LoadTexture("assets/textures/archery_target_albedo.png"));
-    // target.setRotation({0.f, -1.5f, 0.f});
+    Actor target({ 300.f, 0.f, 0.f }, LoadModel("assets/models/archery_target.obj"), LoadTexture("assets/textures/archery_target_albedo.png"));
+    target.setRotation({0.f, -1.5f, 0.f});
 
     //==================================================
     // Camera stuff
@@ -116,6 +116,7 @@ int main(void)
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.update();
+            target.update();
             carriage.update();
             carriage2.update();
             targetCam.update();
@@ -131,7 +132,7 @@ int main(void)
         engine.draw();
         carriage.draw();
         carriage2.draw();
-        // target.draw();
+        target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
 

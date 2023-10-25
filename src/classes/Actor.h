@@ -1,12 +1,13 @@
 #pragma once
 #include "raylib.h"
 #include "raymath.h"
+#include "IUpdatable.h"
 #include "src/globals/SpaceTrainDebug.h"
 
 /**
 * Similar to the Actor class in Unreal Engine. Something which can be placed or spawned in the world
 */
-class Actor {
+class Actor : public IUpdatable {
 private:
     Texture2D texture;
     BoundingBox boundsOrigin;
@@ -30,7 +31,7 @@ public:
     BoundingBox getBounds();
     Vector3 getForwardVector();
 
-    virtual void update() = 0;
+    void update();
     void draw();
     void unload();
 };
