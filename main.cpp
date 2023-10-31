@@ -38,12 +38,6 @@ int main(void)
     bool collision = false;
 
     //==================================================
-    // Moving target stuff
-    //==================================================
-    Actor target({ 300.f, 0.f, 0.f }, LoadModel("assets/models/archery_target.obj"), LoadTexture("assets/textures/archery_target_albedo.png"));
-    target.setRotation({0.f, -1.5f, 0.f});
-
-    //==================================================
     // Camera stuff
     //==================================================
     TargetCam targetCam(&engine, {-150.0f, 100.f, 0.0f});
@@ -116,7 +110,6 @@ int main(void)
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.update();
-            target.update();
             carriage.update();
             carriage2.update();
             targetCam.update();
@@ -132,7 +125,6 @@ int main(void)
         engine.draw();
         carriage.draw();
         carriage2.draw();
-        target.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
 
@@ -151,7 +143,6 @@ int main(void)
     //==================================================
     // duck.unload();
     engine.unload(); // TODO: If multiple Actors use the same model/texture then attempting to unload something after it has already been unloaded will cause a segfault
-    // target.unload();
     CloseWindow();
 
     return 0;
