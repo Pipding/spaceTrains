@@ -27,6 +27,25 @@ void TrainEngine::update() {
 
     if (this->accelerationDirection != Direction::None) {
         this->accelerate(this->accelerationDirection == Direction::Forward);
+    } else {
+        // Not accelerating forward or back, so velocity should decay
+        if (this->velocity.x != 0.f || this->velocity.z != 0.f) {
+            if (this->velocity.x != 0.f && abs(this->velocity.x) < 0.1f) {
+                this->velocity.x = 0.f;
+            }
+
+            if (this->velocity.z != 0.f && abs(this->velocity.z) < 0.1f) {
+                this->velocity.z = 0.f;
+            }
+
+            if (abs(this->velocity.x) > 0) {
+                this->velocity.x *= (1 - (1 / this->decelerationRate));
+            }
+
+            if (abs(this->velocity.z) > 0) {
+                this->velocity.z *= (1 - (1 / this->decelerationRate));
+            }
+        }
     }
 
     Actor::update();
