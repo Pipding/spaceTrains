@@ -85,6 +85,10 @@ int main(void)
                 followCam.unsetTarget();
             }
 
+            if (IsKeyDown(KEY_SPACE) && followCam.getHasTarget()) {
+                hostile.receiveDamage(2);
+            }
+
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
             collision = CheckCollisionBoxes(
                 engine.getBounds(),

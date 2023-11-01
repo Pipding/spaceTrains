@@ -9,6 +9,7 @@ public:
     float targetDistance;
     int maxHitpoints;
     int currentHitpoints;
+    bool isAlive = true;
 
     Hostile(Vector3 position, Model model, Texture texture, Vector3* target);
 
