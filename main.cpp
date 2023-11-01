@@ -70,10 +70,10 @@ int main(void)
 
         if (enemyLockOn) {
             lockedOnEnemy = &hostile;
-            followCam.parent = lockedOnEnemy;
+            followCam.setTarget(lockedOnEnemy);
         } else {
             lockedOnEnemy = NULL;
-            followCam.parent = &engine;
+            followCam.unsetTarget();
         }
 
         if (!g_paused) {
@@ -126,6 +126,7 @@ int main(void)
         carriage.draw();
         carriage2.draw();
         hostile.draw();
+        followCam.draw();
         DrawGrid(2000, 20.f);
         EndMode3D();
 

@@ -71,6 +71,36 @@ Vector3 Actor::getForwardVector() {
 }
 
 /**
+ * Calculates a Vector3 which points from this Actor to the target Vector3. Normalized by default but normalization can be skipped by using the normalized parameter
+ * @param target        Vector3 which the generated Vector3 should point toward
+ * @param normalized    Optional, defaults to true. If true the returned vector will be normalized
+*/
+Vector3 Actor::getVectorTowardTarget(Vector3 target, bool normalized) {
+    Vector3 vectorToTarget = Vector3Subtract(target, this->position);
+
+    if (normalized) {
+        return Vector3Normalize(vectorToTarget);
+    }
+
+    return vectorToTarget;
+}
+
+/**
+ * Calculates the angle of rotation between this Actor's position and the given target vector
+ * TODO: This may or may not rely on the two vectors being coplanar. Honestly not sure
+ * @param target    The target vector which will be used to calculate rotation
+*/
+float Actor::angleToVector(Vector3 target) {
+    Vector3 vectorToTarget = this->getVectorTowardTarget(target);
+
+    // Angle (in rads) between 2 vectors is given by atan2
+    // but the angle is offset by 90 degrees so we need to subtract that. 1.5708rad = 90deg
+    // TODO: Figure out why the angle is offset from what you expected
+    return atan2(vectorToTarget.x, vectorToTarget.z) - 1.5708f;
+}
+
+
+/**
  * Update the Actor based on current state
 */
 void Actor::update() {

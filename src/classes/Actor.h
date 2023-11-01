@@ -30,6 +30,8 @@ public:
     void rotateBy(Vector3 rotation);
     BoundingBox getBounds();
     Vector3 getForwardVector();
+    Vector3 getVectorTowardTarget(Vector3 target, bool normalized = true);
+    float angleToVector(Vector3 target);
 
     void update();
     void draw();

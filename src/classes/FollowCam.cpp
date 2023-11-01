@@ -17,29 +17,44 @@ FollowCam::FollowCam(Actor* parent, Vector3 offset) {
 
 void FollowCam::update() {
 
-    //==================================================
-    // User control
-    // TODO: Not a fan of user control being inside here
-    //==================================================
-    Vector2 mouseDelta = GetMouseDelta();
+    // If there's no target, the player has control over the camera
+    if (!this->hasTarget) {
+        //==================================================
+        // User control
+        // TODO: Not a fan of user control being inside here
+        //==================================================
+        Vector2 mouseDelta = GetMouseDelta();
 
-    if (mouseDelta.x < 0) {
-        this->userCameraRotationAdjustment += this->mouseAdjustmentFactor;
-    } else if (mouseDelta.x > 0) {
-        this->userCameraRotationAdjustment -= this->mouseAdjustmentFactor;
-    }
+        if (mouseDelta.x < 0) {
+            this->userCameraRotationAdjustment += this->mouseAdjustmentFactor;
+        } else if (mouseDelta.x > 0) {
+            this->userCameraRotationAdjustment -= this->mouseAdjustmentFactor;
+        }
 
-    //==================================================
-    // Camera position calculation
-    //==================================================
-    if (userCameraRotationAdjustment == 0.f) {
-        this->defaultCameraRotation = this->parent->rotation;
+        //==================================================
+        // Camera position calculation
+        //==================================================
+        if (userCameraRotationAdjustment == 0.f) {
+            this->defaultCameraRotation = this->parent->rotation;
+        }
     }
 
     this->appliedOffset = calculateAppliedOffset();
 
     this->camera.position = Vector3Add(this->parent->position, this->appliedOffset);
     this->camera.target = this->parent->position;
+}
+
+void FollowCam::draw() {
+    // Only draw camera stuff if debug is enabled
+    if (!_debug.getDrawBoundingBoxes()) {
+        return;
+    }
+
+    if (this->hasTarget) {
+        Vector3 vectorToTarget = this->parent->getVectorTowardTarget(this->target->position, false);
+        DrawLine3D(this->parent->position, Vector3Add(this->parent->position, vectorToTarget), RED);
+    }
 }
 
 
@@ -49,10 +64,31 @@ void FollowCam::resetmouseRotationAdjustment() {
 
 
 Vector3 FollowCam::calculateAppliedOffset() {
-    this->appliedRotation = MatrixRotateXYZ({0.f, userCameraRotationAdjustment + this->defaultCameraRotation.y, 0.f});
+
+    // To calculate the rotation applied to the camera
+    // We generate a Matrix called appliedRotation
+    // This applied rotation is then applied to parentOffset, which is the offset
+    // from the parent object where the camera normally lives.
+
+    // If we have a target, appliedRotation is calculated by looking at the angle between
+    // the parent of the FollowCam and the target of the FollowCam
+    // If we don't have a target, appliedRotation is calcualted using a
+    // variable called userCameraRotationAdjustment
+
+    if (this->hasTarget) {
+        Vector3 vectorToTarget = this->parent->getVectorTowardTarget(this->target->position);
+        float angleBetweenDucks = atan2(vectorToTarget.x, vectorToTarget.z);
+        this->appliedRotation = MatrixRotateXYZ({0.f, angleBetweenDucks - 1.5708f, 0.f});
+    } else {
+        this->appliedRotation = MatrixRotateXYZ({0.f, userCameraRotationAdjustment + this->defaultCameraRotation.y, 0.f});
+    }
+    
     return Vector3Transform(this->parentOffset, this->appliedRotation);
 }
 
+// ==================================================
+// Target-related functions
+// ==================================================
 void FollowCam::setTarget(Actor* target) {
     this->target = target;
     this->hasTarget = true;

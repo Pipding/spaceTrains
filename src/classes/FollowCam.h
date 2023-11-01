@@ -40,6 +40,11 @@ public:
     void update();
 
     /**
+     * Draws certain camera data. Useful for debugging
+    */
+    void draw();
+
+    /**
      * Resets userCameraRotationAdjustment to 0
     */
     void resetmouseRotationAdjustment();
