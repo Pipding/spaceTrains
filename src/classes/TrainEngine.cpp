@@ -26,3 +26,17 @@ TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate,
 void TrainEngine::update() {
     Actor::update();
 }
+
+/**
+ * Applies the engine's acceleration rate to its velocity.
+ * TODO: Deltatime
+ * @param forward   Optional, defaults to true. If true, acceleration is applied in the direction of the engine's forward vector.
+ *                  Otherwise acceleration is applied in the opposite direction
+*/
+void TrainEngine::accelerate(bool forward) {
+    if (forward) {
+        this->velocity = Vector3Add(this->velocity, Vector3Scale(this->getForwardVector(), this->accelerationRate));
+    } else {
+        this->velocity = Vector3Subtract(this->velocity, Vector3Scale(this->getForwardVector(), this->accelerationRate));
+    }
+}

@@ -18,4 +18,5 @@ public:
     TrainEngine(Model, Texture2D, float, float, float, float);
 
     void update();
+    void accelerate(bool = true);
 };
