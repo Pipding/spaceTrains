@@ -14,7 +14,7 @@
 * its orientation.Resetting the user adjustment re-locks the camera's rotation 
 * to its target
 */
-class TargetCam {    
+class FollowCam {    
 public:
     Camera camera = {0};
     Actor* target;
@@ -26,7 +26,7 @@ public:
     // start its life, and the point to which it should return to when reset
     Vector3 targetOffset;
 
-    TargetCam(Actor* target, Vector3 offset);
+    FollowCam(Actor* target, Vector3 offset);
 
     void update();
     void resetmouseRotationAdjustment();

@@ -2,7 +2,7 @@
 #include "raymath.h"
 #include "src/classes/Actor.h"
 #include "src/classes/Hostile.h"
-#include "src/classes/TargetCam.h"
+#include "src/classes/FollowCam.h"
 #include "src/classes/TrainEngine.h"
 #include "src/classes/TrainCar.h"
 #include "src/globals/SpaceTrainDebug.h"
@@ -39,11 +39,13 @@ int main(void)
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
 
     bool collision = false;
+    bool enemyLockOn = false;
+    Hostile* lockedOnEnemy;
 
     //==================================================
     // Camera stuff
     //==================================================
-    TargetCam targetCam(&engine, {-150.0f, 100.f, 0.0f});
+    FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -59,7 +61,19 @@ int main(void)
         }
 
         if (IsKeyPressed(KEY_R)) {
-            targetCam.resetmouseRotationAdjustment();
+            followCam.resetmouseRotationAdjustment();
+        }
+
+        // Lock on to an enemy with right click
+        // Shoot enemy with left click
+        enemyLockOn = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+
+        if (enemyLockOn) {
+            lockedOnEnemy = &hostile;
+            followCam.target = lockedOnEnemy;
+        } else {
+            lockedOnEnemy = NULL;
+            followCam.target = &engine;
         }
 
         if (!g_paused) {
@@ -97,7 +111,7 @@ int main(void)
             engine.update(deltaTime);
             carriage.update();
             carriage2.update();
-            targetCam.update();
+            followCam.update();
             hostile.update();
         }
 
@@ -106,7 +120,7 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
-        BeginMode3D(targetCam.camera);
+        BeginMode3D(followCam.camera);
         DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
         engine.draw();
         carriage.draw();

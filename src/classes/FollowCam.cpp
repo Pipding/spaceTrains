@@ -1,4 +1,4 @@
-#include "TargetCam.h"
+#include "FollowCam.h"
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
@@ -7,7 +7,7 @@ static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
  * @param target    Pointer to the Actor to follow
  * @param offset    Offset from the Actor's location where the camera should be by default
 */
-TargetCam::TargetCam(Actor* target, Vector3 offset) {
+FollowCam::FollowCam(Actor* target, Vector3 offset) {
     // Camera initialization borrowed from https://www.youtube.com/watch?v=TTa75ocharg
     this->target = target;
     this->targetOffset = offset;
@@ -22,7 +22,7 @@ TargetCam::TargetCam(Actor* target, Vector3 offset) {
 /**
  * Update camera position & target vectors
 */
-void TargetCam::update() {
+void FollowCam::update() {
 
     //==================================================
     // User control
@@ -52,7 +52,7 @@ void TargetCam::update() {
 /**
  * Resets any adjustments which have been made to the camera rotation by the user
 */
-void TargetCam::resetmouseRotationAdjustment() {
+void FollowCam::resetmouseRotationAdjustment() {
     this->userCameraRotationAdjustment = 0.f;
 }
 
@@ -61,7 +61,7 @@ void TargetCam::resetmouseRotationAdjustment() {
  * user adjustment
  * Note: This function will recalculate and update appliedRotation
 */
-Vector3 TargetCam::calculateAppliedOffset() {
+Vector3 FollowCam::calculateAppliedOffset() {
     this->appliedRotation = MatrixRotateXYZ({0.f, userCameraRotationAdjustment + this->defaultCameraRotation.y, 0.f});
     return Vector3Transform(this->targetOffset, this->appliedRotation);
 }
