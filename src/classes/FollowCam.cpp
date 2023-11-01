@@ -52,3 +52,17 @@ Vector3 FollowCam::calculateAppliedOffset() {
     this->appliedRotation = MatrixRotateXYZ({0.f, userCameraRotationAdjustment + this->defaultCameraRotation.y, 0.f});
     return Vector3Transform(this->parentOffset, this->appliedRotation);
 }
+
+void FollowCam::setTarget(Actor* target) {
+    this->target = target;
+    this->hasTarget = true;
+}
+
+void FollowCam::unsetTarget() {
+    this->target = NULL;
+    this->hasTarget = false;
+}
+
+bool FollowCam::getHasTarget() {
+    return this->hasTarget;
+}

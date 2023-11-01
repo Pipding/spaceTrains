@@ -14,7 +14,7 @@
 * its orientation. Resetting the user adjustment re-locks the camera's rotation 
 * to its parent
 */
-class FollowCam {    
+class FollowCam {
 public:
     Camera camera = {0};
 
@@ -50,6 +50,21 @@ public:
     */
     Vector3 calculateAppliedOffset();
 
+    /**
+     * Sets the target of the FollowCam
+    */
+    void setTarget(Actor* target);
+
+    /**
+     * Sets the target of the FollowCam
+    */
+    void unsetTarget();
+
+    /**
+     * Returns true if the FollowCam has a target
+    */
+    bool getHasTarget();
+
 private:
     // Side-to-side orbital movement applied by the user
     float userCameraRotationAdjustment = 0.f;
@@ -62,4 +77,10 @@ private:
 
     // The rotation the camera would have without user adjustments
     Vector3 defaultCameraRotation;
+
+    // A secondary Actor which the camera will try to point toward
+    Actor* target = NULL;
+
+    // Indicates whether the FollowCam has a target
+    bool hasTarget = false;
 };
