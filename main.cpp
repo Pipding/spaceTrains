@@ -40,9 +40,7 @@ int main(void)
 
     bool collision = false;
 
-    //==================================================
-    // Camera stuff
-    //==================================================
+    // Camera which follows the player-controlled TrainEngine
     FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
 
     // Main game loop
