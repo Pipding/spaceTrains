@@ -22,12 +22,12 @@ public:
     Color color = WHITE;
 
     Actor();
-    Actor(Model, Texture2D);
-    Actor(Vector3, Model, Texture2D);
+    Actor(Model model, Texture2D texture);
+    Actor(Vector3 position, Model model, Texture2D texture);
 
-    void setTexture(Texture2D);
-    void setRotation(Vector3);
-    void rotateBy(Vector3);
+    void setTexture(Texture2D texture);
+    void setRotation(Vector3 rotation);
+    void rotateBy(Vector3 rotation);
     BoundingBox getBounds();
     Vector3 getForwardVector();
 
