@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "TrainComponent.h"
+#include "src/enums/Direction.h"
 
 /**
  * The front engine of a train. Driven by the player
@@ -13,6 +14,7 @@ public:
     float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float topSpeed = 20.f;
     float rotationRate = 0.05f;
+    Direction accelerationDirection = Direction::None;
 
     TrainEngine();
     TrainEngine(Model, Texture2D, float, float, float, float);

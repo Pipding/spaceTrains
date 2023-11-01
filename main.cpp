@@ -101,29 +101,33 @@ int main(void)
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
-                engine.accelerate();
+                engine.accelerationDirection = Direction::Forward;
             } else if (IsKeyDown(KEY_S)) {
-                engine.accelerate(false);
-            } else if (engine.velocity.x != 0.f || engine.velocity.z != 0.f) {
-                // The user is not pressing any buttons. Velocity should be decaying
-                if (engine.velocity.x != 0.f && abs(engine.velocity.x) < 0.1f) {
-                    engine.velocity.x = 0.f;
-                }
+                engine.accelerationDirection = Direction::Back;
+            } else {
+                engine.accelerationDirection = Direction::None;
 
-                if (engine.velocity.z != 0.f && abs(engine.velocity.z) < 0.1f) {
-                    engine.velocity.z = 0.f;
-                }
+                if (engine.velocity.x != 0.f || engine.velocity.z != 0.f) {
+                    // The user is not pressing any buttons. Velocity should be decaying
+                    if (engine.velocity.x != 0.f && abs(engine.velocity.x) < 0.1f) {
+                        engine.velocity.x = 0.f;
+                    }
 
-                if (abs(engine.velocity.x) > 0) {
-                    engine.velocity.x *= (1 - (1 / engine.decelerationRate));
-                }
+                    if (engine.velocity.z != 0.f && abs(engine.velocity.z) < 0.1f) {
+                        engine.velocity.z = 0.f;
+                    }
 
-                if (abs(engine.velocity.z) > 0) {
-                    engine.velocity.z *= (1 - (1 / engine.decelerationRate));
+                    if (abs(engine.velocity.x) > 0) {
+                        engine.velocity.x *= (1 - (1 / engine.decelerationRate));
+                    }
+
+                    if (abs(engine.velocity.z) > 0) {
+                        engine.velocity.z *= (1 - (1 / engine.decelerationRate));
+                    }
                 }
             }
 
-            engine.velocity = Vector3Clamp(engine.velocity, (Vector3){-engine.topSpeed, 0.f, -engine.topSpeed}, (Vector3){engine.topSpeed, 0.f, engine.topSpeed});
+            // engine.velocity = Vector3Clamp(engine.velocity, (Vector3){-engine.topSpeed, 0.f, -engine.topSpeed}, (Vector3){engine.topSpeed, 0.f, engine.topSpeed});
 
             if (IsKeyDown(KEY_A)) {
                 engine.rotateBy({0.f, engine.rotationRate, 0.f});

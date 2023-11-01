@@ -24,6 +24,11 @@ TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate,
 }
 
 void TrainEngine::update() {
+
+    if (this->accelerationDirection != Direction::None) {
+        this->accelerate(this->accelerationDirection == Direction::Forward);
+    }
+
     Actor::update();
 }
 
@@ -39,4 +44,6 @@ void TrainEngine::accelerate(bool forward) {
     } else {
         this->velocity = Vector3Subtract(this->velocity, Vector3Scale(this->getForwardVector(), this->accelerationRate));
     }
+
+    this->velocity = Vector3Clamp(this->velocity, (Vector3){-this->topSpeed, 0.f, -this->topSpeed}, (Vector3){this->topSpeed, 0.f, this->topSpeed});
 }
