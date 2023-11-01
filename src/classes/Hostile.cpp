@@ -5,7 +5,8 @@ Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target
     this->speed = 5.f;
     this->target = target;
     this->targetDistance = 200.f;
-    this->hitpoints = 100;
+    this->maxHitpoints = 100;
+    this->currentHitpoints = 100;
 }
 
 void Hostile::update() {
@@ -20,4 +21,15 @@ void Hostile::update() {
     this->setRotation({0, this->angleToVector(*this->target), 0});
 
     Actor::update();
+}
+
+int Hostile::receiveDamage(int damageReceived) {
+
+    if (this->currentHitpoints <= damageReceived) {
+        this->currentHitpoints = 0;
+    } else {
+        this->currentHitpoints -= damageReceived;
+    }
+
+    return this->currentHitpoints;
 }
