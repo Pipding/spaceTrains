@@ -17,8 +17,8 @@ public:
     Direction accelerationDirection = Direction::None;
 
     TrainEngine();
-    TrainEngine(Model, Texture2D, float, float, float, float);
+    TrainEngine(Model model, Texture2D texture, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate);
 
-    void update();
-    void accelerate(bool = true);
+    void update(float deltatime);
+    void accelerate(float deltatime, bool forward = true);
 };

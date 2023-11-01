@@ -63,7 +63,7 @@ int main(void)
     Model duckModel = LoadModel("assets/models/ducky.obj");
     Texture2D duckTexture = LoadTexture("assets/textures/ducky_albedo.png");
 
-    TrainEngine engine(duckModel, duckTexture, 0.2f, 20.f, 20.f, 0.05f);
+    TrainEngine engine(duckModel, duckTexture, 10.f, 50000.f, 20.f, 0.05f);
     TrainCar carriage(duckModel, duckTexture, &engine, {-50.f, 0.f, 0.f});
     TrainCar carriage2(duckModel, duckTexture, &carriage, {-100.f, 0.f, 0.f});
 
@@ -71,7 +71,6 @@ int main(void)
     Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
     Vector3 upgradeTowerSize = { 50.0f, 100.0f, 50.0f };
 
-    // WIP: Add an enemy
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
 
     bool collision = false;
@@ -84,7 +83,7 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // const float deltaTime = GetFrameTime();
+        const float deltaTime = GetFrameTime();
 
         if (IsKeyPressed(KEY_P)) {
             g_paused = !g_paused;
@@ -131,7 +130,7 @@ int main(void)
             engine.position = Vector3Add(engine.position, engine.velocity);
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
-            engine.update();
+            engine.update(deltaTime);
             carriage.update();
             carriage2.update();
             targetCam.update();
