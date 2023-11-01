@@ -70,10 +70,10 @@ int main(void)
 
         if (enemyLockOn) {
             lockedOnEnemy = &hostile;
-            followCam.target = lockedOnEnemy;
+            followCam.parent = lockedOnEnemy;
         } else {
             lockedOnEnemy = NULL;
-            followCam.target = &engine;
+            followCam.parent = &engine;
         }
 
         if (!g_paused) {
