@@ -76,9 +76,7 @@ Vector3 FollowCam::calculateAppliedOffset() {
     // variable called userCameraRotationAdjustment
 
     if (this->hasTarget) {
-        Vector3 vectorToTarget = this->parent->getVectorTowardTarget(this->target->position);
-        float angleBetweenDucks = atan2(vectorToTarget.x, vectorToTarget.z);
-        this->appliedRotation = MatrixRotateXYZ({0.f, angleBetweenDucks - 1.5708f, 0.f});
+        this->appliedRotation = MatrixRotateXYZ({0.f, this->parent->angleToVector(this->target->position), 0.f});
     } else {
         this->appliedRotation = MatrixRotateXYZ({0.f, userCameraRotationAdjustment + this->defaultCameraRotation.y, 0.f});
     }

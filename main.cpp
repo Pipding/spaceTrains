@@ -39,8 +39,6 @@ int main(void)
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
 
     bool collision = false;
-    bool enemyLockOn = false;
-    Hostile* lockedOnEnemy;
 
     //==================================================
     // Camera stuff
@@ -66,13 +64,10 @@ int main(void)
 
         // Lock on to an enemy with right click
         // Shoot enemy with left click
-        enemyLockOn = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
 
-        if (enemyLockOn) {
-            lockedOnEnemy = &hostile;
-            followCam.setTarget(lockedOnEnemy);
+        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+            followCam.setTarget(&hostile);
         } else {
-            lockedOnEnemy = NULL;
             followCam.unsetTarget();
         }
 
