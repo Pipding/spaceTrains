@@ -60,15 +60,6 @@ int main(void)
             followCam.resetmouseRotationAdjustment();
         }
 
-        // Lock on to an enemy with right click
-        // Shoot enemy with left click
-
-        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-            followCam.setTarget(&hostile);
-        } else {
-            followCam.unsetTarget();
-        }
-
         if (!g_paused) {
             // Input
             if (IsKeyDown(KEY_W)) {
@@ -85,6 +76,13 @@ int main(void)
                 engine.rotationDirection = Direction::Right;
             } else {
                 engine.rotationDirection = Direction::None;
+            }
+
+            // Lock on to an enemy with right click
+            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+                followCam.setTarget(&hostile);
+            } else {
+                followCam.unsetTarget();
             }
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
