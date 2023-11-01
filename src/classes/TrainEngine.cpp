@@ -51,6 +51,14 @@ void TrainEngine::update(float deltaTime) {
         }
     }
 
+    if (this->rotationDirection != Direction::None) {
+        if (this->rotationDirection == Direction::Left) {
+            this->rotateBy({0.f, this->rotationRate, 0.f}); //TODO: Deltatime
+        } else if (this->rotationDirection == Direction::Right) {
+            this->rotateBy({0.f, -this->rotationRate, 0.f}); //TODO: Deltatime
+        }
+    }
+
     this->position = Vector3Add(this->position, this->velocity);
 
     Actor::update();

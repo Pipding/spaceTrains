@@ -80,9 +80,11 @@ int main(void)
             }
 
             if (IsKeyDown(KEY_A)) {
-                engine.rotateBy({0.f, engine.rotationRate, 0.f});
+                engine.rotationDirection = Direction::Left;
             } else if (IsKeyDown(KEY_D)) {
-                engine.rotateBy({0.f, -engine.rotationRate, 0.f});
+                engine.rotationDirection = Direction::Right;
+            } else {
+                engine.rotationDirection = Direction::None;
             }
 
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c

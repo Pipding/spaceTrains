@@ -13,6 +13,7 @@ public:
     float topSpeed = 20.f;
     float rotationRate = 0.05f;
     Direction accelerationDirection = Direction::None;
+    Direction rotationDirection = Direction::None;
 
     TrainEngine();
     TrainEngine(Model model, Texture2D texture, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate);
