@@ -1,6 +1,4 @@
 #pragma once
-#include "raylib.h"
-#include "raymath.h"
 #include "TrainComponent.h"
 #include "src/enums/Direction.h"
 

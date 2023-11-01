@@ -1,8 +1,5 @@
 #pragma once
-#include "TrainEngine.h"
-#include "raylib.h"
-#include "raymath.h"
-#include "Actor.h"
+#include "TrainComponent.h"
 
 class TrainCar : public TrainComponent {
 public:

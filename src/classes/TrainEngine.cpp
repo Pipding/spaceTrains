@@ -51,6 +51,8 @@ void TrainEngine::update(float deltaTime) {
         }
     }
 
+    this->position = Vector3Add(this->position, this->velocity);
+
     Actor::update();
 }
 

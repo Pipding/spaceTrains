@@ -92,7 +92,6 @@ int main(void)
             } else {
                 engine.color = WHITE;
             }
-            engine.position = Vector3Add(engine.position, engine.velocity);
 
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.update(deltaTime);
