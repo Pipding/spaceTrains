@@ -14,4 +14,6 @@ TrainComponent::TrainComponent()
  * @param texture           The texture to be applied to model
 */
 TrainComponent::TrainComponent(Vector3 position, Model model, Texture2D texture)
-:Actor(position, model, texture){ }
+:Actor(position, model, texture){
+    this->hitpoints = 100;
+}

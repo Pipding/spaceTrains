@@ -15,12 +15,14 @@ public:
     Vector3* target;
     float speed;
     float targetDistance;
+    int hitpoints;
 
     Hostile(Vector3 position, Model model, Texture texture, Vector3* target)
     :Actor(position, model, texture) {
         this->speed = 5.f;
         this->target = target;
         this->targetDistance = 200.f;
+        this->hitpoints = 100;
     }
 
     void update() {
