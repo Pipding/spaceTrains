@@ -26,7 +26,7 @@ public:
     // start its life, and the point to which it should return to when reset
     Vector3 targetOffset;
 
-    TargetCam(Actor*, Vector3);
+    TargetCam(Actor* target, Vector3 offset);
 
     void update();
     void resetmouseRotationAdjustment();
