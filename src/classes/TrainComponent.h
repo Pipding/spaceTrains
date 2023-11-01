@@ -6,5 +6,5 @@ public:
     int hitpoints;
 
     TrainComponent();
-    TrainComponent(Vector3, Model, Texture2D);
+    TrainComponent(Vector3 position, Model model, Texture2D texture);
  };
