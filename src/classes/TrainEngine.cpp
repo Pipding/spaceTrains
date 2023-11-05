@@ -78,3 +78,74 @@ void TrainEngine::accelerate(float deltaTime, bool forward) {
 
     this->velocity = Vector3Clamp(this->velocity, (Vector3){-this->topSpeed, 0.f, -this->topSpeed}, (Vector3){this->topSpeed, 0.f, this->topSpeed});
 }
+
+void TrainEngine::onKeyPressed(int key) {
+    switch (key) {
+
+        case KEY_W:
+            if (this->accelerationDirection == Direction::Back) {
+                this->accelerationDirection = Direction::None;
+            } else {
+                this->accelerationDirection = Direction::Forward;
+            }
+            break;
+        case KEY_S:
+            if (this->accelerationDirection == Direction::Forward) {
+                this->accelerationDirection = Direction::None;
+            } else {
+                this->accelerationDirection = Direction::Back;
+            }
+            break;
+        case KEY_A:
+            if (this->rotationDirection == Direction::Right) {
+                this->rotationDirection = Direction::None;
+            } else {
+                this->rotationDirection = Direction::Left;
+            }
+            break;
+        case KEY_D:
+            if (this->rotationDirection == Direction::Left) {
+                this->rotationDirection = Direction::None;
+            } else {
+                this->rotationDirection = Direction::Right;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void TrainEngine::onKeyReleased(int key) {
+    switch (key) {
+        case KEY_W:
+            if (this->accelerationDirection == Direction::None) {
+                this->accelerationDirection = Direction::Back;
+            } else {
+                this->accelerationDirection = Direction::None;
+            }
+            break;
+        case KEY_S:
+            if (this->accelerationDirection == Direction::None) {
+                this->accelerationDirection = Direction::Forward;
+            } else {
+                this->accelerationDirection = Direction::None;
+            }
+            break;
+        case KEY_A:
+            if (this->rotationDirection == Direction::None) {
+                this->rotationDirection = Direction::Right;
+            } else {
+                this->rotationDirection = Direction::None;
+            }
+            break;
+        case KEY_D:
+            if (this->rotationDirection == Direction::None) {
+                this->rotationDirection = Direction::Left;
+            } else {
+                this->rotationDirection = Direction::None;
+            }
+            break;
+        default:
+            break;
+    }
+}

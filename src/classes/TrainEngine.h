@@ -1,11 +1,13 @@
 #pragma once
 #include "TrainComponent.h"
 #include "src/enums/Direction.h"
+#include "src/enums/Direction.h"
+#include "src/interfaces/IKeyboardListener.h"
 
 /**
  * The front engine of a train. Driven by the player
 */
-class TrainEngine: public TrainComponent {
+class TrainEngine: public TrainComponent, public IKeyboardListener {
 public:
     Vector3 velocity = {0.f, 0.f, 0.f};
     float accelerationRate = .2f;
@@ -20,4 +22,7 @@ public:
 
     void update(float deltatime);
     void accelerate(float deltatime, bool forward = true);
+
+    void onKeyPressed(int);
+    void onKeyReleased(int);
 };
