@@ -3,8 +3,15 @@
 #include <map>
 #include <vector>
 
-// The pattern I'm using for handling input is drawn from this StackOverflow answer
-// https://gamedev.stackexchange.com/questions/98840/handling-input-with-callback-functions
+/**
+ * A singleton class for sending input events to whoever needs to know about them.
+ * 
+ * The implementation of singletone I'm using comes from Martin York on StackOverflow: https://stackoverflow.com/a/1008289
+ * and is designed to be an implementation of the Singleton design pattern that is lazy-evaluated,
+ * correctly-destroyed, and thread-safe
+ * 
+ * The pattern I'm using for handling input is drawn from Naros on StackOverflow: https://gamedev.stackexchange.com/a/98879
+*/
 class InputManager {
 private:
 
