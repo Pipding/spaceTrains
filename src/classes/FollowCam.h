@@ -3,6 +3,7 @@
 #include "raymath.h"
 #include "Actor.h"
 #include "src/globals/SpaceTrainDebug.h"
+#include "src/interfaces/IKeyboardListener.h"
 
 /**
 * A camera which follows a given Actor with a given offset
@@ -14,7 +15,7 @@
 * its orientation. Resetting the user adjustment re-locks the camera's rotation 
 * to its parent
 */
-class FollowCam {
+class FollowCam: public IKeyboardListener {
 public:
     Camera camera = {0};
 
@@ -88,4 +89,8 @@ private:
 
     // Indicates whether the FollowCam has a target
     bool hasTarget = false;
+
+    void onKeyPressed(int key);
+
+    void onKeyReleased(int key);
 };

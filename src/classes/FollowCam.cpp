@@ -1,4 +1,5 @@
 #include "FollowCam.h"
+#include "raylib.h"
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
@@ -100,3 +101,11 @@ void FollowCam::unsetTarget() {
 bool FollowCam::getHasTarget() {
     return this->hasTarget;
 }
+
+void FollowCam::onKeyPressed(int key) {
+    if (key == KEY_R) {
+        this->resetmouseRotationAdjustment();
+    }
+}
+
+void FollowCam::onKeyReleased(int key) { }
