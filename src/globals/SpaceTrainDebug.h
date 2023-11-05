@@ -10,23 +10,61 @@
 * correctly-destroyed, and thread-safe
 */
 class SpaceTrainDebug: public IKeyboardListener {
-    public:
-        static SpaceTrainDebug& getInstance()
-        {
-            static SpaceTrainDebug instance;
-            return instance;
-        }
-    private:
-        SpaceTrainDebug() {}
-        bool drawBoundingBoxes = false;
+public:
+
+    /**
+     * Returns the SpaceTrainDebug singleton
+    */
+    static SpaceTrainDebug& getInstance()
+    {
+        static SpaceTrainDebug instance;
+        return instance;
+    }
+
+private:
+    // Stubbed constructor - not to be used outside this class
+    SpaceTrainDebug() {}
+
+    // Flag indicating whether bounding boxes should be visible
+    bool drawBoundingBoxes = false;
         
     public:
+        
+        /**
+         * Constructor
+        */
         SpaceTrainDebug(SpaceTrainDebug const&) = delete;
-        void operator=(SpaceTrainDebug const&)  = delete;
-        bool toggleDrawBoundingBoxes();
-        bool getDrawBoundingBoxes();
-        void setDrawBoundingBoxes(bool);
 
-        void onKeyPressed(int);
-        void onKeyReleased(int);
+        /**
+         * Override the equals operator
+        */
+        void operator=(SpaceTrainDebug const&)  = delete;
+
+        /**
+         * Toggles whether bounding boxes should be drawn
+        */
+        bool toggleDrawBoundingBoxes();
+
+        /**
+         * Returns true if bounding boxes should be drawn
+        */
+        bool getDrawBoundingBoxes();
+
+        /**
+         * Sets the flag which determines whether or not to draw bounding boxes
+         * @param value   bool indicating whether or not bounding boxes should be drawn
+        */
+        void setDrawBoundingBoxes(bool value);
+
+        /**
+         * Allows this object to receive key pressed events
+         * @param key   The RayLib keycode of the key which was pressed
+        */
+        void onKeyPressed(int key);
+
+        /**
+         * Allows this object to receive key released events
+         * @param key   The RayLib keycode of the key which was released
+        */
+        void onKeyReleased(int key);
 };
