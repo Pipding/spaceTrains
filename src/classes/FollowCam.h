@@ -90,7 +90,15 @@ private:
     // Indicates whether the FollowCam has a target
     bool hasTarget = false;
 
+    /**
+     * Callback which will be invoked whenever a key pressed event this class listens to is triggered
+     * @param key   The key which was pressed
+    */
     void onKeyPressed(int key);
 
+    /**
+     * Callback which will be invoked whenever a key released event this class listens to is triggered
+     * @param key   The key which was released
+    */
     void onKeyReleased(int key);
 };
