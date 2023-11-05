@@ -25,6 +25,8 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
+    _inputManager.addListener(&_debug, KEY_M);
+
     // TODO: Remove the ducky (both code and assets)
     // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
     Model duckModel = LoadModel("assets/models/ducky.obj");
@@ -54,10 +56,6 @@ int main(void)
 
         if (IsKeyPressed(KEY_P)) {
             g_paused = !g_paused;
-        }
-
-        if (IsKeyPressed(KEY_M)) {
-            _debug.toggleDrawBoundingBoxes();
         }
 
         if (IsKeyPressed(KEY_R)) {

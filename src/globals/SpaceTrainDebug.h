@@ -1,4 +1,6 @@
 #pragma once
+#include "raylib.h"
+#include "src/interfaces/IKeyboardListener.h"
 
 /*
 * A singleton class for storing debug flags so they're accessible anywhere in the application
@@ -7,8 +9,7 @@
 * and is designed to be an implementation of the Singleton design pattern that is lazy-evaluated,
 * correctly-destroyed, and thread-safe
 */
-class SpaceTrainDebug
-{
+class SpaceTrainDebug: public IKeyboardListener {
     public:
         static SpaceTrainDebug& getInstance()
         {
@@ -25,4 +26,7 @@ class SpaceTrainDebug
         bool toggleDrawBoundingBoxes();
         bool getDrawBoundingBoxes();
         void setDrawBoundingBoxes(bool);
+
+        void onKeyPressed(int);
+        void onKeyReleased(int);
 };
