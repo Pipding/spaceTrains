@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "src/interfaces/IKeyboardListener.h"
+#include "src/enums/GameState.h"
 
 /**
  * A singleton class for managing game state (paused, playing, etc.)
@@ -39,4 +40,13 @@ private:
      * @param key   The key which was released
     */
     void onKeyReleased(int key);
+
+public:
+
+    /**
+     * Attempts to pause or unpause the game
+     * Note: The game can only be paused from the gameplay state. Likewise, unpausing will set the state to Gameplay
+     * @return  Returns the new GameState after toggling pause
+    */
+    GameState togglePaused();
 };
