@@ -1,3 +1,4 @@
+#pragma once
 #include "raylib.h"
 #include "src/interfaces/IKeyboardListener.h"
 #include "src/enums/GameState.h"
@@ -12,6 +13,7 @@
 class GameStateManager: IKeyboardListener {
 private:
     GameStateManager() {}
+    GameState gameState = GameState::Invalid;
 
 public:
 
