@@ -2,10 +2,10 @@
 #include "raymath.h"
 #include "src/classes/Actor.h"
 #include "src/classes/Hostile.h"
-#include "src/classes/InputManager.h"
 #include "src/classes/FollowCam.h"
 #include "src/classes/TrainEngine.h"
 #include "src/classes/TrainCar.h"
+#include "src/globals/InputManager.h"
 #include "src/globals/SpaceTrainDebug.h"
 
 bool g_paused = false;
