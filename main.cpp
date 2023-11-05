@@ -11,6 +11,7 @@
 bool g_paused = false;
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
+static InputManager& _inputManager = InputManager::getInstance();
 
 int main(void)
 {
@@ -24,15 +25,13 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
-    InputManager inputManager = InputManager();
-
     // TODO: Remove the ducky (both code and assets)
     // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
     Model duckModel = LoadModel("assets/models/ducky.obj");
     Texture2D duckTexture = LoadTexture("assets/textures/ducky_albedo.png");
 
     TrainEngine engine(duckModel, duckTexture, 10.f, 50000.f, 20.f, 0.05f);
-    inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D});
+    _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D});
 
     TrainCar carriage(duckModel, duckTexture, &engine, {-50.f, 0.f, 0.f});
     TrainCar carriage2(duckModel, duckTexture, &carriage, {-100.f, 0.f, 0.f});
@@ -67,7 +66,7 @@ int main(void)
 
         if (!g_paused) {
             // Take user input
-            inputManager.update();
+            _inputManager.update();
 
             // Lock on to an enemy with right click
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {

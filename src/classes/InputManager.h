@@ -8,6 +8,8 @@
 class InputManager {
 private:
 
+    InputManager() {}
+
     // Maps a given key to all listeners who are interested in its state
     std::map<int, IKeyboardListener*> listeners; // TODO: This limits you to one listener per key. Might be ok but bear in mind for future
 
@@ -15,8 +17,19 @@ private:
     std::vector<int> listenedKeys;
 
 public:
-    // Default constructor
-    InputManager();
+
+    // ==================================================
+    // Singleton stuff
+    // ==================================================
+    static InputManager& getInstance()
+    {
+        static InputManager instance;
+        return instance;
+    }
+
+    InputManager(InputManager const&) = delete;
+    void operator=(InputManager const&)  = delete;
+
 
     /**
      * Add a listener for a keyboard event

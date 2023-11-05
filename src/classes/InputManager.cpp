@@ -1,7 +1,5 @@
 #include "InputManager.h"
 
-InputManager::InputManager() { }
-
 void InputManager::addListener(IKeyboardListener* listener, int key) {
     this->listeners[key] = listener;
     this->listenedKeys.push_back(key);
