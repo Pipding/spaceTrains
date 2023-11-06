@@ -13,7 +13,7 @@
 class GameStateManager: public IKeyboardListener {
 private:
     GameStateManager() {}
-    GameState gameState = GameState::Invalid;
+    GameState gameState = GameState::Stateless;
 
 public:
 
