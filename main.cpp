@@ -66,7 +66,7 @@ int main(void)
         // Take user input
         _inputManager.update();
 
-        if (_gameStateManager.getState() != GameState::Paused) {
+        if (_gameStateManager.getState() == GameState::Gameplay) {
 
             // Lock on to an enemy with right click
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
@@ -102,29 +102,28 @@ int main(void)
             hostile.update();
         }
 
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        
-        BeginMode3D(followCam.camera);
-        DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
-        engine.draw();
-        carriage.draw();
-        carriage2.draw();
-        hostile.draw();
-        followCam.draw();
-        DrawGrid(2000, 20.f);
-        EndMode3D();
+        if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused) {
+            BeginDrawing();
+            ClearBackground(RAYWHITE);
+            
+            BeginMode3D(followCam.camera);
+            DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
+            engine.draw();
+            carriage.draw();
+            carriage2.draw();
+            hostile.draw();
+            followCam.draw();
+            DrawGrid(2000, 20.f);
+            EndMode3D();
 
-        DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
+            DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
 
-        if (_gameStateManager.getState() == GameState::Paused) {
-            DrawText("Paused", 600, 340, 40, GREEN);
+            if (_gameStateManager.getState() == GameState::Paused) {
+                DrawText("Paused", 600, 340, 40, GREEN);
+            }
+
+            EndDrawing();
         }
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
     //==================================================
