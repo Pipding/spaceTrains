@@ -46,7 +46,7 @@ int main(void)
     //==================================================
     // Managers
     //==================================================
-    CombatManager combatManager = CombatManager(&followCam);
+    CombatManager combatManager = CombatManager(&followCam, &engine);
 
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
     combatManager.addCombatant(&hostile);

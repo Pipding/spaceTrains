@@ -20,15 +20,16 @@ private:
     // A reference to the camera, as the camera is used for targeting
     FollowCam* camera;
 
-    // Represents a ray which is cast from the camera into the game world for targeting purposes
-    Vector3 targetingRay;
+    // The actor controlled by the player
+    // TODO: This won't always be an actor. In fact it should be an ICombatant
+    Actor* player;
 
 public:
     /**
      * Constructor
      * @param camera    A pointer to the main camera
     */
-    CombatManager(FollowCam* camera);
+    CombatManager(FollowCam* camera, Actor* playerActor);
 
     /**
      * Sets the active target
@@ -58,4 +59,6 @@ public:
      * @return  The active target of the CombatManager
     */
     ICombatant* getActiveTarget();
+
+    Vector3 calculateNormalizedTargetLocationVector();
 };
