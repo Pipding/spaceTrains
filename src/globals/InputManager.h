@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "src/enums/GameState.h"
+#include "src/globals/GameStateManager.h"
 #include "src/interfaces/IKeyboardListener.h"
 #include <map>
 #include <vector>
@@ -21,8 +21,8 @@ private:
     // Maps a given key to all listeners who are interested in its state
     std::map<int, IKeyboardListener*> listeners; // TODO: This limits you to one listener per key. Might be ok but bear in mind for future
 
-    // All keys registered with the InputManager
-    std::vector<int> listenedKeys;
+    // Maps GameStates to sets of keys which are valid keypresses in that state
+    std::map<GameState, std::vector<int>> listenedKeysByGameState;
 
 public:
 
