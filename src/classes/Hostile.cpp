@@ -25,8 +25,6 @@ void Hostile::update() {
     }
 }
 
-
-
 int Hostile::receiveDamage(int damageReceived) {
 
     if (this->currentHitpoints <= damageReceived) {
