@@ -1,15 +1,13 @@
 #pragma once
 
 #include "Actor.h"
+#include "src/interfaces/ICombatant.h"
 
-class Hostile : public Actor {
+class Hostile : public Actor, ICombatant {
 public:
     Vector3* target;
     float speed;
     float targetDistance;
-    int maxHitpoints;
-    int currentHitpoints;
-    bool isAlive = true;
 
     Hostile(Vector3 position, Model model, Texture texture, Vector3* target);
 

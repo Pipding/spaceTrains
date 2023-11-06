@@ -2,6 +2,6 @@
 
 CombatManager::CombatManager() { }
 
-void CombatManager::setTarget(Combatant* newTarget) {
+void CombatManager::setTarget(ICombatant* newTarget) {
     this->activeTarget = newTarget;
 }

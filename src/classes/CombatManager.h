@@ -1,6 +1,6 @@
 #pragma once
 
-#include "src/classes/Combatant.h"
+#include "src/interfaces/ICombatant.h"
 #include <vector>
 
 /**
@@ -9,10 +9,10 @@
 class CombatManager {
 private:
     // The active target of combat
-    Combatant* activeTarget = nullptr;
+    ICombatant* activeTarget = nullptr;
 
     // All extant objects which might engage in combat
-    std::vector<Combatant*> combatants;
+    std::vector<ICombatant*> combatants;
 
     // Constructor
     CombatManager();
@@ -21,5 +21,5 @@ private:
      * Sets the active target
      * @param newTarget     The new target
     */
-    void setTarget(Combatant* newTarget);
+    void setTarget(ICombatant* newTarget);
 };
