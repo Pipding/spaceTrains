@@ -1,5 +1,7 @@
 #include "CombatManager.h"
 
+static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
+
 CombatManager::CombatManager(FollowCam* camera, Actor* player) {
     this->camera = camera;
     this->player = player;
@@ -40,4 +42,13 @@ Vector3 CombatManager::calculateNormalizedTargetLocationVector() {
     Vector3 normalizedTargetingVector = Vector3Normalize(Vector3Subtract(this->player->position, groundedCameraPos));
 
     return normalizedTargetingVector;
+}
+
+void CombatManager::draw() {
+    // Only draw CombatManager stuff if debug is enabled
+    if (!_debug.getDrawBoundingBoxes()) {
+        return;
+    }
+
+    DrawLine3D(this->player->position, Vector3Add(this->player->position, Vector3Scale(this->calculateNormalizedTargetLocationVector(), 300.f)), BLUE);
 }

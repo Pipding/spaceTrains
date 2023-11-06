@@ -60,5 +60,13 @@ public:
     */
     ICombatant* getActiveTarget();
 
+    /**
+     * Calculates a normalized vector which is projected from the player Actor in the direction the camera faces
+    */
     Vector3 calculateNormalizedTargetLocationVector();
+
+    /**
+     * Draw function
+    */
+    void draw();
 };

@@ -121,6 +121,7 @@ int main(void)
             carriage2.draw();
             hostile.draw();
             followCam.draw();
+            combatManager.draw();
             DrawGrid(2000, 20.f);
             EndMode3D();
 
