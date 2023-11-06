@@ -1,5 +1,7 @@
 #pragma once
 
+#include "raylib.h"
+#include "raymath.h"
 #include "src/classes/FollowCam.h"
 #include "src/interfaces/ICombatant.h"
 #include <vector>
@@ -17,6 +19,9 @@ private:
 
     // A reference to the camera, as the camera is used for targeting
     FollowCam* camera;
+
+    // Represents a ray which is cast from the camera into the game world for targeting purposes
+    Vector3 targetingRay;
 
 public:
     /**
