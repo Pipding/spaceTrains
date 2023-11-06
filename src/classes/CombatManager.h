@@ -1,5 +1,6 @@
 #pragma once
 
+#include "src/classes/FollowCam.h"
 #include "src/interfaces/ICombatant.h"
 #include <vector>
 
@@ -14,9 +15,15 @@ private:
     // All extant objects which might engage in combat
     std::vector<ICombatant*> combatants;
 
+    // A reference to the camera, as the camera is used for targeting
+    FollowCam* camera;
+
 public:
-    // Constructor
-    CombatManager();
+    /**
+     * Constructor
+     * @param camera    A pointer to the main camera
+    */
+    CombatManager(FollowCam* camera);
 
     /**
      * Sets the active target

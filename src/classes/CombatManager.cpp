@@ -1,6 +1,8 @@
 #include "CombatManager.h"
 
-CombatManager::CombatManager() { }
+CombatManager::CombatManager(FollowCam* camera) {
+    this->camera = camera;
+}
 
 void CombatManager::setTarget(ICombatant* newTarget) {
     this->activeTarget = newTarget;

@@ -27,11 +27,6 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
-    //==================================================
-    // Managers
-    //==================================================
-    CombatManager combatManager = CombatManager();
-
     // TODO: Remove the ducky (both code and assets)
     // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
     Model duckModel = LoadModel("assets/models/ducky.obj");
@@ -41,17 +36,22 @@ int main(void)
     TrainCar carriage(duckModel, duckTexture, &engine, {-50.f, 0.f, 0.f});
     TrainCar carriage2(duckModel, duckTexture, &carriage, {-100.f, 0.f, 0.f});
 
+    // Camera which follows the player-controlled TrainEngine
+    FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
+
     // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
     Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
     Vector3 upgradeTowerSize = { 50.0f, 100.0f, 50.0f };
+
+    //==================================================
+    // Managers
+    //==================================================
+    CombatManager combatManager = CombatManager(&followCam);
 
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
     combatManager.addCombatant(&hostile);
 
     bool collision = false;
-
-    // Camera which follows the player-controlled TrainEngine
-    FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
 
     // ==================================================
     // Register input listeners
