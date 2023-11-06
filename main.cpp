@@ -53,8 +53,8 @@ int main(void)
     // Register input listeners
     // ==================================================
     _inputManager.addListener(&_debug, KEY_M);
-    _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D});
-    _inputManager.addListener(&followCam, KEY_R);
+    _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
+    _inputManager.addListener(&followCam, KEY_R, GameState::Gameplay);
     _inputManager.addListener(&_gameStateManager, KEY_P);
 
     // Set the game state
@@ -121,7 +121,7 @@ int main(void)
 
         DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
 
-        if (g_paused) {
+        if (_gameStateManager.getState() == GameState::Paused) {
             DrawText("Paused", 600, 340, 40, GREEN);
         }
 

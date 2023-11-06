@@ -3,7 +3,7 @@
 GameState GameStateManager::togglePaused() {
     if (this->gameState == GameState::Gameplay) {
         this->gameState = GameState::Paused;
-    } else if (this->gameState == GameState::Gameplay) {
+    } else if (this->gameState == GameState::Paused) {
         this->gameState = GameState::Gameplay;
     }
 
