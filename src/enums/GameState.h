@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * An enum to represent various game states
 */

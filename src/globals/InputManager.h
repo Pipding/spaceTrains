@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "src/enums/GameState.h"
 #include "src/interfaces/IKeyboardListener.h"
 #include <map>
 #include <vector>
@@ -42,15 +43,19 @@ public:
      * Add a listener for a keyboard event
      * @param listener  The thing doing the listening
      * @param key       The RayLib key code for the key to listen for
+     * @param state     The game state when the given listener should respond to the given key. 
+     *                  e.g. a character might only respond to input while in Gameplay. Defaults to Stateless (any state)
     */
-    void addListener(IKeyboardListener* listener, int key);
+    void addListener(IKeyboardListener* listener, int key, GameState state = GameState::Stateless);
 
     /**
      * Add a listener for a keyboard event
      * @param listener  The thing doing the listening
      * @param keys      Vector of RayLib key code for the keys to listen for
+     * @param state     The game state when the given listener should respond to the given key. 
+     *                  e.g. a character might only respond to input while in Gameplay. Defaults to Stateless (any state)
     */
-    void addListeners(IKeyboardListener* listener, std::vector<int> keys);
+    void addListeners(IKeyboardListener* listener, std::vector<int> keys, GameState = GameState::Stateless);
 
     /**
      * Update method
