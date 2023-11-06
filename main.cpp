@@ -9,8 +9,6 @@
 #include "src/globals/InputManager.h"
 #include "src/globals/SpaceTrainDebug.h"
 
-bool g_paused = false;
-
 // Setting up singletons
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 static InputManager& _inputManager = InputManager::getInstance();
@@ -52,10 +50,10 @@ int main(void)
     // ==================================================
     // Register input listeners
     // ==================================================
-    _inputManager.addListener(&_debug, KEY_M);
+    _inputManager.addListener(&_debug, KEY_M, GameState::Stateless);
     _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
     _inputManager.addListener(&followCam, KEY_R, GameState::Gameplay);
-    _inputManager.addListener(&_gameStateManager, KEY_P);
+    _inputManager.addListener(&_gameStateManager, KEY_P, GameState::Stateless);
 
     // Set the game state
     _gameStateManager.setState(GameState::Gameplay);
