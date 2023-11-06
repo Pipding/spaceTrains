@@ -3,7 +3,7 @@
 #include "Actor.h"
 #include "src/interfaces/ICombatant.h"
 
-class Hostile : public Actor, ICombatant {
+class Hostile : public Actor, public ICombatant {
 public:
     Vector3* target;
     float speed;

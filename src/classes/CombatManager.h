@@ -14,6 +14,7 @@ private:
     // All extant objects which might engage in combat
     std::vector<ICombatant*> combatants;
 
+public:
     // Constructor
     CombatManager();
 
@@ -22,4 +23,27 @@ private:
      * @param newTarget     The new target
     */
     void setTarget(ICombatant* newTarget);
+
+    /**
+     * Removes the active target
+    */
+    void unsetTarget();
+
+    /**
+     * Checks whether there's an active target
+     * @return Returns true if there's an active target, otherwise false
+    */
+    bool hasTarget();
+
+    /**
+     * Adds the given combatant to the list of combatants managed by the CombatManager
+     * @param combatant     Pointer to a combatant
+    */
+    void addCombatant(ICombatant* combatant);
+
+    /**
+     * Returns a pointer to the active target
+     * @return  The active target of the CombatManager
+    */
+    ICombatant* getActiveTarget();
 };

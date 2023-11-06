@@ -88,7 +88,7 @@ private:
     Actor* target = NULL;
 
     // Indicates whether the FollowCam has a target
-    bool hasTarget = false;
+    bool hasTarget = false; //TODO: Can this be replaced with a function which checks whether target == nullptr?
 
     /**
      * Callback which will be invoked whenever a key pressed event this class listens to is triggered

@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "src/classes/Actor.h"
+#include "src/classes/CombatManager.h"
 #include "src/classes/Hostile.h"
 #include "src/classes/FollowCam.h"
 #include "src/classes/TrainEngine.h"
@@ -26,13 +27,17 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
+    //==================================================
+    // Managers
+    //==================================================
+    CombatManager combatManager = CombatManager();
+
     // TODO: Remove the ducky (both code and assets)
     // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
     Model duckModel = LoadModel("assets/models/ducky.obj");
     Texture2D duckTexture = LoadTexture("assets/textures/ducky_albedo.png");
 
     TrainEngine engine(duckModel, duckTexture, 10.f, 50000.f, 20.f, 0.05f);
-
     TrainCar carriage(duckModel, duckTexture, &engine, {-50.f, 0.f, 0.f});
     TrainCar carriage2(duckModel, duckTexture, &carriage, {-100.f, 0.f, 0.f});
 
@@ -41,6 +46,7 @@ int main(void)
     Vector3 upgradeTowerSize = { 50.0f, 100.0f, 50.0f };
 
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
+    combatManager.addCombatant(&hostile);
 
     bool collision = false;
 
@@ -71,8 +77,10 @@ int main(void)
             // Lock on to an enemy with right click
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
                 followCam.setTarget(&hostile);
+                combatManager.setTarget(&hostile);
             } else {
                 followCam.unsetTarget();
+                combatManager.unsetTarget();
             }
 
             if (IsKeyDown(KEY_SPACE) && followCam.getHasTarget()) {
