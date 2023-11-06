@@ -10,7 +10,7 @@
  * and is designed to be an implementation of the Singleton design pattern that is lazy-evaluated,
  * correctly-destroyed, and thread-safe
 */
-class GameStateManager: IKeyboardListener {
+class GameStateManager: public IKeyboardListener {
 private:
     GameStateManager() {}
     GameState gameState = GameState::Invalid;
@@ -41,7 +41,7 @@ private:
      * Callback which will be invoked whenever a key released event this class listens to is triggered
      * @param key   The key which was released
     */
-    void onKeyReleased(int key);
+    void onKeyReleased(int key) { };
 
 public:
 
@@ -51,4 +51,16 @@ public:
      * @return  Returns the new GameState after toggling pause
     */
     GameState togglePaused();
+
+    /**
+     * Returns the current GameState
+    */
+    GameState getState();
+
+    /**
+     * Sets the GameState
+     * @param newState  The GameState which the game should be in
+     * @return  Returns the GameState after attempting to apply the new value
+    */
+    GameState setState(GameState newState);
 };

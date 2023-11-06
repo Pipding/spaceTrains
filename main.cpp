@@ -5,13 +5,16 @@
 #include "src/classes/FollowCam.h"
 #include "src/classes/TrainEngine.h"
 #include "src/classes/TrainCar.h"
+#include "src/globals/GameStateManager.h"
 #include "src/globals/InputManager.h"
 #include "src/globals/SpaceTrainDebug.h"
 
 bool g_paused = false;
 
+// Setting up singletons
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 static InputManager& _inputManager = InputManager::getInstance();
+static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 int main(void)
 {
@@ -52,19 +55,20 @@ int main(void)
     _inputManager.addListener(&_debug, KEY_M);
     _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D});
     _inputManager.addListener(&followCam, KEY_R);
+    _inputManager.addListener(&_gameStateManager, KEY_P);
+
+    // Set the game state
+    _gameStateManager.setState(GameState::Gameplay);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         const float deltaTime = GetFrameTime();
 
-        if (IsKeyPressed(KEY_P)) {
-            g_paused = !g_paused;
-        }
+        // Take user input
+        _inputManager.update();
 
-        if (!g_paused) {
-            // Take user input
-            _inputManager.update();
+        if (_gameStateManager.getState() != GameState::Paused) {
 
             // Lock on to an enemy with right click
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
