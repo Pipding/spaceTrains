@@ -74,7 +74,7 @@ int main(void)
     _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
     _inputManager.addListener(&followCam, KEY_R, GameState::Gameplay);
     _inputManager.addListener(&_gameStateManager, KEY_P, GameState::Stateless);
-    _inputManager.addListener(&combatManager, KEY_LEFT_SHIFT, GameState::Gameplay);
+    _inputManager.addListeners(&combatManager, {KEY_LEFT_SHIFT, KEY_SPACE}, GameState::Gameplay);
 
     // Set the game state
     _gameStateManager.setState(GameState::Gameplay);
@@ -88,11 +88,6 @@ int main(void)
         _inputManager.update();
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
-
-            if (IsKeyDown(KEY_SPACE) && followCam.getHasTarget()) {
-                hostile.receiveDamage(2);
-            }
-
             // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
             collision = CheckCollisionBoxes(
                 engine.getBounds(),

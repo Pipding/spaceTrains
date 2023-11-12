@@ -89,6 +89,12 @@ void CombatManager::onKeyPressed(int key) {
             }
         }
     }
+
+    if (key == KEY_SPACE) {
+        if (this->hasTarget() && this->targetLocked) {
+            this->getActiveTarget()->receiveDamage(2);
+        }
+    }
 }
 
 void CombatManager::onKeyReleased(int key) { }
