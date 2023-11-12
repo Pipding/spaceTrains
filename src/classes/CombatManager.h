@@ -3,19 +3,19 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "src/classes/FollowCam.h"
+#include "src/classes/Hostile.h"
 #include "src/interfaces/ICombatant.h"
 #include <vector>
 
 /**
  * Manager class for combat. Takes care of targeting and acts as an intermediary between objects dealing damage to one another
 */
-class CombatManager {
+class CombatManager: public IUpdatable {
 private:
     // The active target of combat
     ICombatant* activeTarget = nullptr;
 
-    // All extant objects which might engage in combat
-    std::vector<ICombatant*> combatants;
+    std::vector<Hostile*> hostiles;
 
     // A reference to the camera, as the camera is used for targeting
     FollowCam* camera;
@@ -49,10 +49,10 @@ public:
     bool hasTarget();
 
     /**
-     * Adds the given combatant to the list of combatants managed by the CombatManager
-     * @param combatant     Pointer to a combatant
+     * Adds the given Hostile to the list of Hostiles managed by the CombatManager
+     * @param hostile     Pointer to a Hostile to be added to the CombatManager
     */
-    void addCombatant(ICombatant* combatant);
+    void addHostile(Hostile* hostile);
 
     /**
      * Returns a pointer to the active target
@@ -65,6 +65,19 @@ public:
     */
     Vector3 calculateNormalizedTargetLocationVector();
 
+    /**
+     * Gets a Ray which is used for detecting which, if any, Hostiles the camera is facing towards
+     * @return  A Ray with origin at the player's position pointing 
+     *          in the same direction as the camera
+    */
+    Ray getTargetingRay();
+    
+    /**
+     * Update function. Currently only checks if the player is facing a Hostile and,
+     * if so, allows the player to lock on to that Hostile with right click
+    */
+    void update();
+    
     /**
      * Draw function
     */

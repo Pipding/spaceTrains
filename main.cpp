@@ -49,7 +49,7 @@ int main(void)
     CombatManager combatManager = CombatManager(&followCam, &engine);
 
     Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
-    combatManager.addCombatant(&hostile);
+    combatManager.addHostile(&hostile);
 
     bool collision = false;
 
@@ -75,12 +75,11 @@ int main(void)
         if (_gameStateManager.getState() == GameState::Gameplay) {
 
             // Lock on to an enemy with right click
-            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-                followCam.setTarget(&hostile);
-                combatManager.setTarget(&hostile);
-            } else {
+            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && combatManager.hasTarget()) {
+                // TODO: Targets should only be set if the player presses the lock-on button
+                // followCam.setTarget(combatManager.getActiveTarget());
+            } else if (!IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
                 followCam.unsetTarget();
-                combatManager.unsetTarget();
             }
 
             if (IsKeyDown(KEY_SPACE) && followCam.getHasTarget()) {
@@ -108,6 +107,8 @@ int main(void)
             carriage2.update();
             followCam.update();
             hostile.update();
+
+            combatManager.update();
         }
 
         if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused) {
