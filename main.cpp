@@ -20,6 +20,12 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  * - Update how the shoot button works so the CombatManager handles damage
+ * - Update CombatManager to have an activeTrainComponent member
+ * - Allow activeTrainComponent to change with key presses
+ * - Have the camera follow activeTrainComponent
+ * - Add train models
+ * - Add turret models
+ * - Make turret models rotate to face the direction the camera faces
  * - Create IMouseListener so things can take mouse input properly
 */
 
