@@ -33,6 +33,7 @@ void AssetManager::unloadTexture(const char* assetName) {
 }
 
 void AssetManager::unloadAll() {
+    // Found this loop structure here: https://favtutor.com/blogs/iterate-through-map-cpp
     for (auto keyValuePair : this->models) {
         UnloadModel(keyValuePair.second);
     }

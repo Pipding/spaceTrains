@@ -17,6 +17,13 @@ static AssetManager& _assets = AssetManager::getInstance();
 static InputManager& _inputManager = InputManager::getInstance();
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
+/**
+ * TODO
+ * - Update how the shoot button works so the CombatManager handles damage
+ * - Make lock-on a toggle
+ * - Create IMouseListener so things can take mouse input properly
+*/
+
 int main(void)
 {
     //==================================================
@@ -81,6 +88,7 @@ int main(void)
                 // TODO: Targets should only be set if the player presses the lock-on button
                 // followCam.setTarget(combatManager.getActiveTarget());
             } else if (!IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+
                 followCam.unsetTarget();
             }
 

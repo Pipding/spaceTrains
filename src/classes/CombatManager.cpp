@@ -60,6 +60,8 @@ void CombatManager::update() {
         if (coll.hit) {
             this->setTarget(hostile);
             this->camera->setTarget(hostile);
+        } else {
+            this->unsetTarget();
         }
     }
 }
@@ -70,5 +72,5 @@ void CombatManager::draw() {
         return;
     }
 
-    DrawLine3D(this->getTargetingRay().position, Vector3Add(this->getTargetingRay().position, Vector3Scale(this->getTargetingRay().direction, 300.f)), this->hasTarget() ? RED : BLUE);
+    DrawLine3D(this->getTargetingRay().position, Vector3Add(this->getTargetingRay().position, Vector3Scale(this->getTargetingRay().direction, 300.f)), this->hasTarget() ? RED : GREEN);
 }
