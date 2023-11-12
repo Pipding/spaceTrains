@@ -10,10 +10,12 @@
 /**
  * Manager class for combat. Takes care of targeting and acts as an intermediary between objects dealing damage to one another
 */
-class CombatManager: public IUpdatable {
+class CombatManager: public IUpdatable, public IKeyboardListener {
 private:
     // The active target of combat
-    ICombatant* activeTarget = nullptr;
+    Hostile* activeTarget = nullptr;
+
+    bool targetLocked = false;
 
     std::vector<Hostile*> hostiles;
 
@@ -35,7 +37,7 @@ public:
      * Sets the active target
      * @param newTarget     The new target
     */
-    void setTarget(ICombatant* newTarget);
+    void setTarget(Hostile* newTarget);
 
     /**
      * Removes the active target
@@ -58,7 +60,7 @@ public:
      * Returns a pointer to the active target
      * @return  The active target of the CombatManager
     */
-    ICombatant* getActiveTarget();
+    Hostile* getActiveTarget();
 
     /**
      * Calculates a normalized vector which is projected from the player Actor in the direction the camera faces
@@ -82,4 +84,16 @@ public:
      * Draw function
     */
     void draw();
+
+    /**
+     * Callback which will be invoked whenever a key pressed event this class listens to is triggered
+     * @param key   The key which was pressed
+    */
+    void onKeyPressed(int key);
+
+    /**
+     * Callback which will be invoked whenever a key released event this class listens to is triggered
+     * @param key   The key which was released
+    */
+    void onKeyReleased(int key);
 };

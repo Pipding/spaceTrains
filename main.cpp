@@ -20,7 +20,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  * - Update how the shoot button works so the CombatManager handles damage
- * - Make lock-on a toggle
  * - Create IMouseListener so things can take mouse input properly
 */
 
@@ -69,6 +68,7 @@ int main(void)
     _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
     _inputManager.addListener(&followCam, KEY_R, GameState::Gameplay);
     _inputManager.addListener(&_gameStateManager, KEY_P, GameState::Stateless);
+    _inputManager.addListener(&combatManager, KEY_LEFT_SHIFT, GameState::Gameplay);
 
     // Set the game state
     _gameStateManager.setState(GameState::Gameplay);
@@ -82,15 +82,6 @@ int main(void)
         _inputManager.update();
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
-
-            // Lock on to an enemy with right click
-            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT) && combatManager.hasTarget()) {
-                // TODO: Targets should only be set if the player presses the lock-on button
-                // followCam.setTarget(combatManager.getActiveTarget());
-            } else if (!IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-
-                followCam.unsetTarget();
-            }
 
             if (IsKeyDown(KEY_SPACE) && followCam.getHasTarget()) {
                 hostile.receiveDamage(2);

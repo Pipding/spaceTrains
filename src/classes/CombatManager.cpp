@@ -7,7 +7,7 @@ CombatManager::CombatManager(FollowCam* camera, Actor* player) {
     this->player = player;
 }
 
-void CombatManager::setTarget(ICombatant* newTarget) {
+void CombatManager::setTarget(Hostile* newTarget) {
     this->activeTarget = newTarget;
 }
 
@@ -24,7 +24,7 @@ void CombatManager::addHostile(Hostile* hostile) {
     this->hostiles.push_back(hostile);
 }
 
-ICombatant* CombatManager::getActiveTarget() {
+Hostile* CombatManager::getActiveTarget() {
     return this->activeTarget;
 }
 
@@ -54,14 +54,16 @@ Ray CombatManager::getTargetingRay() {
 void CombatManager::update() {
     Ray targetRay = this->getTargetingRay();
 
-    for (Hostile* hostile : this->hostiles ) {
-        RayCollision coll = GetRayCollisionBox(targetRay, hostile->getBounds());
+    // Don't bother scanning for new targets if there's already a locked target
+    if (!targetLocked) {
+        for (Hostile* hostile : this->hostiles ) {
+            RayCollision coll = GetRayCollisionBox(targetRay, hostile->getBounds());
 
-        if (coll.hit) {
-            this->setTarget(hostile);
-            this->camera->setTarget(hostile);
-        } else {
-            this->unsetTarget();
+            if (coll.hit) {
+                this->setTarget(hostile);
+            } else {
+                this->unsetTarget();
+            }
         }
     }
 }
@@ -74,3 +76,19 @@ void CombatManager::draw() {
 
     DrawLine3D(this->getTargetingRay().position, Vector3Add(this->getTargetingRay().position, Vector3Scale(this->getTargetingRay().direction, 300.f)), this->hasTarget() ? RED : GREEN);
 }
+
+void CombatManager::onKeyPressed(int key) {
+    if (key == KEY_LEFT_SHIFT) {
+        if (this->hasTarget()) {
+            this->targetLocked = !this->targetLocked;
+
+            if (this->targetLocked) {
+                this->camera->setTarget(this->getActiveTarget());
+            } else {
+                this->camera->unsetTarget();
+            }
+        }
+    }
+}
+
+void CombatManager::onKeyReleased(int key) { }
