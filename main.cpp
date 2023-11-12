@@ -6,12 +6,14 @@
 #include "src/classes/FollowCam.h"
 #include "src/classes/TrainEngine.h"
 #include "src/classes/TrainCar.h"
+#include "src/globals/AssetManager.h"
 #include "src/globals/GameStateManager.h"
 #include "src/globals/InputManager.h"
 #include "src/globals/SpaceTrainDebug.h"
 
 // Setting up singletons
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
+static AssetManager& _assets = AssetManager::getInstance();
 static InputManager& _inputManager = InputManager::getInstance();
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
@@ -29,12 +31,12 @@ int main(void)
 
     // TODO: Remove the ducky (both code and assets)
     // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
-    Model duckModel = LoadModel("assets/models/ducky.obj");
-    Texture2D duckTexture = LoadTexture("assets/textures/ducky_albedo.png");
+    _assets.loadModel("assets/models/ducky.obj", "duck");
+    _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
 
-    TrainEngine engine(duckModel, duckTexture, 10.f, 50000.f, 20.f, 0.05f);
-    TrainCar carriage(duckModel, duckTexture, &engine, {-50.f, 0.f, 0.f});
-    TrainCar carriage2(duckModel, duckTexture, &carriage, {-100.f, 0.f, 0.f});
+    TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 50000.f, 20.f, 0.05f);
+    TrainCar carriage(_assets.getModel("duck"), _assets.getTexture("duck"), &engine, {-50.f, 0.f, 0.f});
+    TrainCar carriage2(_assets.getModel("duck"), _assets.getTexture("duck"), &carriage, {-100.f, 0.f, 0.f});
 
     // Camera which follows the player-controlled TrainEngine
     FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
@@ -48,7 +50,7 @@ int main(void)
     //==================================================
     CombatManager combatManager = CombatManager(&followCam, &engine);
 
-    Hostile hostile({1000.f, 0.f, 1000.f}, duckModel, duckTexture, &engine.position);
+    Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position);
     combatManager.addHostile(&hostile);
 
     bool collision = false;
@@ -139,8 +141,7 @@ int main(void)
     //==================================================
     // De-initialization
     //==================================================
-    // duck.unload();
-    engine.unload(); // TODO: If multiple Actors use the same model/texture then attempting to unload something after it has already been unloaded will cause a segfault
+    _assets.unloadAll();
     CloseWindow();
 
     return 0;
