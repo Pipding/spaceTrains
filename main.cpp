@@ -20,11 +20,20 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  * - Update how the shoot button works so the CombatManager handles damage
- * - Allow activeTrainComponent to change with key presses
- * - Have the camera follow activeTrainComponent
+ * - Update TrainComponents to have individual damage ratings
+ * - Add reload times to TrainComponents
+ * - Add DR and DT to Hostiles
+ * - Add DR and DT to the train
  * - Add train models
  * - Add turret models
  * - Make turret models rotate to face the direction the camera faces
+ * - Add projectile models
+ * - Add hostile projectiles
+ * - Add shooting sound effects
+ * - Add UI to show reload times
+ * - Add UI to show damage being dealt to enemies
+ * - Add UI to show damage being dealt to player
+ * - Add a health bar
  * - Create IMouseListener so things can take mouse input properly
 */
 
