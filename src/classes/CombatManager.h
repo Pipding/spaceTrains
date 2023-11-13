@@ -5,6 +5,7 @@
 #include "src/classes/FollowCam.h"
 #include "src/classes/Hostile.h"
 #include "src/interfaces/ICombatant.h"
+#include "src/classes/TrainComponent.h"
 #include <vector>
 
 /**
@@ -28,6 +29,9 @@ private:
 
     // Which train component does the player currently have selected?
     TrainComponent* activeTrainComponent;
+
+    // The player-controlled train
+    std::vector<TrainComponent*> train;
 
 public:
     /**
@@ -99,4 +103,11 @@ public:
      * @param key   The key which was released
     */
     void onKeyReleased(int key);
+
+    /**
+     * Initializes the player-controlled train
+     * TODO: Not sure if this belongs here. Probably not
+     * @param train     A vector of pointers to TrainComponents. The first item in the vector will be considered the default component
+    */
+    void initializeTrain(std::vector<TrainComponent*> train);
 };

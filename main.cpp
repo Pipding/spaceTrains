@@ -19,7 +19,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Update CombatManager to have an activeTrainComponent member
  * - Update how the shoot button works so the CombatManager handles damage
  * - Allow activeTrainComponent to change with key presses
  * - Have the camera follow activeTrainComponent
@@ -61,6 +60,8 @@ int main(void)
     // Managers
     //==================================================
     CombatManager combatManager = CombatManager(&followCam, &engine);
+
+    combatManager.initializeTrain({&engine, &carriage, &carriage2});
 
     Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position);
     combatManager.addHostile(&hostile);

@@ -98,3 +98,7 @@ void CombatManager::onKeyPressed(int key) {
 }
 
 void CombatManager::onKeyReleased(int key) { }
+
+void CombatManager::initializeTrain(std::vector<TrainComponent*> train) {
+    this->train = train;
+}
