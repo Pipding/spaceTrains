@@ -75,7 +75,7 @@ int main(void)
     _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
     _inputManager.addListener(&followCam, KEY_R, GameState::Gameplay);
     _inputManager.addListener(&_gameStateManager, KEY_P, GameState::Stateless);
-    _inputManager.addListeners(&combatManager, {KEY_LEFT_SHIFT, KEY_SPACE}, GameState::Gameplay);
+    _inputManager.addListeners(&combatManager, {KEY_LEFT_SHIFT, KEY_SPACE, KEY_UP, KEY_DOWN}, GameState::Gameplay);
 
     // Set the game state
     _gameStateManager.setState(GameState::Gameplay);

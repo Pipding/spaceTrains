@@ -86,13 +86,26 @@ void CombatManager::onKeyPressed(int key) {
                 this->camera->setTarget(this->getActiveTarget());
             } else {
                 this->camera->unsetTarget();
+                this->activeTrainComponentIndex = 0;
+                this->activeTrainComponent = this->train[0];
+                this->camera->parent = this->activeTrainComponent;
             }
         }
-    }
-
-    if (key == KEY_SPACE) {
+    } else if (key == KEY_SPACE) {
         if (this->hasTarget() && this->targetLocked) {
             this->getActiveTarget()->receiveDamage(2);
+        }
+    } else if (key == KEY_UP) {
+        if (this->targetLocked) {
+            this->activeTrainComponentIndex = (this->activeTrainComponentIndex + 1) % this->train.size();
+            this->activeTrainComponent = this->train[this->activeTrainComponentIndex];
+            this->camera->parent = this->activeTrainComponent;
+        }
+    } else if (key == KEY_DOWN) {
+        if (this->targetLocked) {
+            this->activeTrainComponentIndex = this->activeTrainComponentIndex == 0 ? this->train.size() - 1 : this->activeTrainComponentIndex - 1;
+            this->activeTrainComponent = this->train[this->activeTrainComponentIndex];
+            this->camera->parent = this->activeTrainComponent;
         }
     }
 }
@@ -101,4 +114,7 @@ void CombatManager::onKeyReleased(int key) { }
 
 void CombatManager::initializeTrain(std::vector<TrainComponent*> train) {
     this->train = train;
+    this->activeTrainComponentIndex = 0;
+    this->activeTrainComponent = this->train[0];
+    this->camera->parent = this->activeTrainComponent;
 }

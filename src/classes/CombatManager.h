@@ -27,11 +27,14 @@ private:
     // TODO: This won't always be an actor. In fact it should be an ICombatant
     Actor* player;
 
-    // Which train component does the player currently have selected?
-    TrainComponent* activeTrainComponent;
-
     // The player-controlled train
     std::vector<TrainComponent*> train;
+
+    // Which train component does the player currently have selected?
+    TrainComponent* activeTrainComponent;
+    
+    // The index of the active train component in the train vector
+    int activeTrainComponentIndex;
 
 public:
     /**
