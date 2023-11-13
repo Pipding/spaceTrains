@@ -19,8 +19,8 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Update how the shoot button works so the CombatManager handles damage
  * - Update CombatManager to have an activeTrainComponent member
+ * - Update how the shoot button works so the CombatManager handles damage
  * - Allow activeTrainComponent to change with key presses
  * - Have the camera follow activeTrainComponent
  * - Add train models

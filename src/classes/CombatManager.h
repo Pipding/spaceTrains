@@ -26,6 +26,9 @@ private:
     // TODO: This won't always be an actor. In fact it should be an ICombatant
     Actor* player;
 
+    // Which train component does the player currently have selected?
+    TrainComponent* activeTrainComponent;
+
 public:
     /**
      * Constructor
