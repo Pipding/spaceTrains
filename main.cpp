@@ -19,6 +19,9 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
+ * - Limit lock-on by distance
+ * - Add some more rays for target detection so it's less finicky
+ * - The IUpdatable interface should accept deltatime
  * - Add projectiles
  * - Update selected component UI so it's less confusing
  * - Update target display UI to show a visual representation of the current target
@@ -49,8 +52,10 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
-    // TODO: Remove the ducky (both code and assets)
-    // Model & texture come from https://www.cgtrader.com/items/2033848/download-page
+    //==================================================
+    // Load assets
+    //==================================================
+    // Duck model & texture come from https://www.cgtrader.com/items/2033848/download-page
     _assets.loadModel("assets/models/ducky.obj", "duck");
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
 
@@ -61,21 +66,14 @@ int main(void)
     // Camera which follows the player-controlled TrainEngine
     FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
 
-    // This borrowed from the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
-    Vector3 upgradeTowerPos = { 120.0f, 0.f, 120.f };
-    Vector3 upgradeTowerSize = { 50.0f, 100.0f, 50.0f };
-
     //==================================================
     // Managers
     //==================================================
     CombatManager combatManager = CombatManager(&followCam, &engine);
-
     combatManager.initializeTrain({&engine, &carriage, &carriage2});
 
     Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position);
     combatManager.addHostile(&hostile);
-
-    bool collision = false;
 
     // ==================================================
     // Register input listeners
@@ -98,21 +96,6 @@ int main(void)
         _inputManager.update();
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
-            // Box collision check based on the models_box_collisions example: https://github.com/raysan5/raylib/blob/master/examples/models/models_box_collisions.c
-            collision = CheckCollisionBoxes(
-                engine.getBounds(),
-                (BoundingBox) {
-                    (Vector3){ upgradeTowerPos.x - upgradeTowerSize.x/2, upgradeTowerPos.y - upgradeTowerSize.y/2, upgradeTowerPos.z - upgradeTowerSize.z/2 },
-                    (Vector3){ upgradeTowerPos.x + upgradeTowerSize.x/2, upgradeTowerPos.y + upgradeTowerSize.y/2, upgradeTowerPos.z + upgradeTowerSize.z/2 }
-                }
-            );
-
-            if (collision) {
-                engine.color = RED;
-            } else {
-                engine.color = WHITE;
-            }
-
             // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.update(deltaTime);
             carriage.update();
@@ -128,7 +111,6 @@ int main(void)
             ClearBackground(RAYWHITE);
             
             BeginMode3D(followCam.camera);
-            DrawCube(upgradeTowerPos, upgradeTowerSize.x, upgradeTowerSize.y, upgradeTowerSize.z, GRAY);
             engine.draw();
             carriage.draw();
             carriage2.draw();
@@ -183,11 +165,7 @@ int main(void)
         }
     }
 
-    //==================================================
-    // De-initialization
-    //==================================================
     _assets.unloadAll();
     CloseWindow();
-
     return 0;
 }
