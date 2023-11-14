@@ -19,7 +19,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Fix reload times so they're always displayed for reloading cars
  * - Add projectiles
  * - Update selected component UI so it's less confusing
  * - Update target display UI to show a visual representation of the current target

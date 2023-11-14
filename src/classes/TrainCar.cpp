@@ -9,6 +9,7 @@ TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vecto
     this->rotation = {0.f, 0.f, 0.f};
     this->power = power;
     this->reloadTime = reloadTime;
+    this->canShoot = true;
 }
 
 void TrainCar::update() {
@@ -26,7 +27,6 @@ void TrainCar::update() {
         if (timeSinceLastShot > this->reloadTime) {
             this->canShoot = true;
         } else {
-            this->canShoot = false;
             this->timeUntilReloaded = this->reloadTime - timeSinceLastShot;
         }
     }
