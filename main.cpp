@@ -19,9 +19,8 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Update how the shoot button works so the CombatManager handles damage
- * - Update TrainComponents to have individual damage ratings
  * - Add reload times to TrainComponents
+ * - Make repeat fire work if the fire button is held down
  * - Add DR and DT to Hostiles
  * - Add DR and DT to the train
  * - Add train models

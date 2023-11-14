@@ -8,6 +8,7 @@
 #include "src/classes/TrainComponent.h"
 #include "src/classes/TrainCar.h"
 #include <vector>
+#include <chrono>
 
 /**
  * Manager class for combat. Takes care of targeting and acts as an intermediary between objects dealing damage to one another

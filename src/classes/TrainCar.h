@@ -1,5 +1,6 @@
 #pragma once
 #include "TrainComponent.h"
+#include <chrono>
 
 class TrainCar : public TrainComponent {
 public:
@@ -12,6 +13,10 @@ public:
 
     // How long between shots (seconds)
     float reloadTime;
+
+    // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
+    // Timestamp of the last time this TrainCar fired its weapon
+    std::chrono::steady_clock::time_point lastShot = std::chrono::steady_clock::now();
 
     /**
      * Default constructor
