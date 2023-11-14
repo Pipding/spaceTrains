@@ -11,12 +11,17 @@ public:
     // How much damage does this TrainCar deal when it shoots?
     int power;
 
+    bool canShoot;
+
     // How long between shots (milliseconds)
     int reloadTime;
 
     // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
     // Timestamp of the last time this TrainCar fired its weapon
     std::chrono::steady_clock::time_point lastShot = std::chrono::steady_clock::now();
+
+    // The number of milliseconds until this car can fire another shot
+    int timeUntilReloaded;
 
     /**
      * Default constructor
@@ -40,13 +45,20 @@ public:
     void update();
 
     /**
+     * Handles the logic associated with shooting
+     * @return Returns the outgoing damage of this TrainCar
+    */
+    int shoot();
+
+    /**
      * Returns true if this TrainCar can currently fire a shot
      * @return True if the this TrainCar can currently fire a shot
     */
-    bool canShoot();
+    bool getCanShoot();
 
     /**
-     * Returns an int representing the number of milliseconds until this TrainCar can shoot again
+     * Gets amount of time until this TrainCar can shoot again
+     * @return int milliseconds
     */
-   int timeUntilReloaded();
+   int getTimeUntilReloaded();
 };

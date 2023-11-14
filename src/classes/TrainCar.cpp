@@ -19,19 +19,31 @@ void TrainCar::update() {
     this->position = Vector3Add(this->engine->position, scaledInvertedPulledDirection);
     this->setRotation({0, this->angleToVector(this->engine->position), 0});
 
+    // Calculate how long is left until this car can shoot again
+    if (!this->canShoot) {
+        int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - this->lastShot).count();
+
+        if (timeSinceLastShot > this->reloadTime) {
+            this->canShoot = true;
+        } else {
+            this->canShoot = false;
+            this->timeUntilReloaded = this->reloadTime - timeSinceLastShot;
+        }
+    }
+
     Actor::update();
 }
 
-bool TrainCar::canShoot() {
-    // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
-    int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - this->lastShot).count();
-
-    return (timeSinceLastShot > this->reloadTime);
+int TrainCar::shoot() {
+    this->canShoot = false;
+    this->lastShot = std::chrono::steady_clock::now();
+    return this->power;
 }
 
-int TrainCar::timeUntilReloaded() {
-    // TODO: This is inefficient. Same thing is calculated in multiple places
-    int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - this->lastShot).count();
+bool TrainCar::getCanShoot() {
+    return this->canShoot;
+}
 
-    return this->reloadTime - timeSinceLastShot;
+int TrainCar::getTimeUntilReloaded() {
+    return this->timeUntilReloaded;
 }

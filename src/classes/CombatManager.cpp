@@ -97,22 +97,15 @@ void CombatManager::onKeyPressed(int key) {
         }
     } else if (key == KEY_SPACE) {
         if (this->hasTarget() && this->targetLocked) {
-
-            // TODO: Might be worthwhile to set up a method in TrainCar for dealing with firing
-
             // If the activeTrainComponentIndex is 0 then the player has the engine selected. The engine can't fire, so return
             if (this->activeTrainComponentIndex == 0) return;
 
             TrainCar* shooter = dynamic_cast<TrainCar*>(this->activeTrainComponent);
 
-            // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
-            int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - shooter->lastShot).count();
-
-            if (timeSinceLastShot < shooter->reloadTime) return;
+            if (!shooter->getCanShoot()) return;
 
             // Cast source from StackOverflow: https://stackoverflow.com/a/307801
-            this->getActiveTarget()->receiveDamage(shooter->power);
-            shooter->lastShot = std::chrono::steady_clock::now();
+            this->getActiveTarget()->receiveDamage(shooter->shoot());
         }
     } else if (key == KEY_UP) {
         if (this->targetLocked) {
@@ -157,5 +150,5 @@ bool CombatManager::canShoot() {
 
     // TODO: This is kind of flaky. It'll crash if the active component
     // cannot be cast to a TrainCar. There's at least one safeguard above
-    return dynamic_cast<TrainCar*>(this->activeTrainComponent)->canShoot();
+    return dynamic_cast<TrainCar*>(this->activeTrainComponent)->getCanShoot();
 }

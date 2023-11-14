@@ -169,7 +169,7 @@ int main(void)
                     // If you can't shoot but you've got a car selected...
                     // TrainCar* car = combatManager.getActiveTrainComponent
                     TrainCar* car = dynamic_cast<TrainCar*>(combatManager.getActiveTrainComponent());
-                    int timeUntilShoot = car->timeUntilReloaded();
+                    int timeUntilShoot = car->getTimeUntilReloaded();
                     // Divide by 100 and insert a full stop
                     timeUntilShoot /= 100;
 
