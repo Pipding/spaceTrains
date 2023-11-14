@@ -120,4 +120,18 @@ public:
      * @param train     A vector of pointers to TrainComponents. The first item in the vector will be considered the default component
     */
     void initializeTrain(std::vector<TrainComponent*> train);
+
+    /**
+     * Get the size of the player-controlled train
+     * @return  Returns the number of components in the Train (including the Engine)
+    */
+    int getTrainSize();
+
+    /**
+     * Gets the index of the currently active train component
+     * @return  The index of the currently selected train component in the train
+    */
+    int getActiveTrainComponentIndex();
+
+
 };

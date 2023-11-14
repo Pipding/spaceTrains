@@ -150,6 +150,25 @@ int main(void)
                 DrawText(TextFormat("%i", combatManager.getActiveTarget()), 0.f, 300.f, 30, combatManager.getTargetLocked() ? RED : GREEN);
             }
 
+            // ==================================================
+            // Train UI
+            // ==================================================
+            // How many boxes to draw
+            int trainBoxesCount = combatManager.getTrainSize();
+            float trainBoxesWidth = 80.f;
+            float gapBetweenBoxes = 20.f;
+            float trainBoxesHeight = 40.f;
+            // TODO: Very hardcoded but 1280 is the width of the screen. Make this more dynamic
+            float totalTrainUIWidth = (trainBoxesWidth * trainBoxesCount) + (gapBetweenBoxes * (trainBoxesCount - 1));
+            float trainUIStartX = (1280 - totalTrainUIWidth) / 2;
+
+            for (int i = 0; i < trainBoxesCount; i++) {
+                DrawRectangle(trainUIStartX, 720 - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, combatManager.getActiveTrainComponentIndex() == i ? GREEN : WHITE);
+                trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
+            }
+
+
+
 
             if (_gameStateManager.getState() == GameState::Paused) {
                 DrawText("Paused", 600, 340, 40, GREEN);

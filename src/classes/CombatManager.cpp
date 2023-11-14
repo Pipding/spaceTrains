@@ -137,3 +137,11 @@ void CombatManager::initializeTrain(std::vector<TrainComponent*> train) {
     this->activeTrainComponent = this->train[0];
     this->camera->parent = this->activeTrainComponent;
 }
+
+int CombatManager::getTrainSize() {
+    return this->train.size();
+}
+
+int CombatManager::getActiveTrainComponentIndex() {
+    return this->activeTrainComponentIndex;
+}
