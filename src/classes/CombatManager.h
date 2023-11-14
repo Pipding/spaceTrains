@@ -6,6 +6,7 @@
 #include "src/classes/Hostile.h"
 #include "src/interfaces/ICombatant.h"
 #include "src/classes/TrainComponent.h"
+#include "src/classes/TrainCar.h"
 #include <vector>
 
 /**
