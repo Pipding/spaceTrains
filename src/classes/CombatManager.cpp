@@ -94,12 +94,11 @@ void CombatManager::onKeyPressed(int key) {
     } else if (key == KEY_SPACE) {
         if (this->hasTarget() && this->targetLocked) {
 
-            // Check if the active component is a TrainCar. If it is, it can shoot.
-            // This check sourced from StackOverflow here: https://stackoverflow.com/a/307801
-            if (dynamic_cast<TrainCar*>(this->activeTrainComponent) != nullptr)
-            {
-                this->getActiveTarget()->receiveDamage(dynamic_cast<TrainCar*>(this->activeTrainComponent)->power);
-            }
+            // If the activeTrainComponentIndex is 0 then the player has the engine selected. The engine can't fire, so return
+            if (this->activeTrainComponentIndex == 0) return;
+
+            // Cast source from StackOverflow: https://stackoverflow.com/a/307801
+            this->getActiveTarget()->receiveDamage(dynamic_cast<TrainCar*>(this->activeTrainComponent)->power);
         }
     } else if (key == KEY_UP) {
         if (this->targetLocked) {
