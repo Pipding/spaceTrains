@@ -144,4 +144,11 @@ public:
      * @param return Returns true if pressing the shoot button should fire a shot
     */
     bool canShoot();
+
+    /**
+     * Returns the TrainComponent at the given index of the train
+     * @param index     The index of the train form which to fetch a TrainComponent
+     * @return Returns a pointer to a TrainComponent
+    */
+    TrainComponent* getTrainComponent(int index);
 };

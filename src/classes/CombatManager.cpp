@@ -152,3 +152,7 @@ bool CombatManager::canShoot() {
     // cannot be cast to a TrainCar. There's at least one safeguard above
     return dynamic_cast<TrainCar*>(this->activeTrainComponent)->getCanShoot();
 }
+
+TrainComponent* CombatManager::getTrainComponent(int index) {
+    return this->train[index];
+}

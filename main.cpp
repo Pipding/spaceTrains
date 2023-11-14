@@ -19,7 +19,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Add reload times to the selected component UI
+ * - Fix reload times so they're always displayed for reloading cars
  * - Add projectiles
  * - Update selected component UI so it's less confusing
  * - Update target display UI to show a visual representation of the current target
@@ -165,15 +165,11 @@ int main(void)
             for (int i = 0; i < trainBoxesCount; i++) {
                 DrawRectangle(trainUIStartX, 720 - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, combatManager.getActiveTrainComponentIndex() == i ? GREEN : WHITE);
 
-                if (!combatManager.canShoot() && combatManager.getActiveTrainComponentIndex() != 0) {
-                    // If you can't shoot but you've got a car selected...
-                    // TrainCar* car = combatManager.getActiveTrainComponent
-                    TrainCar* car = dynamic_cast<TrainCar*>(combatManager.getActiveTrainComponent());
-                    int timeUntilShoot = car->getTimeUntilReloaded();
-                    // Divide by 100 and insert a full stop
-                    timeUntilShoot /= 100;
-
-                    DrawText(TextFormat("%i", (timeUntilShoot)), trainUIStartX, 720 - trainBoxesWidth, 30, BLACK);
+                if (i != 0) {
+                    TrainCar* car = dynamic_cast<TrainCar*>(combatManager.getTrainComponent(i));
+                    if (!car->getCanShoot()) {
+                        DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, 720 - trainBoxesWidth, 30, BLACK);
+                    }
                 }
 
                 trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
