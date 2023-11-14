@@ -28,6 +28,10 @@ Hostile* CombatManager::getActiveTarget() {
     return this->activeTarget;
 }
 
+bool CombatManager::getTargetLocked() {
+    return this->targetLocked;
+}
+
 Vector3 CombatManager::calculateNormalizedTargetLocationVector() {
     // TODO: Clean up this function
 

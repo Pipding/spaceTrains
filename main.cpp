@@ -19,17 +19,19 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Add reload times to TrainComponents
- * - Make repeat fire work if the fire button is held down
+ * - Add UI representation of the train
+ * - Add UI to show reload times
+ * - Add UI to show locked-on target
+ * - Add UI to show when a target can be locked
  * - Add DR and DT to Hostiles
  * - Add DR and DT to the train
+ * - Make repeat fire work if the fire button is held down
  * - Add train models
  * - Add turret models
  * - Make turret models rotate to face the direction the camera faces
  * - Add projectile models
  * - Add hostile projectiles
  * - Add shooting sound effects
- * - Add UI to show reload times
  * - Add UI to show damage being dealt to enemies
  * - Add UI to show damage being dealt to player
  * - Add a health bar
@@ -138,6 +140,16 @@ int main(void)
             EndMode3D();
 
             DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
+
+            // ==================================================
+            // Target box
+            // ==================================================
+            DrawRectangle(0.f, 200.f, 200.f, 200.f, WHITE);
+            DrawText(TextFormat("Target"), 0.f, 200.f, 30, BLUE);
+            if (combatManager.hasTarget()) {
+                DrawText(TextFormat("%i", combatManager.getActiveTarget()), 0.f, 300.f, 30, combatManager.getTargetLocked() ? RED : GREEN);
+            }
+
 
             if (_gameStateManager.getState() == GameState::Paused) {
                 DrawText("Paused", 600, 340, 40, GREEN);

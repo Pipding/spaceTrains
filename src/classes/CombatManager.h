@@ -75,6 +75,11 @@ public:
     Hostile* getActiveTarget();
 
     /**
+     * Returns true if the activeTarget is locked
+    */
+    bool getTargetLocked();
+
+    /**
      * Calculates a normalized vector which is projected from the player Actor in the direction the camera faces
     */
     Vector3 calculateNormalizedTargetLocationVector();
