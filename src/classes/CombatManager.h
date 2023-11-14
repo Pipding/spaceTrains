@@ -128,10 +128,20 @@ public:
     int getTrainSize();
 
     /**
+     * Gets the currently active train component
+     * @return  The currently selected train component in the train
+    */
+    TrainComponent* getActiveTrainComponent();
+
+    /**
      * Gets the index of the currently active train component
      * @return  The index of the currently selected train component in the train
     */
     int getActiveTrainComponentIndex();
 
-
+    /**
+     * Returns true if the currently-active train component can fire
+     * @param return Returns true if pressing the shoot button should fire a shot
+    */
+    bool canShoot();
 };

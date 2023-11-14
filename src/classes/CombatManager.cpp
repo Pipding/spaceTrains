@@ -142,6 +142,20 @@ int CombatManager::getTrainSize() {
     return this->train.size();
 }
 
+TrainComponent* CombatManager::getActiveTrainComponent() {
+    return this->activeTrainComponent;
+}
+
 int CombatManager::getActiveTrainComponentIndex() {
     return this->activeTrainComponentIndex;
+}
+
+bool CombatManager::canShoot() {
+    if (this->getActiveTrainComponentIndex() == 0) {
+        return false;
+    }
+
+    // TODO: This is kind of flaky. It'll crash if the active component
+    // cannot be cast to a TrainCar. There's at least one safeguard above
+    return dynamic_cast<TrainCar*>(this->activeTrainComponent)->canShoot();
 }

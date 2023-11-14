@@ -38,4 +38,15 @@ public:
      * Update function
     */
     void update();
+
+    /**
+     * Returns true if this TrainCar can currently fire a shot
+     * @return True if the this TrainCar can currently fire a shot
+    */
+    bool canShoot();
+
+    /**
+     * Returns an int representing the number of milliseconds until this TrainCar can shoot again
+    */
+   int timeUntilReloaded();
 };

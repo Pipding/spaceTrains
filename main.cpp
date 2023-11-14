@@ -19,23 +19,23 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Add UI representation of the train
- * - Add UI to show reload times
- * - Add UI to show locked-on target
+ * - Add reload times to the selected component UI
+ * - Add projectiles
+ * - Update selected component UI so it's less confusing
+ * - Update target display UI to show a visual representation of the current target
  * - Add UI to show when a target can be locked
- * - Add DR and DT to Hostiles
- * - Add DR and DT to the train
- * - Make repeat fire work if the fire button is held down
  * - Add train models
  * - Add turret models
+ * - Make repeat fire work if the fire button is held down
  * - Make turret models rotate to face the direction the camera faces
- * - Add projectile models
  * - Add hostile projectiles
  * - Add shooting sound effects
  * - Add UI to show damage being dealt to enemies
  * - Add UI to show damage being dealt to player
  * - Add a health bar
  * - Create IMouseListener so things can take mouse input properly
+ * - Add DR and DT to Hostiles
+ * - Add DR and DT to the train
 */
 
 int main(void)
@@ -164,10 +164,20 @@ int main(void)
 
             for (int i = 0; i < trainBoxesCount; i++) {
                 DrawRectangle(trainUIStartX, 720 - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, combatManager.getActiveTrainComponentIndex() == i ? GREEN : WHITE);
+
+                if (!combatManager.canShoot() && combatManager.getActiveTrainComponentIndex() != 0) {
+                    // If you can't shoot but you've got a car selected...
+                    // TrainCar* car = combatManager.getActiveTrainComponent
+                    TrainCar* car = dynamic_cast<TrainCar*>(combatManager.getActiveTrainComponent());
+                    int timeUntilShoot = car->timeUntilReloaded();
+                    // Divide by 100 and insert a full stop
+                    timeUntilShoot /= 100;
+
+                    DrawText(TextFormat("%i", (timeUntilShoot)), trainUIStartX, 720 - trainBoxesWidth, 30, BLACK);
+                }
+
                 trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
             }
-
-
 
 
             if (_gameStateManager.getState() == GameState::Paused) {

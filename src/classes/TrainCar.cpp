@@ -21,3 +21,17 @@ void TrainCar::update() {
 
     Actor::update();
 }
+
+bool TrainCar::canShoot() {
+    // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
+    int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - this->lastShot).count();
+
+    return (timeSinceLastShot > this->reloadTime);
+}
+
+int TrainCar::timeUntilReloaded() {
+    // TODO: This is inefficient. Same thing is calculated in multiple places
+    int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - this->lastShot).count();
+
+    return this->reloadTime - timeSinceLastShot;
+}
