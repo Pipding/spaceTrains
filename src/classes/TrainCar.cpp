@@ -3,7 +3,7 @@
 TrainCar::TrainCar(): TrainComponent() { }
 
 
-TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, float reloadTime)
+TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime)
 : TrainComponent(position, model, texture) {
     this->engine = engine;
     this->rotation = {0.f, 0.f, 0.f};

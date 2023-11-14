@@ -54,8 +54,8 @@ int main(void)
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
 
     TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 50000.f, 20.f, 0.05f);
-    TrainCar carriage(_assets.getModel("duck"), _assets.getTexture("duck"), &engine, {-50.f, 0.f, 0.f}, 20, 3.f);
-    TrainCar carriage2(_assets.getModel("duck"), _assets.getTexture("duck"), &carriage, {-100.f, 0.f, 0.f}, 5, 0.2f);
+    TrainCar carriage(_assets.getModel("duck"), _assets.getTexture("duck"), &engine, {-50.f, 0.f, 0.f}, 20, 3000);
+    TrainCar carriage2(_assets.getModel("duck"), _assets.getTexture("duck"), &carriage, {-100.f, 0.f, 0.f}, 5, 200);
 
     // Camera which follows the player-controlled TrainEngine
     FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});

@@ -11,8 +11,8 @@ public:
     // How much damage does this TrainCar deal when it shoots?
     int power;
 
-    // How long between shots (seconds)
-    float reloadTime;
+    // How long between shots (milliseconds)
+    int reloadTime;
 
     // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
     // Timestamp of the last time this TrainCar fired its weapon
@@ -30,9 +30,9 @@ public:
      * @param engine        Pointer to a TrainComponent which this car will follow
      * @param position      Initial position of the train car
      * @param power         How much damage the TrainComponent deals in combat
-     * @param reloadTime    Time in seconds between shots in combat
+     * @param reloadTime    Time in milliseconds between shots in combat
     */
-    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, float reloadTime);
+    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime);
 
     /**
      * Update function

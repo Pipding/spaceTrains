@@ -102,7 +102,7 @@ void CombatManager::onKeyPressed(int key) {
             TrainCar* shooter = dynamic_cast<TrainCar*>(this->activeTrainComponent);
 
             // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
-            int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::seconds> (std::chrono::steady_clock::now() - shooter->lastShot).count();
+            int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - shooter->lastShot).count();
 
             if (timeSinceLastShot < shooter->reloadTime) return;
 
