@@ -15,16 +15,25 @@
 */
 class CombatManager: public IUpdatable, public IKeyboardListener {
 private:
-    // The active target of combat
+
+    // ==================================================
+    // Targeting member variables
+    // ==================================================
+    // The Hostile the player is currently looking at (if any)
     Hostile* activeTarget = nullptr;
 
+    // Is the player locked onto activeTarget
     bool targetLocked = false;
 
-    std::vector<Hostile*> hostiles;
-
-    // A reference to the camera, as the camera is used for targeting
+    // A reference to the camera - used for targeting
     FollowCam* camera;
 
+    // All Hostiles
+    std::vector<Hostile*> hostiles;
+
+    // ==================================================
+    // Combatants (Hostiles & the player)
+    // ==================================================
     // The actor controlled by the player
     // TODO: This won't always be an actor. In fact it should be an ICombatant
     Actor* player;

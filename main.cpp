@@ -44,6 +44,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *      - Add UI to show damage being dealt to player
  *      - Add a health bar
  *      - Add a menu system
+ *      - Implement an UpdateManager
  * 
  *  WON'T
  *      - Update target display UI to show a visual representation of the current target
@@ -107,13 +108,11 @@ int main(void)
         _inputManager.update();
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
-            // TODO: Bounding box is axis-aligned, so it doesn't rotate with the model. Unsure what if anything to do about this atm
             engine.update(deltaTime);
             carriage.update();
             carriage2.update();
             followCam.update();
             hostile.update();
-
             combatManager.update();
         }
 
