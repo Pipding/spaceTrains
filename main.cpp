@@ -19,25 +19,31 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
 /**
  * TODO
- * - Limit lock-on by distance
- * - Add some more rays for target detection so it's less finicky
- * - The IUpdatable interface should accept deltatime
- * - Add projectiles
- * - Update selected component UI so it's less confusing
- * - Update target display UI to show a visual representation of the current target
- * - Add UI to show when a target can be locked
- * - Add train models
- * - Add turret models
- * - Make repeat fire work if the fire button is held down
- * - Make turret models rotate to face the direction the camera faces
- * - Add hostile projectiles
- * - Add shooting sound effects
- * - Add UI to show damage being dealt to enemies
- * - Add UI to show damage being dealt to player
- * - Add a health bar
- * - Create IMouseListener so things can take mouse input properly
- * - Add DR and DT to Hostiles
- * - Add DR and DT to the train
+ *  MUST
+ *      - The IUpdatable interface should accept deltatime, i.e. everything with an update method should account for deltaTime
+ *      - Add projectiles
+ *      - Add train models
+ *      - Add turret models
+ *      - Make turret models rotate to face the direction the camera faces
+ *      - Add shooting sound effects
+ * 
+ *  SHOULD
+ *      - Limit lock-on by distance
+ *      - Add some more rays for target detection so it's less finicky
+ *      - Add UI to show when a target can be locked
+ *      - Make repeat fire work if the fire button is held down
+ *      - Update selected component UI so it's less confusing
+ *      - Create IMouseListener so things can take mouse input properly
+ * 
+ *  COULD
+ *      - Add UI to show damage being dealt to enemies
+ *      - Add UI to show damage being dealt to player
+ *      - Add a health bar
+ * 
+ *  WON'T
+ *      - Update target display UI to show a visual representation of the current target
+ *      - Add DR and DT to Hostiles
+ *      - Add DR and DT to the train
 */
 
 int main(void)
