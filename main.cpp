@@ -75,14 +75,15 @@ int main(void)
     TrainCar carriage(_assets.getModel("duck"), _assets.getTexture("duck"), &engine, {-50.f, 0.f, 0.f}, 20, 3000);
     TrainCar carriage2(_assets.getModel("duck"), _assets.getTexture("duck"), &carriage, {-100.f, 0.f, 0.f}, 5, 200);
 
+    Train train({&engine, &carriage, &carriage2}, 100);
+
     // Camera which follows the player-controlled TrainEngine
     FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
 
     //==================================================
     // Managers
     //==================================================
-    CombatManager combatManager = CombatManager(&followCam, &engine);
-    combatManager.initializeTrain({&engine, &carriage, &carriage2});
+    CombatManager combatManager = CombatManager(&followCam, &train);
 
     Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position);
     combatManager.addHostile(&hostile);
@@ -147,7 +148,7 @@ int main(void)
             // Train UI
             // ==================================================
             // How many boxes to draw
-            int trainBoxesCount = combatManager.getTrainSize();
+            int trainBoxesCount = train.size();
             float trainBoxesWidth = 80.f;
             float gapBetweenBoxes = 20.f;
             float trainBoxesHeight = 40.f;
@@ -156,10 +157,10 @@ int main(void)
             float trainUIStartX = (1280 - totalTrainUIWidth) / 2;
 
             for (int i = 0; i < trainBoxesCount; i++) {
-                DrawRectangle(trainUIStartX, 720 - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, combatManager.getActiveTrainComponentIndex() == i ? GREEN : WHITE);
+                DrawRectangle(trainUIStartX, 720 - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, train.getActiveComponentIndex() == i ? GREEN : WHITE);
 
                 if (i != 0) {
-                    TrainCar* car = dynamic_cast<TrainCar*>(combatManager.getTrainComponent(i));
+                    TrainCar* car = dynamic_cast<TrainCar*>(train.getComponent(i));
                     if (!car->getCanShoot()) {
                         DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, 720 - trainBoxesWidth, 30, BLACK);
                     }
@@ -167,7 +168,6 @@ int main(void)
 
                 trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
             }
-
 
             if (_gameStateManager.getState() == GameState::Paused) {
                 DrawText("Paused", 600, 340, 40, GREEN);

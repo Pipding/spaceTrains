@@ -2,10 +2,10 @@
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
-CombatManager::CombatManager(FollowCam* camera, Actor* player) {
+CombatManager::CombatManager(FollowCam* camera, Train* train) {
     this->camera = camera;
-    this->player = player;
-    this->playerHealth = 100;
+    this->train = train;
+    this->camera->parent = this->train->head();
 }
 
 void CombatManager::setTarget(Hostile* newTarget) {
@@ -44,7 +44,7 @@ Vector3 CombatManager::calculateNormalizedTargetLocationVector() {
     // Get the vector from the camera to its target
     Vector3 groundedCameraPos = {this->camera->camera.position.x, 0.f, this->camera->camera.position.z};
 
-    Vector3 normalizedTargetingVector = Vector3Normalize(Vector3Subtract(this->player->position, groundedCameraPos));
+    Vector3 normalizedTargetingVector = Vector3Normalize(Vector3Subtract(this->train->head()->position, groundedCameraPos));
 
     return normalizedTargetingVector;
 }
@@ -53,11 +53,11 @@ Ray CombatManager::getTargetingRay() {
     // The ray needs to be a little bit off the ground. If the Y position
     // is 0, the ray doesn't intersect with bounding boxes which are 
     // on the ground. Hence 0.5f
-    return {{this->player->position.x, 0.5f, this->player->position.z}, this->calculateNormalizedTargetLocationVector()};
+    return {{this->train->head()->position.x, 0.5f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
 }
 
 int CombatManager::getPlayerHealth() {
-    return this->playerHealth;
+    return this->train->getHealth();
 }
 
 void CombatManager::update() {
@@ -95,69 +95,24 @@ void CombatManager::onKeyPressed(int key) {
                 this->camera->setTarget(this->getActiveTarget());
             } else {
                 this->camera->unsetTarget();
-                this->activeTrainComponentIndex = 0;
-                this->activeTrainComponent = this->train[0];
-                this->camera->parent = this->activeTrainComponent;
+                this->camera->parent = this->train->resetActiveComponent();
             }
         }
     } else if (key == KEY_SPACE) {
         if (this->hasTarget() && this->targetLocked) {
-            // If the activeTrainComponentIndex is 0 then the player has the engine selected. The engine can't fire, so return
-            if (this->activeTrainComponentIndex == 0) return;
-
-            TrainCar* shooter = dynamic_cast<TrainCar*>(this->activeTrainComponent);
-
-            if (!shooter->getCanShoot()) return;
-
-            // Cast source from StackOverflow: https://stackoverflow.com/a/307801
-            this->getActiveTarget()->receiveDamage(shooter->shoot());
+            if (!this->train->canShoot()) return;
+            
+            this->getActiveTarget()->receiveDamage(this->train->shoot());
         }
     } else if (key == KEY_UP) {
         if (this->targetLocked) {
-            this->activeTrainComponentIndex = (this->activeTrainComponentIndex + 1) % this->train.size();
-            this->activeTrainComponent = this->train[this->activeTrainComponentIndex];
-            this->camera->parent = this->activeTrainComponent;
+            this->camera->parent = this->train->incrementActiveComponent();
         }
     } else if (key == KEY_DOWN) {
         if (this->targetLocked) {
-            this->activeTrainComponentIndex = this->activeTrainComponentIndex == 0 ? this->train.size() - 1 : this->activeTrainComponentIndex - 1;
-            this->activeTrainComponent = this->train[this->activeTrainComponentIndex];
-            this->camera->parent = this->activeTrainComponent;
+            this->camera->parent = this->train->decrementActiveComponent();
         }
     }
 }
 
 void CombatManager::onKeyReleased(int key) { }
-
-void CombatManager::initializeTrain(std::vector<TrainComponent*> train) {
-    this->train = train;
-    this->activeTrainComponentIndex = 0;
-    this->activeTrainComponent = this->train[0];
-    this->camera->parent = this->activeTrainComponent;
-}
-
-int CombatManager::getTrainSize() {
-    return this->train.size();
-}
-
-TrainComponent* CombatManager::getActiveTrainComponent() {
-    return this->activeTrainComponent;
-}
-
-int CombatManager::getActiveTrainComponentIndex() {
-    return this->activeTrainComponentIndex;
-}
-
-bool CombatManager::canShoot() {
-    if (this->getActiveTrainComponentIndex() == 0) {
-        return false;
-    }
-
-    // TODO: This is kind of flaky. It'll crash if the active component
-    // cannot be cast to a TrainCar. There's at least one safeguard above
-    return dynamic_cast<TrainCar*>(this->activeTrainComponent)->getCanShoot();
-}
-
-TrainComponent* CombatManager::getTrainComponent(int index) {
-    return this->train[index];
-}
