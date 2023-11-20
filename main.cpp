@@ -23,9 +23,13 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *      - The IUpdatable interface should accept deltatime, i.e. everything with an update method should account for deltaTime
  *      - Add projectiles
  *      - Add train models
+ *      - Animate train models
  *      - Add turret models
  *      - Make turret models rotate to face the direction the camera faces
  *      - Add shooting sound effects
+ *      - Add powerups which drop when an enemy is defeated
+ *      - Load a font
+ *      - Improve enemy AI and shooting behaviour
  * 
  *  SHOULD
  *      - Limit lock-on by distance
@@ -39,6 +43,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *      - Add UI to show damage being dealt to enemies
  *      - Add UI to show damage being dealt to player
  *      - Add a health bar
+ *      - Add a menu system
  * 
  *  WON'T
  *      - Update target display UI to show a visual representation of the current target
