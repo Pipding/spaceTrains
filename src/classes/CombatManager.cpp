@@ -5,6 +5,7 @@ static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 CombatManager::CombatManager(FollowCam* camera, Actor* player) {
     this->camera = camera;
     this->player = player;
+    this->playerHealth = 100;
 }
 
 void CombatManager::setTarget(Hostile* newTarget) {
@@ -53,6 +54,10 @@ Ray CombatManager::getTargetingRay() {
     // is 0, the ray doesn't intersect with bounding boxes which are 
     // on the ground. Hence 0.5f
     return {{this->player->position.x, 0.5f, this->player->position.z}, this->calculateNormalizedTargetLocationVector()};
+}
+
+int CombatManager::getPlayerHealth() {
+    return this->playerHealth;
 }
 
 void CombatManager::update() {

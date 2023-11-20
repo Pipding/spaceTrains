@@ -122,6 +122,8 @@ int main(void)
 
             DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
 
+            DrawText(TextFormat("Health: %i", combatManager.getPlayerHealth()), 20, screenHeight - 60, 40, RED);
+
             // ==================================================
             // Target box
             // ==================================================

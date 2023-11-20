@@ -38,6 +38,8 @@ private:
     // The index of the active train component in the train vector
     int activeTrainComponentIndex;
 
+    int playerHealth;
+
 public:
     /**
      * Constructor
@@ -90,6 +92,11 @@ public:
      *          in the same direction as the camera
     */
     Ray getTargetingRay();
+
+    /**
+     * Returns the current health of the player
+    */
+    int getPlayerHealth();
     
     /**
      * Update function. Currently only checks if the player is facing a Hostile and,
