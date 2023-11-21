@@ -35,6 +35,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *      - Add powerups which drop when an enemy is defeated
  *      - Load a font
  *      - Improve enemy AI and shooting behaviour
+ *      - TrainEngine.h needs comments
  * 
  *  SHOULD
  *      - Limit lock-on by distance
