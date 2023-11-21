@@ -30,26 +30,7 @@ void TrainEngine::update(float deltaTime) {
         this->accelerate(deltaTime, this->accelerationDirection == Direction::Forward);
     } else {
         // Not accelerating forward or back, so velocity should decay
-        if (this->velocity.x != 0.f || this->velocity.z != 0.f) {
-
-            // If the velocity in either X or Z axis is close to 0, just set it to 0
-            if (this->velocity.x != 0.f && abs(this->velocity.x) < 0.1f) {
-                this->velocity.x = 0.f;
-            }
-
-            if (this->velocity.z != 0.f && abs(this->velocity.z) < 0.1f) {
-                this->velocity.z = 0.f;
-            }
-
-            // If the velocity in either X or Z isn't close to zero, decay it by decelerationRate
-            if (abs(this->velocity.x) > 0) {
-                this->velocity.x *= (1 - (this->decelerationRate * deltaTime / this->decelerationRate * deltaTime * 100.f)); // TODO: Deceleration doesn't work right. decelerationRate is effectively pointless. Fix.
-            }
-
-            if (abs(this->velocity.z) > 0) {
-                this->velocity.z *= (1 - (this->decelerationRate * deltaTime / this->decelerationRate * deltaTime * 100.f));
-            }
-        }
+        this->decayAcceleration(deltaTime);
     }
 
     if (this->rotationDirection != Direction::None) {
@@ -78,6 +59,29 @@ void TrainEngine::accelerate(float deltaTime, bool forward) {
     }
 
     this->velocity = Vector3Clamp(this->velocity, (Vector3){-this->topSpeed, 0.f, -this->topSpeed}, (Vector3){this->topSpeed, 0.f, this->topSpeed});
+}
+
+void TrainEngine::decayAcceleration(float deltaTime) {
+    if (this->velocity.x != 0.f || this->velocity.z != 0.f) {
+
+        // If the velocity in either X or Z axis is close to 0, just set it to 0
+        if (this->velocity.x != 0.f && abs(this->velocity.x) < 0.1f) {
+            this->velocity.x = 0.f;
+        }
+
+        if (this->velocity.z != 0.f && abs(this->velocity.z) < 0.1f) {
+            this->velocity.z = 0.f;
+        }
+
+        // If the velocity in either X or Z isn't close to zero, decay it by decelerationRate
+        if (abs(this->velocity.x) > 0) {
+            this->velocity.x *= (1 - (this->decelerationRate * deltaTime / this->decelerationRate * deltaTime * 100.f)); // TODO: Deceleration doesn't work right. decelerationRate is effectively pointless. Fix.
+        }
+
+        if (abs(this->velocity.z) > 0) {
+            this->velocity.z *= (1 - (this->decelerationRate * deltaTime / this->decelerationRate * deltaTime * 100.f));
+        }
+    }
 }
 
 void TrainEngine::onKeyPressed(int key) {

@@ -22,6 +22,7 @@ public:
 
     void update(float deltatime);
     void accelerate(float deltatime, bool forward = true);
+    void decayAcceleration(float deltaTime);
 
     void onKeyPressed(int);
     void onKeyReleased(int);
