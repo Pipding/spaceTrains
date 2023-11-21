@@ -21,11 +21,11 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  * TODO
  *  MUST
  *      - Integrate deltaTime into the update functions for the following classes;
- *          - Hostile
  *          - Projectile
  *          - TrainEngine
  *          - TrainCar
  *          - InputManager
+ *      - Anything which inherits from Actor needs to call the Actor update function
  *      - Add projectiles
  *      - Add train models
  *      - Animate train models
