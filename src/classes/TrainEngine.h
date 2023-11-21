@@ -13,7 +13,7 @@ public:
     float accelerationRate = .2f;
     float decelerationRate = 20.f; // This needs to be greater than 1. Otherwise deceleration will cause acceleration
     float topSpeed = 20.f;
-    float rotationRate = 0.05f;
+    float rotationRate;
     Direction accelerationDirection = Direction::None;
     Direction rotationDirection = Direction::None;
 

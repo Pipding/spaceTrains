@@ -35,9 +35,9 @@ void TrainEngine::update(float deltaTime) {
 
     if (this->rotationDirection != Direction::None) {
         if (this->rotationDirection == Direction::Left) {
-            this->rotateBy({0.f, this->rotationRate, 0.f}); //TODO: Deltatime
+            this->rotateBy({0.f, (this->rotationRate * deltaTime), 0.f});
         } else if (this->rotationDirection == Direction::Right) {
-            this->rotateBy({0.f, -this->rotationRate, 0.f}); //TODO: Deltatime
+            this->rotateBy({0.f, (this->rotationRate * deltaTime * -1), 0.f});
         }
     }
 
