@@ -112,9 +112,7 @@ int main(void)
         _inputManager.update(deltaTime);
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
-            engine.update(deltaTime);
-            carriage.update(deltaTime);
-            carriage2.update(deltaTime);
+            train.update(deltaTime);
             followCam.update(deltaTime);
             hostile.update(deltaTime);
             combatManager.update(deltaTime);
