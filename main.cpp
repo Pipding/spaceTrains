@@ -27,6 +27,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *          - Projectile
  *          - TrainEngine
  *          - TrainCar
+ *          - InputManager
  *      - Add projectiles
  *      - Add train models
  *      - Animate train models
@@ -112,7 +113,7 @@ int main(void)
         const float deltaTime = GetFrameTime();
 
         // Take user input
-        _inputManager.update();
+        _inputManager.update(deltaTime);
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
             engine.update(deltaTime);

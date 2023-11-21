@@ -11,7 +11,8 @@ void InputManager::addListeners(IKeyboardListener* listener, std::vector<int> ke
     }
 }
 
-void InputManager::update() {
+void InputManager::update(float deltaTime) {
+    // TODO: Implement deltaTime
 
     std::vector<int> keysValidInThisGameState = this->listenedKeysByGameState[GameStateManager::getInstance().getState()];
 

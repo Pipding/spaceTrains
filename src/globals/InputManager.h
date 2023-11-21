@@ -13,7 +13,7 @@
  * 
  * The pattern I'm using for handling input is drawn from Naros on StackOverflow: https://gamedev.stackexchange.com/a/98879
 */
-class InputManager {
+class InputManager: public IUpdatable {
 private:
 
     InputManager() {}
@@ -59,6 +59,7 @@ public:
 
     /**
      * Update method
+     * @param deltaTime Time in seconds for last frame drawn
     */
-    void update();
+    void update(float deltaTime);
 };
