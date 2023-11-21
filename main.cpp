@@ -21,7 +21,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  * TODO
  *  MUST
  *      - Integrate deltaTime into the update functions for the following classes;
- *          - FollowCam
  *          - Hostile
  *          - Projectile
  *          - TrainEngine
@@ -44,6 +43,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *      - Make repeat fire work if the fire button is held down
  *      - Update selected component UI so it's less confusing
  *      - Create IMouseListener so things can take mouse input properly
+ *          - Update FollowCam to implement IMouseListener
  * 
  *  COULD
  *      - Add UI to show damage being dealt to enemies
