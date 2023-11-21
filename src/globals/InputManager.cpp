@@ -12,8 +12,7 @@ void InputManager::addListeners(IKeyboardListener* listener, std::vector<int> ke
 }
 
 void InputManager::update(float deltaTime) {
-    // TODO: Implement deltaTime
-
+    // Check the current game state & only update keypresses which are valid in this game state
     std::vector<int> keysValidInThisGameState = this->listenedKeysByGameState[GameStateManager::getInstance().getState()];
 
     // This iterates through all keys with a registered listener & if the key has been pressed, it triggers the onKeyPressed method ot the listener

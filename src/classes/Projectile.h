@@ -24,6 +24,7 @@ public:
 
     /**
      * Updates the projectile, moving it closer to its destination
+     * @param deltaTime Time in seconds for last frame drawn
     */
-    void update();
+    void update(float deltaTime);
 };

@@ -1,21 +1,29 @@
 #pragma once
-#include "TrainComponent.h"
 #include "TrainEngine.h"
 #include "TrainCar.h"
+
+#include "src/interfaces/ICombatant.h"
+#include "src/interfaces/IUpdatable.h"
+
 #include <initializer_list>
 #include <vector>
 
-class Train {
+class Train : public ICombatant, public IUpdatable {
 private:
     std::vector<TrainComponent*> train;
     int activeComponentIndex;
-    int health;
 
 public:
     /**
      * Constructor
     */
     Train(std::initializer_list<TrainComponent*> cars, int health);
+
+    /**
+     * Update method
+     * @param deltaTime Time in seconds for last frame drawn
+    */
+    void update(float deltaTime);
 
     // ==================================================
     // convenience methods
@@ -86,7 +94,7 @@ public:
     TrainComponent* decrementActiveComponent();
 
     // ==================================================
-    // Functions related to shooting
+    // Functions related to combat
     // ==================================================
 
     /**
@@ -101,4 +109,11 @@ public:
      * @return Returns the outgoing damage
     */
     int shoot();
+
+    /**
+     * Removes the given damageReceived from current hitpoints. Will not reduce currentHitpoints below 0
+     * @param damageReceived    The amount of damage to subtract from current hitpoints
+     * @return  Returns hitpoints after damage is applied
+    */
+    int receiveDamage(int damageReceived);
 };

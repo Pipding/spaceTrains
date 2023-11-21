@@ -2,10 +2,17 @@
 
 // The idea to use an initializer_list here comes from https://stackoverflow.com/a/13979720
 Train::Train(std::initializer_list<TrainComponent*> cars, int health)
-    :train(cars) {
-        this->health = health;
-        this->activeComponentIndex = 0;
+:train(cars) {
+    this->maxHitpoints = health;
+    this->currentHitpoints = health;
+    this->activeComponentIndex = 0;
+}
+
+void Train::update(float deltaTime) {
+    for (std::vector<TrainComponent*>::iterator it = this->train.begin(); it != this->train.end(); ++it) {
+        dynamic_cast<IUpdatable*>(*it)->update(deltaTime);
     }
+}
 
 TrainEngine* Train::head() {
     return dynamic_cast<TrainEngine*>(this->getComponent(0));
@@ -20,7 +27,7 @@ int Train::size() {
 }
 
 int Train::getHealth() {
-    return this->health;
+    return this->currentHitpoints;
 }
 
 TrainComponent* Train::getActiveComponent() {
@@ -61,4 +68,14 @@ int Train::shoot() {
 
      // Cast source from StackOverflow: https://stackoverflow.com/a/307801
      return dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot();
+}
+
+int Train::receiveDamage(int damageReceived) {
+    this->currentHitpoints -= damageReceived;
+
+    if (currentHitpoints < 0) {
+        currentHitpoints = 0;
+    }
+
+    return currentHitpoints;
 }

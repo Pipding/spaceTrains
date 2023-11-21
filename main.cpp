@@ -20,9 +20,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Integrate deltaTime into the update functions for the following classes;
- *          - Projectile
- *          - InputManager
  *      - Anything which inherits from Actor needs to call the Actor update function
  *      - Add projectiles
  *      - Add train models
@@ -37,6 +34,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  * 
  *  SHOULD
  *      - Limit lock-on by distance
+ *      - ICombatant should be virtual/abstract in the same way IUpdatable is
  *      - Add some more rays for target detection so it's less finicky
  *      - Add UI to show when a target can be locked
  *      - Make repeat fire work if the fire button is held down
