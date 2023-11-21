@@ -22,7 +22,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *  MUST
  *      - Integrate deltaTime into the update functions for the following classes;
  *          - Projectile
- *          - TrainEngine
  *          - TrainCar
  *          - InputManager
  *      - Anything which inherits from Actor needs to call the Actor update function
@@ -78,7 +77,7 @@ int main(void)
     _assets.loadModel("assets/models/ducky.obj", "duck");
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
 
-    TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 50000.f, 20.f, 2.5f);
+    TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
     TrainCar carriage(_assets.getModel("duck"), _assets.getTexture("duck"), &engine, {-50.f, 0.f, 0.f}, 20, 3000);
     TrainCar carriage2(_assets.getModel("duck"), _assets.getTexture("duck"), &carriage, {-100.f, 0.f, 0.f}, 5, 200);
 

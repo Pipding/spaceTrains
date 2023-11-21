@@ -73,13 +73,16 @@ void TrainEngine::decayAcceleration(float deltaTime) {
             this->velocity.z = 0.f;
         }
 
+        float decelerationFactor = 0.f;
+        decelerationFactor = 1 - (this->decelerationRate * deltaTime / 100.f);
+
         // If the velocity in either X or Z isn't close to zero, decay it by decelerationRate
         if (abs(this->velocity.x) > 0) {
-            this->velocity.x *= (1 - (this->decelerationRate * deltaTime / this->decelerationRate * deltaTime * 100.f)); // TODO: Deceleration doesn't work right. decelerationRate is effectively pointless. Fix.
+            this->velocity.x *= decelerationFactor;
         }
 
         if (abs(this->velocity.z) > 0) {
-            this->velocity.z *= (1 - (this->decelerationRate * deltaTime / this->decelerationRate * deltaTime * 100.f));
+            this->velocity.z *= decelerationFactor;
         }
     }
 }
