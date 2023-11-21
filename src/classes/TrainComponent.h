@@ -1,7 +1,8 @@
 #pragma once
 #include "Actor.h"
+#include "src/interfaces/IUpdatable.h"
 
-class TrainComponent : public Actor {
+class TrainComponent : public Actor, public IUpdatable {
 public:
     /**
      * Default constructor

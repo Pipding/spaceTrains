@@ -24,6 +24,7 @@ TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate,
 }
 
 void TrainEngine::update(float deltaTime) {
+    // TODO: Implement deltaTime
 
     if (this->accelerationDirection != Direction::None) {
         this->accelerate(deltaTime, this->accelerationDirection == Direction::Forward);
@@ -61,7 +62,7 @@ void TrainEngine::update(float deltaTime) {
 
     this->position = Vector3Add(this->position, this->velocity);
 
-    Actor::update();
+    // Actor::update();
 }
 
 /**

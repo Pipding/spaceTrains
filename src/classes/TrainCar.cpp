@@ -12,7 +12,12 @@ TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vecto
     this->canShoot = true;
 }
 
-void TrainCar::update() {
+/**
+ * Update method
+ * @param deltaTime Time in seconds for last frame drawn
+*/
+void TrainCar::update(float deltaTime) {
+    // TODO: Implement deltatime
     // Update the train car to be pointing towards and following the TrainComponent assigned to the engine parameter
     Vector3 pulledDirection = this->getVectorTowardTarget(this->engine->position);
     Vector3 invertedPulledDirection = Vector3Negate(pulledDirection);

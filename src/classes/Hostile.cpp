@@ -9,7 +9,8 @@ Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target
     this->currentHitpoints = 100;
 }
 
-void Hostile::update() {
+void Hostile::update(float deltaTime) {
+    // TODO: Implement deltaTime
     if (this->isAlive) {
         // Move self towards target
         Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);

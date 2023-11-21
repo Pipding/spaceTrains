@@ -2,8 +2,9 @@
 
 #include "Actor.h"
 #include "src/interfaces/ICombatant.h"
+#include "src/interfaces/IUpdatable.h"
 
-class Hostile : public Actor, public ICombatant {
+class Hostile : public Actor, public ICombatant, public IUpdatable {
 public:
     Vector3* target;
     float speed;
@@ -11,7 +12,11 @@ public:
 
     Hostile(Vector3 position, Model model, Texture texture, Vector3* target);
 
-    void update();
+    /**
+     * Update method
+     * @param deltaTime Time in seconds for last frame drawn
+    */
+    void update(float deltaTime);
 
     /**
      * Removes the given damageReceived from the Hostile's currentHitpoints. Will not reduce currentHitpoints below 0

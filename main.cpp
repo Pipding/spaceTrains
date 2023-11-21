@@ -20,7 +20,13 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - The IUpdatable interface should accept deltatime, i.e. everything with an update method should account for deltaTime
+ *      - Integrate deltaTime into the update functions for the following classes;
+ *          - CombatManager
+ *          - FollowCam
+ *          - Hostile
+ *          - Projectile
+ *          - TrainEngine
+ *          - TrainCar
  *      - Add projectiles
  *      - Add train models
  *      - Animate train models
@@ -110,11 +116,11 @@ int main(void)
 
         if (_gameStateManager.getState() == GameState::Gameplay) {
             engine.update(deltaTime);
-            carriage.update();
-            carriage2.update();
-            followCam.update();
-            hostile.update();
-            combatManager.update();
+            carriage.update(deltaTime);
+            carriage2.update(deltaTime);
+            followCam.update(deltaTime);
+            hostile.update(deltaTime);
+            combatManager.update(deltaTime);
         }
 
         if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused) {

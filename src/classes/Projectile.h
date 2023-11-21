@@ -4,8 +4,8 @@
 #include "raymath.h"
 
 #include "Actor.h"
-
-class Projectile: public Actor {
+#include "src/interfaces/IUpdatable.h"
+class Projectile: public Actor, public IUpdatable {
 private:
     Vector3 velocity;
     Vector3* destination;

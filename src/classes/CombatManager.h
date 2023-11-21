@@ -5,6 +5,7 @@
 #include "src/classes/FollowCam.h"
 #include "src/classes/Hostile.h"
 #include "src/interfaces/ICombatant.h"
+#include "src/interfaces/IUpdatable.h"
 #include "src/classes/Train.h"
 #include <vector>
 #include <chrono>
@@ -94,8 +95,9 @@ public:
     /**
      * Update function. Currently only checks if the player is facing a Hostile and,
      * if so, allows the player to lock on to that Hostile with right click
+     * @param deltaTime Time in seconds for last frame drawn
     */
-    void update();
+    void update(float deltaTime);
     
     /**
      * Draw function

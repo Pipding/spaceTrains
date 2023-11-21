@@ -41,8 +41,9 @@ public:
 
     /**
      * Update function
+     * @param deltaTime Time in seconds for last frame drawn
     */
-    void update();
+    void update(float delatTime);
 
     /**
      * Handles the logic associated with shooting

@@ -16,7 +16,8 @@ FollowCam::FollowCam(Actor* parent, Vector3 offset) {
 }
 
 
-void FollowCam::update() {
+void FollowCam::update(float deltaTime) {
+    // TODO: Implement deltaTime
 
     // If there's no target, the player has control over the camera
     if (!this->hasTarget) {

@@ -60,7 +60,8 @@ int CombatManager::getPlayerHealth() {
     return this->train->getHealth();
 }
 
-void CombatManager::update() {
+void CombatManager::update(float deltaTime) {
+    // TODO: Implement deltaTime
     Ray targetRay = this->getTargetingRay();
 
     // Don't bother scanning for new targets if there's already a locked target

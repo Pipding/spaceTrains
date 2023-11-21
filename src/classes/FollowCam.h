@@ -4,6 +4,7 @@
 #include "Actor.h"
 #include "src/globals/SpaceTrainDebug.h"
 #include "src/interfaces/IKeyboardListener.h"
+#include "src/interfaces/IUpdatable.h"
 
 /**
 * A camera which follows a given Actor with a given offset
@@ -15,7 +16,7 @@
 * its orientation. Resetting the user adjustment re-locks the camera's rotation 
 * to its parent
 */
-class FollowCam: public IKeyboardListener {
+class FollowCam: public IKeyboardListener, public IUpdatable {
 public:
     Camera camera = {0};
 
@@ -37,8 +38,9 @@ public:
 
     /**
      * Update camera position & parent vectors
+     * @param deltaTime Time in seconds for last frame drawn
     */
-    void update();
+    void update(float deltaTime);
 
     /**
      * Draws certain camera data. Useful for debugging
