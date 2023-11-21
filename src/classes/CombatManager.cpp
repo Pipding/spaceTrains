@@ -61,11 +61,11 @@ int CombatManager::getPlayerHealth() {
 }
 
 void CombatManager::update(float deltaTime) {
-    // TODO: Implement deltaTime
     Ray targetRay = this->getTargetingRay();
 
     // Don't bother scanning for new targets if there's already a locked target
     if (!targetLocked) {
+        // Iterate through all hostiles and check if the targeting ray is hitting one of them
         for (Hostile* hostile : this->hostiles ) {
             RayCollision coll = GetRayCollisionBox(targetRay, hostile->getBounds());
 

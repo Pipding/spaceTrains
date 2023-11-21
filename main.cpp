@@ -21,7 +21,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  * TODO
  *  MUST
  *      - Integrate deltaTime into the update functions for the following classes;
- *          - CombatManager
  *          - FollowCam
  *          - Hostile
  *          - Projectile
