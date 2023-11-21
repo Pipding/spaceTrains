@@ -20,7 +20,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Anything which inherits from Actor needs to call the Actor update function
  *      - Add projectiles
  *      - Add train models
  *      - Animate train models
