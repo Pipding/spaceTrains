@@ -38,6 +38,8 @@ private:
     std::vector<Hostile*> hostiles;
     Train* train;
 
+    void spawnHostile();
+
 public:
     /**
      * Constructor

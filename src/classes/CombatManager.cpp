@@ -10,7 +10,7 @@ CombatManager::CombatManager(FollowCam* camera, Train* train) {
 
     // Define the different Hostile types the CombatManager can spawn
     Hostile hostile(
-        {1000.f, 0.f, 1000.f},
+        {0.f, 0.f, 0.f},
         _assets.getModel("duck"),
         _assets.getTexture("duck"),
         &this->train->head()->position,
@@ -72,6 +72,24 @@ Ray CombatManager::getTargetingRay() {
 
 int CombatManager::getPlayerHealth() {
     return this->train->getHealth();
+}
+
+void CombatManager::spawnHostile() {
+    // TODO: When there's more than 1 hostile, maybe randomize the type of hostile spawned
+
+    Vector3 newHostilePos = {1000.f, 0.f, 1000.f};
+
+    Hostile* h = new Hostile(
+        newHostilePos,
+        *this->hostileTypes[0].getModel(),
+        *this->hostileTypes[0].getTexture(),
+        &this->train->head()->position,
+        this->hostileTypes[0].getMinEngagementDistance(),
+        this->hostileTypes[0].getMaxEngagementDistance(),
+        this->hostileTypes[0].getMaxSpeed()
+    );
+
+    this->hostiles.push_back(h);
 }
 
 void CombatManager::update(float deltaTime) {
