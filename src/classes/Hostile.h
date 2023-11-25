@@ -1,8 +1,11 @@
 #pragma once
 
 #include "Actor.h"
+#include "Projectile.h"
 #include "src/interfaces/ICombatant.h"
 #include "src/interfaces/IUpdatable.h"
+
+#include <chrono>
 
 // TODO:
 // What does a hostile want to do?
@@ -35,6 +38,26 @@ private:
     float maxSpeed;
 
     float currentSpeed;
+
+    // How much damage the Hostile deals on hit
+    int power;
+
+    bool reloading = false;
+
+    // How long between shots (milliseconds)
+    int reloadTime;
+
+    // Use of chrono for time measurement found on StackOverflow here: https://stackoverflow.com/a/27739925
+    // Timestamp of the last time this TrainCar fired its weapon
+    std::chrono::steady_clock::time_point lastShot = std::chrono::steady_clock::now();
+
+    // The number of milliseconds until this car can fire another shot
+    int timeUntilReloaded;
+
+    Model projectileModel;
+
+    Texture2D projectileTexture;
+
 
 public:
     Vector3* target;
@@ -77,11 +100,10 @@ public:
 
     /**
      * Fire!
-     * Note: If the Hostile cannot shoot, will return 0
      * @param targetPos     Pointer to a vector representing the target being shot
-     * @return Returns the outgoing damage
+     * @return Returns a pointer to the fired projectile
     */
-    int shoot(Vector3* targetPos);
+    Projectile* shoot(Vector3* targetPos);
 
     /**
      * Removes the given damageReceived from the Hostile's currentHitpoints. Will not reduce currentHitpoints below 0

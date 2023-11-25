@@ -74,7 +74,7 @@ bool Train::canShoot() {
 }
 
 Projectile* Train::shoot(Vector3* targetPos) {
-    if (!this->canShoot()) return 0;
+    if (!this->canShoot()) return nullptr;
 
     int outgoingDamage = dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot(); // Learned about dynamic_cast from StackOverflow: https://stackoverflow.com/a/307801
 

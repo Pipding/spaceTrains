@@ -11,7 +11,6 @@ Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target
     this->currentHitpoints = 100;
 }
 
-
 bool Hostile::getIsFleeing() {
     return this->isFleeing;
 }
@@ -29,27 +28,56 @@ float Hostile::getMaxSpeed() {
 }
 
 void Hostile::update(float deltaTime) {
-    if (this->isAlive()) { // TODO: If this thing isn't alive it should be deleted. That's a job for the CombatManager
+    Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);
+    this->distanceToTarget = Vector3Length(vectorToTarget);
+    this->directionToTarget = Vector3Normalize(vectorToTarget);
 
-        Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);
-        this->distanceToTarget = Vector3Length(vectorToTarget);
-        this->directionToTarget = Vector3Normalize(vectorToTarget);
+    if (this->reloading) {
+        int64_t timeSinceLastShot = std::chrono::duration_cast<std::chrono::milliseconds> (std::chrono::steady_clock::now() - this->lastShot).count();
 
-        if (this->isFleeing) {
-            // Try to get away from the target
-            this->alive = false;
-            // TODO: This is a stub
+        if (timeSinceLastShot > this->reloadTime) {
+            this->reloading = false;
         } else {
-            // Try to get closer to the target
-            if (this->distanceToTarget > this->minEngagementDistance) {
-                this->position = Vector3Add(this->position, Vector3Scale(this->directionToTarget, this->currentSpeed * deltaTime));
-            }
-
-            this->setRotation({0, this->angleToVector(*this->target), 0});
+            this->timeUntilReloaded = this->reloadTime - timeSinceLastShot;
         }
-
-        Actor::update();
     }
+
+    if (this->isFleeing) {
+        // Try to get away from the target
+        this->alive = false;
+        // TODO: This is a stub
+    } else {
+        // Try to get closer to the target
+        if (this->distanceToTarget > this->minEngagementDistance) {
+            this->position = Vector3Add(this->position, Vector3Scale(this->directionToTarget, this->currentSpeed * deltaTime));
+            this->setRotation({0, this->angleToVector(*this->target), 0});
+        } else if (this->distanceToTarget < this->minEngagementDistance) {
+            // try to get away
+        }
+    }
+
+    Actor::update();
+}
+
+bool Hostile::canShoot() {
+    if (this->reloading) return false;
+
+    if ((this->minEngagementDistance < this->distanceToTarget) && (this->distanceToTarget < this->maxEngagementDistance)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Projectile* Hostile::shoot(Vector3* targetPos) {
+    if (!this->canShoot()) return nullptr;
+
+    Projectile* p = new Projectile(this->position, 1000.f, this->power, targetPos, this->projectileModel, this->projectileTexture);
+
+    this->lastShot = std::chrono::steady_clock::now();
+    this->reloading = true;
+    
+    return p;
 }
 
 int Hostile::receiveDamage(int damageReceived) {
