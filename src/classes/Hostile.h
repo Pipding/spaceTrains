@@ -89,4 +89,9 @@ public:
      * @return  Returns currentHitpoints after damage is applied
     */
     int receiveDamage(int damageReceived);
+
+    /**
+     * Returns true if the combatant is alive
+    */
+    bool isAlive();
 };

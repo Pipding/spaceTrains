@@ -29,7 +29,7 @@ float Hostile::getMaxSpeed() {
 }
 
 void Hostile::update(float deltaTime) {
-    if (this->isAlive) { // TODO: If this thing isn't alive it should be deleted. That's a job for the CombatManager
+    if (this->isAlive()) { // TODO: If this thing isn't alive it should be deleted. That's a job for the CombatManager
 
         Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);
         this->distanceToTarget = Vector3Length(vectorToTarget);
@@ -37,7 +37,7 @@ void Hostile::update(float deltaTime) {
 
         if (this->isFleeing) {
             // Try to get away from the target
-            this->isAlive = false;
+            this->alive = false;
             // TODO: This is a stub
         } else {
             // Try to get closer to the target
@@ -56,11 +56,15 @@ int Hostile::receiveDamage(int damageReceived) {
 
     if (this->currentHitpoints <= damageReceived) {
         this->currentHitpoints = 0;
-        this->isAlive = false;
+        this->alive = false;
         this->color = RED;
     } else {
         this->currentHitpoints -= damageReceived;
     }
 
     return this->currentHitpoints;
+}
+
+bool Hostile::isAlive() {
+    return this->alive;
 }
