@@ -9,8 +9,29 @@ Train::Train(std::initializer_list<TrainComponent*> cars, int health)
 }
 
 void Train::update(float deltaTime) {
+
+    // Update each train component
     for (std::vector<TrainComponent*>::iterator it = this->train.begin(); it != this->train.end(); ++it) {
         dynamic_cast<IUpdatable*>(*it)->update(deltaTime);
+    }
+
+    // Update projectiles. This loop needs to be different because projectiles are stored on the heap
+    // and therefore we're responsible for deleting them. If we delete them without removing them
+    // from the projectiles vector, we'll crash. If we remove something from the projectiles vector
+    // in a for loop, we'll skip an element
+    // This loop sourced from StackOverflow: https://stackoverflow.com/a/13102374
+
+    std::vector<Projectile*>::iterator it = this->projectiles.begin();
+
+    while (it != this->projectiles.end()) {
+
+        if (!(*it)->isAlive()) {
+            delete (*it);
+            it = this->projectiles.erase(it);
+        }
+        else {
+            ++it;
+        }
     }
 }
 
@@ -63,11 +84,18 @@ bool Train::canShoot() {
     return dynamic_cast<TrainCar*>(this->getActiveComponent())->getCanShoot();
 }
 
-int Train::shoot() {
+int Train::shoot(Vector3* targetPos) {
      if (!this->canShoot()) return 0;
+
+    // When a projectile is fired, create a new projectile on the heap using "new"
+    Projectile* p = new Projectile(this->head()->position, 10.f, targetPos, this->getActiveComponent()->projectile->getModel(), this->getActiveComponent()->getTexture());
+
+    // The address of the new projectile is stored in the projectiles vector
+    this->projectiles.push_back(p);
 
      // Cast source from StackOverflow: https://stackoverflow.com/a/307801
      return dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot();
+     
 }
 
 int Train::receiveDamage(int damageReceived) {
