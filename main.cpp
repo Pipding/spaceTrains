@@ -144,9 +144,7 @@ int main(void)
             ClearBackground(RAYWHITE);
             
             BeginMode3D(followCam.camera);
-            engine.draw();
-            carriage.draw();
-            carriage2.draw();
+            train.draw();
             hostile.draw();
             followCam.draw();
             combatManager.draw();
