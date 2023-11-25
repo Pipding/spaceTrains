@@ -1,11 +1,29 @@
 #include "CombatManager.h"
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
+static AssetManager& _assets = AssetManager::getInstance();
 
 CombatManager::CombatManager(FollowCam* camera, Train* train) {
     this->camera = camera;
     this->train = train;
     this->camera->parent = this->train->head();
+
+    this->projectiles[train] = std::vector<Projectile*>();
+
+    // Define the different Hostile types the CombatManager can spawn
+    Hostile hostile(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        &this->train->head()->position,
+        200.f,
+        400.f,
+        150.f,
+        _assets.getModel("missile1"),
+        _assets.getTexture("missile1")
+    );
+
+    this->hostileTypes.push_back(hostile);
 }
 
 void CombatManager::setTarget(Hostile* newTarget) {
@@ -60,7 +78,105 @@ int CombatManager::getPlayerHealth() {
     return this->train->getHealth();
 }
 
+void CombatManager::spawnHostile() {
+    // TODO: When there's more than 1 hostile, maybe randomize the type of hostile spawned
+
+    Vector3 newHostilePos = {1000.f, 0.f, 1000.f};
+
+    Hostile* h = new Hostile(
+        newHostilePos,
+        *this->hostileTypes[0].getModel(),
+        *this->hostileTypes[0].getTexture(),
+        &this->train->head()->position,
+        this->hostileTypes[0].getMinEngagementDistance(),
+        this->hostileTypes[0].getMaxEngagementDistance(),
+        this->hostileTypes[0].getMaxSpeed(),
+        this->hostileTypes[0].getProjectileModel(),
+        this->hostileTypes[0].getProjectileTexture()
+    );
+
+    this->hostiles.push_back(h);
+    this->projectiles[h] = std::vector<Projectile*>();
+}
+
 void CombatManager::update(float deltaTime) {
+    if (this->hostiles.size() == 0) {
+        this->spawnHostile();
+    }
+
+    // Update hostiles. This isn't the typical for loop because hostiles are stored on the heap
+    // and therefore we're responsible for deleting them. If we delete them without removing them
+    // from the hostiles vector, we'll crash. If we remove something from the projectiles vector
+    // in a for loop, we'll skip an element
+    // This loop sourced from StackOverflow: https://stackoverflow.com/a/13102374
+    std::vector<Hostile*>::iterator hostileIt = this->hostiles.begin();
+
+    while (hostileIt != this->hostiles.end()) {
+
+        // Update any projectiles heading for this hostile
+        // Update projectiles
+        std::vector<Projectile*>::iterator projectileIt = this->projectiles[*hostileIt].begin();
+
+        while (projectileIt != this->projectiles[*hostileIt].end()) {
+            // Update the projectile
+            dynamic_cast<IUpdatable*>(*projectileIt)->update(deltaTime);
+
+            // If the projectile is not alive after updating, delete it from heap and vector
+            if (!(*projectileIt)->isAlive()) {
+                // Assign damage
+                (*hostileIt)->receiveDamage((*projectileIt)->getDamage());
+                delete (*projectileIt);
+                projectileIt = this->projectiles[*hostileIt].erase(projectileIt);
+            }
+            else {
+                ++projectileIt;
+            }
+        }
+
+        // TODO: Hostile shouldn't update if it's dead
+        // Update the hostile
+        (*hostileIt)->update(deltaTime);
+
+        // If the Hostile is not alive after updating, delete it from heap and vector
+        if (!(*hostileIt)->isAlive()) {
+            // TODO: Unsetting target needs cleaning up
+            this->targetLocked = false;
+            this->camera->unsetTarget();
+            this->camera->parent = this->train->resetActiveComponent();
+            this->camera->resetmouseRotationAdjustment();
+
+            delete (*hostileIt);
+            hostileIt = this->hostiles.erase(hostileIt);
+        }
+        else {
+            if ((*hostileIt)->canShoot()) {
+                Projectile* firedProjectile = (*hostileIt)->shoot(&this->train->head()->position);
+                this->projectiles[this->train].push_back(firedProjectile);
+            }
+            ++hostileIt;
+        }
+    }
+
+    // Update any projectiles targeted at the player
+    std::vector<Projectile*>::iterator it = this->projectiles[this->train].begin();
+
+    while (it != this->projectiles[this->train].end()) {
+        // Update the projectile
+        (*it)->update(deltaTime);
+
+        // If the projectile is not alive after updating, delete it from heap and vector
+        if (!(*it)->isAlive()) {
+            // Assign damage
+            this->train->receiveDamage((*it)->getDamage());
+            delete (*it);
+            it = this->projectiles[this->train].erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+    
+
     Ray targetRay = this->getTargetingRay();
 
     // Don't bother scanning for new targets if there's already a locked target
@@ -79,7 +195,23 @@ void CombatManager::update(float deltaTime) {
 }
 
 void CombatManager::draw() {
-    // Only draw CombatManager stuff if debug is enabled
+
+    // Draw each hostile and any projectiles targeting them
+    for (std::vector<Hostile*>::iterator hostileIt = this->hostiles.begin(); hostileIt != this->hostiles.end(); ++hostileIt) {
+        (*hostileIt)->draw();
+
+        for (std::vector<Projectile*>::iterator projectileIt = this->projectiles[(*hostileIt)].begin(); projectileIt != this->projectiles[(*hostileIt)].end(); ++projectileIt) {
+            (*projectileIt)->draw();
+        }
+    }
+
+    // Draw any projectiles targeted at the player
+    for (std::vector<Projectile*>::iterator it = this->projectiles[this->train].begin(); it != this->projectiles[this->train].end(); ++it) {
+        (*it)->draw();
+    }
+    
+
+    // Everything below here should only be drawn if debug is enabled
     if (!_debug.getDrawBoundingBoxes()) {
         return;
     }
@@ -103,9 +235,8 @@ void CombatManager::onKeyPressed(int key) {
         if (this->hasTarget() && this->targetLocked) {
             if (!this->train->canShoot()) return;
 
-            int damageDealt = this->train->shoot(&this->getActiveTarget()->position);
-            
-            this->getActiveTarget()->receiveDamage(damageDealt);
+            Projectile* firedProjectile = this->train->shoot(&this->getActiveTarget()->position);
+            this->projectiles[this->getActiveTarget()].push_back(firedProjectile);
         }
     } else if (key == KEY_UP) {
         if (this->targetLocked) {

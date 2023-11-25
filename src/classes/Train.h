@@ -13,7 +13,6 @@ class Train : public ICombatant, public IUpdatable {
 private:
     std::vector<TrainComponent*> train;
     int activeComponentIndex;
-    std::vector<Projectile*> projectiles;
 
 public:
     /**
@@ -114,9 +113,9 @@ public:
      * Fire!
      * Note: If the currently active TrainComponent cannot shoot, will return 0
      * @param targetPos     Pointer to a vector representing the target being shot
-     * @return Returns the outgoing damage
+     * @return A pointer to the projectile fired
     */
-    int shoot(Vector3* targetPos);
+    Projectile* shoot(Vector3* targetPos);
 
     /**
      * Removes the given damageReceived from current hitpoints. Will not reduce currentHitpoints below 0

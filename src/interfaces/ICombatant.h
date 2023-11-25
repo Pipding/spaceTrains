@@ -6,7 +6,7 @@
 class ICombatant {
 protected:
     // Is the combatant still alive? (Can it move, deal dadmage, be damaged etc.)
-    bool isAlive = true;
+    bool alive = true;
     int maxHitpoints = 1;
     int currentHitpoints = 1;
 
@@ -16,4 +16,10 @@ protected:
      * @return  Returns currentHitpoints after damage is applied
     */
     int receiveDamage(int damageReceived);
+
+public:
+    /**
+     * Returns true if the combatant is alive
+    */
+    bool isAlive();
 };
