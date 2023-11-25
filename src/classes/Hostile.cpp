@@ -11,6 +11,23 @@ Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target
     this->currentHitpoints = 100;
 }
 
+
+bool Hostile::getIsFleeing() {
+    return this->isFleeing;
+}
+
+float Hostile::getMinEngagementDistance() {
+    return this->minEngagementDistance;
+}
+
+float Hostile::getMaxEngagementDistance() {
+    return this->maxEngagementDistance;
+}
+
+float Hostile::getMaxSpeed() {
+    return this->maxSpeed;
+}
+
 void Hostile::update(float deltaTime) {
     if (this->isAlive) { // TODO: If this thing isn't alive it should be deleted. That's a job for the CombatManager
 

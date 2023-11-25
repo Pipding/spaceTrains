@@ -57,6 +57,14 @@ public:
     */
     void setIsFleeing(bool value);
 
+    bool getIsFleeing();
+
+    float getMinEngagementDistance();
+
+    float getMaxEngagementDistance();
+
+    float getMaxSpeed();
+
     // ==================================================
     // Combat-related functions
     // ==================================================
