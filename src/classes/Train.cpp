@@ -101,17 +101,18 @@ bool Train::canShoot() {
     return dynamic_cast<TrainCar*>(this->getActiveComponent())->getCanShoot();
 }
 
-int Train::shoot(Vector3* targetPos) {
-     if (!this->canShoot()) return 0;
+Projectile* Train::shoot(Vector3* targetPos) {
+    if (!this->canShoot()) return 0;
+
+    int outgoingDamage = dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot(); // Learned about dynamic_cast from StackOverflow: https://stackoverflow.com/a/307801
 
     // When a projectile is fired, create a new projectile on the heap using "new"
-    Projectile* p = new Projectile(this->getActiveComponent()->position, 1000.f, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture);
+    Projectile* p = new Projectile(this->getActiveComponent()->position, 1000.f, outgoingDamage, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture);
 
     // The address of the new projectile is stored in the projectiles vector
     this->projectiles.push_back(p);
-
-    // Tell the active train component to shoot
-    return dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot(); // Learned about dynamic_cast from StackOverflow: https://stackoverflow.com/a/307801
+    
+    return p;
 }
 
 int Train::receiveDamage(int damageReceived) {
