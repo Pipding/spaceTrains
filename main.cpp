@@ -109,9 +109,6 @@ int main(void)
     //==================================================
     CombatManager combatManager = CombatManager(&followCam, &train);
 
-    Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position, 200.f, 1000.f, 300.f);
-    combatManager.addHostile(&hostile);
-
     // ==================================================
     // Register input listeners
     // ==================================================
@@ -135,7 +132,6 @@ int main(void)
         if (_gameStateManager.getState() == GameState::Gameplay) {
             train.update(deltaTime);
             followCam.update(deltaTime);
-            hostile.update(deltaTime);
             combatManager.update(deltaTime);
         }
 
@@ -145,7 +141,6 @@ int main(void)
             
             BeginMode3D(followCam.camera);
             train.draw();
-            hostile.draw();
             followCam.draw();
             combatManager.draw();
             DrawGrid(2000, 20.f);

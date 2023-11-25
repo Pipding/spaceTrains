@@ -13,13 +13,13 @@ CombatManager::CombatManager(FollowCam* camera, Train* train) {
         {1000.f, 0.f, 1000.f},
         _assets.getModel("duck"),
         _assets.getTexture("duck"),
-        this->train->head()->position,
+        &this->train->head()->position,
         200.f,
         1000.f,
         300.f
     );
 
-    this->addHostile(&hostile);
+    this->hostileTypes.push_back(hostile);
 }
 
 void CombatManager::setTarget(Hostile* newTarget) {
@@ -75,6 +75,12 @@ int CombatManager::getPlayerHealth() {
 }
 
 void CombatManager::update(float deltaTime) {
+
+    // Update each hostile
+    for (std::vector<Hostile*>::iterator it = this->hostiles.begin(); it != this->hostiles.end(); ++it) {
+        dynamic_cast<IUpdatable*>(*it)->update(deltaTime);
+    }
+
     Ray targetRay = this->getTargetingRay();
 
     // Don't bother scanning for new targets if there's already a locked target
@@ -93,7 +99,13 @@ void CombatManager::update(float deltaTime) {
 }
 
 void CombatManager::draw() {
-    // Only draw CombatManager stuff if debug is enabled
+
+    // Draw each hostile
+    for (std::vector<Hostile*>::iterator it = this->hostiles.begin(); it != this->hostiles.end(); ++it) {
+        (*it)->draw();
+    }
+
+    // Everything below here should only be drawn if debug is enabled
     if (!_debug.getDrawBoundingBoxes()) {
         return;
     }
