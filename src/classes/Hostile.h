@@ -29,11 +29,14 @@ private:
     // Is the hostile trying to escape?
     bool isFleeing = true;
 
+    float maxSpeed;
+
+    float currentSpeed;
+
 public:
     Vector3* target;
-    float speed;
 
-    Hostile(Vector3 position, Model model, Texture texture, Vector3* target);
+    Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed);
 
     /**
      * Update method

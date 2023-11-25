@@ -109,7 +109,7 @@ int main(void)
     //==================================================
     CombatManager combatManager = CombatManager(&followCam, &train);
 
-    Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position);
+    Hostile hostile({1000.f, 0.f, 1000.f}, _assets.getModel("duck"), _assets.getTexture("duck"), &engine.position, 200.f, 1000.f, 300.f);
     combatManager.addHostile(&hostile);
 
     // ==================================================

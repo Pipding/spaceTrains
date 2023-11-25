@@ -1,10 +1,10 @@
 #include "Hostile.h"
 
-Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target)
+Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed)
 :Actor(position, model, texture) {
-    this->speed = 300.f;
+    this->maxSpeed = maxSpeed;
+    this->currentSpeed = maxSpeed; //TODO: Need to implement acceleration and deceleration for hostiles
     this->target = target;
-    this->targetDistance = 200.f;
     this->maxHitpoints = 100;
     this->currentHitpoints = 100;
 }
@@ -15,8 +15,8 @@ void Hostile::update(float deltaTime) {
         Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);
 
         // Don't get too close to the target
-        if (Vector3Length(vectorToTarget) >= targetDistance) {
-            this->position = Vector3Add(this->position, Vector3Scale(Vector3Normalize(vectorToTarget), this->speed * deltaTime));
+        if (Vector3Length(vectorToTarget) >= this->minEngagementDistance) {
+            this->position = Vector3Add(this->position, Vector3Scale(Vector3Normalize(vectorToTarget), this->currentSpeed * deltaTime));
         }
         
         this->setRotation({0, this->angleToVector(*this->target), 0});
