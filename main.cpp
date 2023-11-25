@@ -20,15 +20,13 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Enemy behaviour
+ *      - Keep track of player's score (number of enemies killed)
+ *      - Add shooting sound effects
+ *      - Add powerups which drop when an enemy is defeated
+ *      - Load a font
  *      - Add train models
  *      - Add turret models
  *      - Make turret models rotate to face the direction the camera faces
- *      - Add shooting sound effects
- *      - Add powerups which drop when an enemy is defeated
- *      - Spawn a new enemy when the enemy dies
- *      - Keep track of player's score (number of enemies killed)
- *      - Load a font
  *      - Improve enemy AI and shooting behaviour
  *      - TrainEngine.h needs comments
  * 
