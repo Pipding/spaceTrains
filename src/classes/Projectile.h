@@ -21,7 +21,7 @@ public:
      * @param model         The 3D model which should represent the projectile
      * @param texture       The texture to be applied to the model
     */
-    Projectile(Vector3 position, float speed, Vector3* destination, Model* model, Texture2D* texture);
+    Projectile(Vector3 position, float speed, Vector3* destination, Model model, Texture2D texture); // TODO: This should accept pointers to model/textures
 
     /**
      * Updates the projectile, moving it closer to its destination
