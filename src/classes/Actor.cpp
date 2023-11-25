@@ -25,6 +25,14 @@ void Actor::setTexture(Texture2D texture) {
     this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
 }
 
+Texture2D* Actor::getTexture() {
+    return &this->texture;
+}
+
+Model* Actor::getModel() {
+    return &this->model;
+}
+
 void Actor::setRotation(Vector3 rotation) {
     this->rotation = rotation;
     this->transform = MatrixRotateXYZ(this->rotation);

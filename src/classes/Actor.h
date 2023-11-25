@@ -49,6 +49,12 @@ public:
      */
     void setTexture(Texture2D texture);
 
+    // TODO: Comments
+    Texture2D* getTexture();
+
+    // TODO: Comments
+    Model* getModel();
+
     /**
     * Set the rotation of the Actor
     * @param rotation   Vector3 of angles in radians in x, y and z

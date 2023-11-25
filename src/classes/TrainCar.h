@@ -30,14 +30,16 @@ public:
 
     /**
      * A train car. Follows another TrainComponent and can be followed by another TrainCar
-     * @param model         The 3D model representing the TrainCar in the world
-     * @param texture       The texture to be applied to model
-     * @param engine        Pointer to a TrainComponent which this car will follow
-     * @param position      Initial position of the train car
-     * @param power         How much damage the TrainComponent deals in combat
-     * @param reloadTime    Time in milliseconds between shots in combat
+     * @param model                 The 3D model representing the TrainCar in the world
+     * @param texture               The texture to be applied to model
+     * @param engine                Pointer to a TrainComponent which this car will follow
+     * @param position              Initial position of the train car
+     * @param power                 How much damage the TrainComponent deals in combat
+     * @param reloadTime            Time in milliseconds between shots in combat
+     * @param projectileModel       3D model representing the projectiles fired by this TrainComponent
+     * @param projectileTexture     Texture to apply to the projectiles
     */
-    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime);
+    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture); // TODO: This should accept pointers to model/texture
 
     /**
      * Update function
