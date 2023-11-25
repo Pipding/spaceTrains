@@ -1,11 +1,25 @@
 #include "CombatManager.h"
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
+static AssetManager& _assets = AssetManager::getInstance();
 
 CombatManager::CombatManager(FollowCam* camera, Train* train) {
     this->camera = camera;
     this->train = train;
     this->camera->parent = this->train->head();
+
+    // Define the different Hostile types the CombatManager can spawn
+    Hostile hostile(
+        {1000.f, 0.f, 1000.f},
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        this->train->head()->position,
+        200.f,
+        1000.f,
+        300.f
+    );
+
+    this->addHostile(&hostile);
 }
 
 void CombatManager::setTarget(Hostile* newTarget) {

@@ -7,14 +7,18 @@
 #include "src/interfaces/ICombatant.h"
 #include "src/interfaces/IUpdatable.h"
 #include "src/classes/Train.h"
-#include <vector>
+#include "src/globals/AssetManager.h"
 #include <chrono>
+#include <vector>
 
 /**
  * Manager class for combat. Takes care of targeting and acts as an intermediary between objects dealing damage to one another
 */
 class CombatManager: public IUpdatable, public IKeyboardListener {
 private:
+
+    // Types of Hostiles the CombatManager can spawn
+    std::vector<Hostile> hostileTypes;
 
     // ==================================================
     // Targeting member variables
