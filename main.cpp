@@ -22,11 +22,12 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *  MUST
  *      - Add projectiles
  *      - Add train models
- *      - Animate train models
  *      - Add turret models
  *      - Make turret models rotate to face the direction the camera faces
  *      - Add shooting sound effects
  *      - Add powerups which drop when an enemy is defeated
+ *      - Spawn a new enemy when the enemy dies
+ *      - Keep track of player's score (number of enemies killed)
  *      - Load a font
  *      - Improve enemy AI and shooting behaviour
  *      - TrainEngine.h needs comments
@@ -71,11 +72,32 @@ int main(void)
     //==================================================
     // Duck model & texture come from https://www.cgtrader.com/items/2033848/download-page
     _assets.loadModel("assets/models/ducky.obj", "duck");
+    _assets.loadModel("assets/models/missile1.obj", "missile1");
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
+    _assets.loadTexture("assets/textures/missile1_albedo.png", "missile1");
 
     TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
-    TrainCar carriage(_assets.getModel("duck"), _assets.getTexture("duck"), &engine, {-50.f, 0.f, 0.f}, 20, 3000);
-    TrainCar carriage2(_assets.getModel("duck"), _assets.getTexture("duck"), &carriage, {-100.f, 0.f, 0.f}, 5, 200);
+
+    TrainCar carriage(
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        &engine,
+        {-50.f, 0.f, 0.f},
+        20,
+        3000,
+        _assets.getModel("missile1"),
+        _assets.getTexture("missile1")
+    );
+
+    TrainCar carriage2(
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        &carriage, {-100.f, 0.f, 0.f},
+        5,
+        200,
+        _assets.getModel("missile1"),
+        _assets.getTexture("missile1")
+    );
 
     Train train({&engine, &carriage, &carriage2}, 100);
 
