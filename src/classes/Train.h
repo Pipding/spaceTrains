@@ -27,6 +27,11 @@ public:
     */
     void update(float deltaTime);
 
+    /**
+     * Draw method
+    */
+   void draw();
+
     // ==================================================
     // convenience methods
     // ==================================================

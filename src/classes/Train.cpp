@@ -38,6 +38,20 @@ void Train::update(float deltaTime) {
     }
 }
 
+void Train::draw() {
+
+    // Draw train components
+    for (std::vector<TrainComponent*>::iterator it = this->train.begin(); it != this->train.end(); ++it) {
+        (*it)->draw();
+    }
+    
+    // Draw projectiles
+    for (std::vector<Projectile*>::iterator it = this->projectiles.begin(); it != this->projectiles.end(); ++it) {
+        (*it)->draw();
+    }
+
+}
+
 TrainEngine* Train::head() {
     return dynamic_cast<TrainEngine*>(this->getComponent(0));
 }
