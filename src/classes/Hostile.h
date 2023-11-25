@@ -62,7 +62,7 @@ private:
 public:
     Vector3* target;
 
-    Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed);
+    Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed, Model projectileModel, Texture2D projectileTexture);
 
     /**
      * Update method
@@ -87,6 +87,10 @@ public:
     float getMaxEngagementDistance();
 
     float getMaxSpeed();
+
+    Texture2D getProjectileTexture();
+
+    Model getProjectileModel();
 
     // ==================================================
     // Combat-related functions
