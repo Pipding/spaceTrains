@@ -9,6 +9,7 @@ class Projectile: public Actor, public IUpdatable {
 private:
     float speed;
     Vector3* destination;
+    bool alive;
 
 public:
 
@@ -27,4 +28,7 @@ public:
      * @param deltaTime Time in seconds for last frame drawn
     */
     void update(float deltaTime);
+
+    // TODO: Comments
+    bool isAlive();
 };
