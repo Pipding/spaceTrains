@@ -97,9 +97,28 @@ void CombatManager::update(float deltaTime) {
         this->spawnHostile();
     }
 
-    // Update each hostile
-    for (std::vector<Hostile*>::iterator it = this->hostiles.begin(); it != this->hostiles.end(); ++it) {
+    // This update loop is similar to the way Projectiles are handled. For more
+    // information, see the comment in Train::update(), where I first implemented it
+    std::vector<Hostile*>::iterator it = this->hostiles.begin();
+
+    while (it != this->hostiles.end()) {
+        // Update the hostile
         dynamic_cast<IUpdatable*>(*it)->update(deltaTime);
+
+        // If the Hostile is not alive after updating, delete it from heap and vector
+        if (!(*it)->isAlive()) {
+            // TODO: Unsetting target needs cleaning up
+            this->targetLocked = false;
+            this->camera->unsetTarget();
+            this->camera->parent = this->train->resetActiveComponent();
+            this->camera->resetmouseRotationAdjustment();
+
+            delete (*it);
+            it = this->hostiles.erase(it);
+        }
+        else {
+            ++it;
+        }
     }
 
     Ray targetRay = this->getTargetingRay();
@@ -150,7 +169,7 @@ void CombatManager::onKeyPressed(int key) {
         if (this->hasTarget() && this->targetLocked) {
             if (!this->train->canShoot()) return;
 
-            int damageDealt = this->train->shoot(&this->getActiveTarget()->position);
+            int damageDealt = this->train->shoot(&this->getActiveTarget()->position)->getDamage();
             
             this->getActiveTarget()->receiveDamage(damageDealt);
         }

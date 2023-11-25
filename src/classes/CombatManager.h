@@ -9,6 +9,7 @@
 #include "src/classes/Train.h"
 #include "src/globals/AssetManager.h"
 #include <chrono>
+#include <map>
 #include <vector>
 
 /**
@@ -36,6 +37,8 @@ private:
     // Combatants (Hostiles & the player)
     // ==================================================
     std::vector<Hostile*> hostiles;
+
+    std::map<Hostile*, std::vector<Projectile*>> activeProjectiles;
     Train* train;
 
     void spawnHostile();
