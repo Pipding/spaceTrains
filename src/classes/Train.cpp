@@ -24,7 +24,10 @@ void Train::update(float deltaTime) {
     std::vector<Projectile*>::iterator it = this->projectiles.begin();
 
     while (it != this->projectiles.end()) {
+        // Update the projectile
+        dynamic_cast<IUpdatable*>(*it)->update(deltaTime);
 
+        // If the projectile is not alive after updating, delete it from heap and vector
         if (!(*it)->isAlive()) {
             delete (*it);
             it = this->projectiles.erase(it);
@@ -88,14 +91,13 @@ int Train::shoot(Vector3* targetPos) {
      if (!this->canShoot()) return 0;
 
     // When a projectile is fired, create a new projectile on the heap using "new"
-    Projectile* p = new Projectile(this->head()->position, 10.f, targetPos, this->getActiveComponent()->projectile->getModel(), this->getActiveComponent()->getTexture());
+    Projectile* p = new Projectile(this->head()->position, 10.f, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture);
 
     // The address of the new projectile is stored in the projectiles vector
     this->projectiles.push_back(p);
 
-     // Cast source from StackOverflow: https://stackoverflow.com/a/307801
-     return dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot();
-     
+    // Tell the active train component to shoot
+    return dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot(); // Learned about dynamic_cast from StackOverflow: https://stackoverflow.com/a/307801
 }
 
 int Train::receiveDamage(int damageReceived) {
