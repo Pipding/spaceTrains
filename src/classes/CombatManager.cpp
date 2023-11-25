@@ -17,7 +17,7 @@ CombatManager::CombatManager(FollowCam* camera, Train* train) {
         _assets.getTexture("duck"),
         &this->train->head()->position,
         200.f,
-        1000.f,
+        400.f,
         300.f,
         _assets.getModel("missile1"),
         _assets.getTexture("missile1")

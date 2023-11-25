@@ -40,6 +40,7 @@ Model Hostile::getProjectileModel() {
 }
 
 void Hostile::update(float deltaTime) {
+    // Calculate where your target is
     Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);
     this->distanceToTarget = Vector3Length(vectorToTarget);
     this->directionToTarget = Vector3Normalize(vectorToTarget);
@@ -54,11 +55,18 @@ void Hostile::update(float deltaTime) {
         }
     }
 
-    if (this->isFleeing) {
-        // Try to get away from the target
-        this->alive = false;
-        // TODO: This is a stub
+    // If you're reloading or in the "fleeing" state, try to get away from the player
+    if (this->isFleeing || this->reloading) {
+
+        // Calculate a vector which is in the exact opposite direction of the player
+        Vector3 fleeVector = Vector3Add(this->position, Vector3Scale(Vector3Negate(this->directionToTarget), 100.f));
+
+        // Turn away from the player and run
+        this->setRotation({0, this->angleToVector(fleeVector), 0});
+        this->position = Vector3Add(this->position, Vector3Scale(Vector3Normalize(fleeVector), this->currentSpeed * deltaTime));
+
     } else {
+
         // Try to get closer to the target
         if (this->distanceToTarget > this->minEngagementDistance) {
             this->position = Vector3Add(this->position, Vector3Scale(this->directionToTarget, this->currentSpeed * deltaTime));
@@ -66,6 +74,7 @@ void Hostile::update(float deltaTime) {
         } else if (this->distanceToTarget < this->minEngagementDistance) {
             // try to get away
         }
+        
     }
 
     Actor::update();
