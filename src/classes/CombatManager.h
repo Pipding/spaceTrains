@@ -38,7 +38,7 @@ private:
     // ==================================================
     std::vector<Hostile*> hostiles;
 
-    std::map<Hostile*, std::vector<Projectile*>> activeProjectiles;
+    std::map<Hostile*, std::vector<Projectile*>> projectiles;
     Train* train;
 
     void spawnHostile();
