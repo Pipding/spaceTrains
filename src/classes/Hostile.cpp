@@ -63,7 +63,7 @@ void Hostile::update(float deltaTime) {
 
         // Turn away from the player and run
         this->setRotation({0, this->angleToVector(fleeVector), 0});
-        this->position = Vector3Add(this->position, Vector3Scale(Vector3Normalize(fleeVector), this->currentSpeed * deltaTime));
+        this->position = Vector3Add(this->position, Vector3Scale(this->getVectorTowardTarget(fleeVector), this->currentSpeed * deltaTime));
 
     } else {
 
