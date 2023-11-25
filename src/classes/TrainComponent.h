@@ -10,14 +10,17 @@ public:
     */
     TrainComponent();
 
-    // TODO: Make this private
-    Projectile* projectile;
+    // TODO: Make these private
+    Model projectileModel;
+    Texture2D projectileTexture;
 
     /**
      * A component of a Train
-     * @param position      The starting position of the TrainComponent
-     * @param model         Pointer to a 3D model representing the TrainComponent
-     * @param texture       Texture to apply to the model
+     * @param position              The starting position of the TrainComponent
+     * @param model                 3D model representing the TrainComponent
+     * @param texture               Texture to apply to the model
+     * @param projectileModel       3D model representing the projectiles fired by this TrainComponent
+     * @param projectileTexture     Texture to apply to the projectiles
     */
-    TrainComponent(Vector3 position, Model model, Texture2D texture);
+    TrainComponent(Vector3 position, Model model, Texture2D texture, Model projectileModel, Texture2D projectiletexture); // TODO: This should accept pointers to model/texture
  };
