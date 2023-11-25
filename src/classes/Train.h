@@ -13,7 +13,6 @@ class Train : public ICombatant, public IUpdatable {
 private:
     std::vector<TrainComponent*> train;
     int activeComponentIndex;
-    std::vector<Projectile*> projectiles;
 
 public:
     /**
