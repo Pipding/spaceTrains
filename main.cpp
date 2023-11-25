@@ -20,7 +20,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Add projectiles
+ *      - Enemy behaviour
  *      - Add train models
  *      - Add turret models
  *      - Make turret models rotate to face the direction the camera faces
