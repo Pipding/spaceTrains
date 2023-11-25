@@ -105,7 +105,7 @@ int Train::shoot(Vector3* targetPos) {
      if (!this->canShoot()) return 0;
 
     // When a projectile is fired, create a new projectile on the heap using "new"
-    Projectile* p = new Projectile(this->head()->position, 1000.f, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture);
+    Projectile* p = new Projectile(this->getActiveComponent()->position, 1000.f, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture);
 
     // The address of the new projectile is stored in the projectiles vector
     this->projectiles.push_back(p);
