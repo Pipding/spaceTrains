@@ -93,6 +93,9 @@ void CombatManager::spawnHostile() {
 }
 
 void CombatManager::update(float deltaTime) {
+    if (this->hostiles.size() == 0) {
+        this->spawnHostile();
+    }
 
     // Update each hostile
     for (std::vector<Hostile*>::iterator it = this->hostiles.begin(); it != this->hostiles.end(); ++it) {
