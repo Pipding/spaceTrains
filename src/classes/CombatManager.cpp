@@ -102,8 +102,10 @@ void CombatManager::onKeyPressed(int key) {
     } else if (key == KEY_SPACE) {
         if (this->hasTarget() && this->targetLocked) {
             if (!this->train->canShoot()) return;
+
+            int damageDealt = this->train->shoot(&this->getActiveTarget()->position);
             
-            this->getActiveTarget()->receiveDamage(this->train->shoot());
+            this->getActiveTarget()->receiveDamage(damageDealt);
         }
     } else if (key == KEY_UP) {
         if (this->targetLocked) {
