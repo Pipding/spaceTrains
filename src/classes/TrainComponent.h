@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Projectile.h"
 #include "src/interfaces/IUpdatable.h"
 
 class TrainComponent : public Actor, public IUpdatable {
@@ -8,6 +9,9 @@ public:
      * Default constructor
     */
     TrainComponent();
+
+    // TODO: Make this private
+    Projectile* projectile;
 
     /**
      * A component of a Train
