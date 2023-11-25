@@ -11,10 +11,19 @@ Projectile::Projectile(Vector3 position, float speed, Vector3* destination, Mode
 
 void Projectile::update(float deltaTime) {
 
-    // Move the projectile towards its target at speed
-    this->position = Vector3Add(this->position, Vector3Scale(this->getVectorTowardTarget(*this->destination), this->speed * deltaTime));
+    Vector3 vectorToTarget = this->getVectorTowardTarget(*this->destination, false);
 
-    Actor::update();
+    // If the projectile has reached (or is close enough) to its target, destroy projectile
+    if (Vector3Length(vectorToTarget) <= 10.f) {
+        this->alive = false;
+    } else {
+        this->setRotation({0, this->angleToVector(*this->destination), 0});
+
+        // Move the projectile towards its target at speed
+        this->position = Vector3Add(this->position, Vector3Scale(this->getVectorTowardTarget(*this->destination), this->speed * deltaTime));
+
+        Actor::update();
+    }
 }
 
 bool Projectile::isAlive() {
