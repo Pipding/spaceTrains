@@ -8,6 +8,8 @@ CombatManager::CombatManager(FollowCam* camera, Train* train) {
     this->train = train;
     this->camera->parent = this->train->head();
 
+    this->projectiles[train] = std::vector<Projectile*>();
+
     // Define the different Hostile types the CombatManager can spawn
     Hostile hostile(
         {0.f, 0.f, 0.f},
@@ -16,7 +18,9 @@ CombatManager::CombatManager(FollowCam* camera, Train* train) {
         &this->train->head()->position,
         200.f,
         1000.f,
-        300.f
+        300.f,
+        _assets.getModel("missile1"),
+        _assets.getTexture("missile1")
     );
 
     this->hostileTypes.push_back(hostile);
@@ -86,7 +90,9 @@ void CombatManager::spawnHostile() {
         &this->train->head()->position,
         this->hostileTypes[0].getMinEngagementDistance(),
         this->hostileTypes[0].getMaxEngagementDistance(),
-        this->hostileTypes[0].getMaxSpeed()
+        this->hostileTypes[0].getMaxSpeed(),
+        this->hostileTypes[0].getProjectileModel(),
+        this->hostileTypes[0].getProjectileTexture()
     );
 
     this->hostiles.push_back(h);
@@ -129,7 +135,7 @@ void CombatManager::update(float deltaTime) {
 
         // TODO: Hostile shouldn't update if it's dead
         // Update the hostile
-        dynamic_cast<IUpdatable*>(*hostileIt)->update(deltaTime);
+        (*hostileIt)->update(deltaTime);
 
         // If the Hostile is not alive after updating, delete it from heap and vector
         if (!(*hostileIt)->isAlive()) {
@@ -143,9 +149,33 @@ void CombatManager::update(float deltaTime) {
             hostileIt = this->hostiles.erase(hostileIt);
         }
         else {
+            if ((*hostileIt)->canShoot()) {
+                Projectile* firedProjectile = (*hostileIt)->shoot(&this->train->head()->position);
+                this->projectiles[this->train].push_back(firedProjectile);
+            }
             ++hostileIt;
         }
     }
+
+    // Update any projectiles targeted at the player
+    std::vector<Projectile*>::iterator it = this->projectiles[this->train].begin();
+
+    while (it != this->projectiles[this->train].end()) {
+        // Update the projectile
+        (*it)->update(deltaTime);
+
+        // If the projectile is not alive after updating, delete it from heap and vector
+        if (!(*it)->isAlive()) {
+            // Assign damage
+            this->train->receiveDamage((*it)->getDamage());
+            delete (*it);
+            it = this->projectiles[this->train].erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+    
 
     Ray targetRay = this->getTargetingRay();
 
@@ -173,6 +203,11 @@ void CombatManager::draw() {
         for (std::vector<Projectile*>::iterator projectileIt = this->projectiles[(*hostileIt)].begin(); projectileIt != this->projectiles[(*hostileIt)].end(); ++projectileIt) {
             (*projectileIt)->draw();
         }
+    }
+
+    // Draw any projectiles targeted at the player
+    for (std::vector<Projectile*>::iterator it = this->projectiles[this->train].begin(); it != this->projectiles[this->train].end(); ++it) {
+        (*it)->draw();
     }
     
 
