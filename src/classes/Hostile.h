@@ -74,12 +74,6 @@ public:
     // Getters & setters
     // ==================================================
 
-    /**
-     * Sets isfleeing, which determines whether the Hostile is trying to get away from its target
-     * @param value     Value to set isFleeing to
-    */
-    void setIsFleeing(bool value);
-
     bool getIsFleeing();
 
     float getMinEngagementDistance();

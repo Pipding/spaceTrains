@@ -74,14 +74,14 @@ void Hostile::update(float deltaTime) {
         } else if (this->distanceToTarget < this->minEngagementDistance) {
             // try to get away
         }
-        
+
     }
 
     Actor::update();
 }
 
 bool Hostile::canShoot() {
-    if (this->reloading) return false;
+    if (this->reloading || this->isFleeing) return false;
 
     if ((this->minEngagementDistance < this->distanceToTarget) && (this->distanceToTarget < this->maxEngagementDistance)) {
         return true;
@@ -109,6 +109,12 @@ int Hostile::receiveDamage(int damageReceived) {
         this->color = RED;
     } else {
         this->currentHitpoints -= damageReceived;
+
+        // If hitpoints have dropped below 20%, start fleeing
+        // TODO: Give hostiles a random chance to start fleeing instead of a definite threshold
+        if ((this->currentHitpoints / this->maxHitpoints) <= 0.2f) {
+            this->isFleeing = true;
+        }
     }
 
     return this->currentHitpoints;
