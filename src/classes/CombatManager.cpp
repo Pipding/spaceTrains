@@ -26,6 +26,17 @@ CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scor
     );
 
     this->hostileTypes.push_back(hostile);
+
+    // Define the different PowerUps the CombatManager can spawn
+    PowerUp healthPackSmall(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        PowerUpType::HealthPack,
+        10
+    );
+
+    this->powerupTypes.push_back(healthPackSmall);
 }
 
 Train* CombatManager::getTrain() {
@@ -105,6 +116,20 @@ void CombatManager::spawnHostile() {
     this->projectiles[h] = std::vector<Projectile*>();
 }
 
+void CombatManager::spawnPowerup(Vector3 pos) {
+    // TODO: When there's more than 1 powerup, randomize which one gets spawned
+
+    PowerUp* p = new PowerUp(
+        pos,
+        *this->powerupTypes[0].getModel(),
+        *this->powerupTypes[0].getTexture(),
+        this->powerupTypes[0].getType(),
+        this->powerupTypes[0].getMagnitude()
+    );
+
+    this->powerups.push_back(p);
+}
+
 void CombatManager::update(float deltaTime) {
     if (this->hostiles.size() == 0) {
         this->spawnHostile();
@@ -151,6 +176,8 @@ void CombatManager::update(float deltaTime) {
             this->camera->parent = this->train->resetActiveComponent();
             this->camera->resetmouseRotationAdjustment();
 
+            this->spawnPowerup((*hostileIt)->position);
+
             delete (*hostileIt);
             hostileIt = this->hostiles.erase(hostileIt);
 
@@ -185,6 +212,29 @@ void CombatManager::update(float deltaTime) {
         }
     }
     
+    // Update any projectiles targeted at the player
+    std::vector<PowerUp*>::iterator powerUpIt = this->powerups.begin();
+
+    while (powerUpIt != this->powerups.end()) {
+        // Update the powerup
+        (*powerUpIt)->update(deltaTime);
+
+        // Check if the powerup is colliding with the player
+
+        if (CheckCollisionBoxes(this->train->head()->getBounds(), (*powerUpIt)->getBounds())) {
+            (*powerUpIt)->setIsAlive(false);
+        }
+
+        // If the powerup is not alive after updating, give the train its bonus and then delete it from the heap
+        if (!(*powerUpIt)->getIsAlive()) {
+            this->train->receivePowerUp(*powerUpIt);
+            delete (*powerUpIt);
+            powerUpIt = this->powerups.erase(powerUpIt);
+        }
+        else {
+            ++powerUpIt;
+        }
+    }
 
     Ray targetRay = this->getTargetingRay();
 
@@ -216,6 +266,11 @@ void CombatManager::draw() {
 
     // Draw any projectiles targeted at the player
     for (std::vector<Projectile*>::iterator it = this->projectiles[this->train].begin(); it != this->projectiles[this->train].end(); ++it) {
+        (*it)->draw();
+    }
+
+    // Draw powerups
+    for (std::vector<PowerUp*>::iterator it = this->powerups.begin(); it != this->powerups.end(); ++it) {
         (*it)->draw();
     }
     

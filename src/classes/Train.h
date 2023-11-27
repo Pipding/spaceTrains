@@ -1,4 +1,5 @@
 #pragma once
+#include "PowerUp.h"
 #include "Projectile.h"
 #include "TrainEngine.h"
 #include "TrainCar.h"
@@ -123,4 +124,10 @@ public:
      * @return  Returns hitpoints after damage is applied
     */
     int receiveDamage(int damageReceived);
+
+    /**
+     * Applies the given powerup to the Train
+     * @param pup   The PowerUp to apply to the Train
+    */
+    void receivePowerUp(PowerUp* pup);
 };
