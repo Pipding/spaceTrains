@@ -3,9 +3,10 @@
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 static AssetManager& _assets = AssetManager::getInstance();
 
-CombatManager::CombatManager(FollowCam* camera, Train* train) {
+CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scoreMan) {
     this->camera = camera;
     this->train = train;
+    this->scoreManager = scoreMan;
     this->camera->parent = this->train->head();
 
     this->projectiles[train] = std::vector<Projectile*>();

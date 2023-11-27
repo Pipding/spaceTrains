@@ -2,8 +2,9 @@
 
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
-UIManager::UIManager(CombatManager* combatMan) {
+UIManager::UIManager(CombatManager* combatMan, ScoreManager* scoreMan) {
     this->combatManager = combatMan;
+    this->scoreManager = scoreMan;
 }
 
 void UIManager::update(float deltaTime) {

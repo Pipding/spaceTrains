@@ -14,4 +14,5 @@ void ScoreManager::setScore(int value) {
 
 int ScoreManager::Add(int add) {
     this->score += add;
+    return score;
 }

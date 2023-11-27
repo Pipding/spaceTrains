@@ -106,8 +106,9 @@ int main(void)
     //==================================================
     // Managers
     //==================================================
-    CombatManager combatManager = CombatManager(&followCam, &train);
-    UIManager uiManager = UIManager(&combatManager);
+    ScoreManager scoreManager = ScoreManager();
+    CombatManager combatManager = CombatManager(&followCam, &train, &scoreManager);
+    UIManager uiManager = UIManager(&combatManager, &scoreManager);
 
     // ==================================================
     // Register input listeners
