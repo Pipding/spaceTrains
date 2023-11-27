@@ -6,6 +6,7 @@
 #include "src/classes/FollowCam.h"
 #include "src/classes/TrainEngine.h"
 #include "src/classes/TrainCar.h"
+#include "src/classes/UIManager.h"
 #include "src/globals/AssetManager.h"
 #include "src/globals/GameStateManager.h"
 #include "src/globals/InputManager.h"
@@ -106,6 +107,7 @@ int main(void)
     // Managers
     //==================================================
     CombatManager combatManager = CombatManager(&followCam, &train);
+    UIManager uiManager = UIManager(&combatManager);
 
     // ==================================================
     // Register input listeners
@@ -142,6 +144,7 @@ int main(void)
             followCam.draw();
             combatManager.draw();
             DrawGrid(2000, 20.f);
+            uiManager.draw();
             EndMode3D();
 
             DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
