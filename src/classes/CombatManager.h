@@ -9,6 +9,7 @@
 #include "src/interfaces/IUpdatable.h"
 #include "src/classes/Train.h"
 #include "src/globals/AssetManager.h"
+#include "src/globals/AudioManager.h"
 #include <chrono>
 #include <map>
 #include <vector>

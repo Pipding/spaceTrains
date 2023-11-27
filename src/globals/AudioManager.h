@@ -1,6 +1,5 @@
 #include "raylib.h"
-#include "src/globals/GameStateManager.h"
-#include "src/interfaces/IUpdatable.h"
+#include "src/globals/AssetManager.h"
 
 /**
  * A singleton class for playing audio
@@ -22,10 +21,18 @@ public:
     // ==================================================
     static AudioManager& getInstance()
     {
+        InitAudioDevice();
         static AudioManager instance;
         return instance;
     }
 
     AudioManager(AudioManager const&) = delete;
     void operator=(AudioManager const&)  = delete;
+
+    /**
+     * Plays a sound
+     * @param assetName The name of the sound to play. Note: if assetName isn't the name of a sound
+     *  in the AssetManager, you'll probably crash
+    */
+    void play(const char* assetName);
 };
