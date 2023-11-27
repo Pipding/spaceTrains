@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "raymath.h"
+#include "ScoreManager.h"
 #include "src/classes/FollowCam.h"
 #include "src/classes/Hostile.h"
 #include "src/interfaces/ICombatant.h"
@@ -17,6 +18,9 @@
 */
 class CombatManager: public IUpdatable, public IKeyboardListener {
 private:
+
+    // Reference to the ScoreManager so the CombatManager can update the score
+    ScoreManager* scoreManager;
 
     // Types of Hostiles the CombatManager can spawn
     std::vector<Hostile> hostileTypes;
@@ -47,8 +51,9 @@ public:
     /**
      * Constructor
      * @param camera    A pointer to the main camera
+     * TODO: Update comments
     */
-    CombatManager(FollowCam* camera, Train* train);
+    CombatManager(FollowCam* camera, Train* train, ScoreManager* scoreMan);
 
     Train* getTrain();
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CombatManager.h"
+#include "ScoreManager.h"
 #include "src/globals/GameStateManager.h"
 
 class UIManager: public IUpdatable {
@@ -16,12 +17,13 @@ class UIManager: public IUpdatable {
     */
 private:
    CombatManager* combatManager;
+   ScoreManager* scoreManager;
 
 public:
     /**
      * Constructor
     */
-    UIManager(CombatManager* combatManager);
+    UIManager(CombatManager* combatManager, ScoreManager* scoreManager);
 
     void update(float deltaTime);
 

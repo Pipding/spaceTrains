@@ -2,8 +2,9 @@
 
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
-UIManager::UIManager(CombatManager* combatMan) {
+UIManager::UIManager(CombatManager* combatMan, ScoreManager* scoreMan) {
     this->combatManager = combatMan;
+    this->scoreManager = scoreMan;
 }
 
 void UIManager::update(float deltaTime) {
@@ -17,9 +18,10 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         return;
     }
 
-    DrawText(TextFormat("Velocity: %f", Vector3Length(this->combatManager->getTrain()->head()->velocity)), 20, 20, 40, GREEN);
+    DrawText(TextFormat("Score: %i", this->scoreManager->getScore()), 20, 20, 40, GREEN);
 
-    DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 60, 40, RED);
+    DrawText(TextFormat("Speed: %f", Vector3Length(this->combatManager->getTrain()->head()->velocity)), 20, screenHeight - 60, 40, GREEN);
+    DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
 
     // ==================================================
     // Target box
