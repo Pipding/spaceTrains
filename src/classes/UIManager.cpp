@@ -10,7 +10,8 @@ void UIManager::update(float deltaTime) {
     
 }
 
+void UIManager::draw(int screenWidth, int screenHeight) {
+    DrawText(TextFormat("Velocity: %f", Vector3Length(this->combatManager->getTrain()->head()->velocity)), 20, 20, 40, GREEN);
 
-void UIManager::draw() {
-
+    DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 60, 40, RED);
 }

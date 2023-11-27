@@ -26,6 +26,10 @@ CombatManager::CombatManager(FollowCam* camera, Train* train) {
     this->hostileTypes.push_back(hostile);
 }
 
+Train* CombatManager::getTrain() {
+    return this->train;
+}
+
 void CombatManager::setTarget(Hostile* newTarget) {
     this->activeTarget = newTarget;
 }

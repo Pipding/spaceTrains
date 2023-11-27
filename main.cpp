@@ -144,12 +144,10 @@ int main(void)
             followCam.draw();
             combatManager.draw();
             DrawGrid(2000, 20.f);
-            uiManager.draw();
             EndMode3D();
 
-            DrawText(TextFormat("Velocity: %f, %f", engine.velocity.x, engine.velocity.z), 20, 20, 40, GREEN);
-
-            DrawText(TextFormat("Health: %i", combatManager.getPlayerHealth()), 20, screenHeight - 60, 40, RED);
+            // UI needs to be drawn outside of 3D mode
+            uiManager.draw(screenWidth, screenHeight);
 
             // ==================================================
             // Target box

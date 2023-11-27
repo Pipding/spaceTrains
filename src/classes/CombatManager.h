@@ -50,6 +50,8 @@ public:
     */
     CombatManager(FollowCam* camera, Train* train);
 
+    Train* getTrain();
+
     /**
      * Sets the active target
      * @param newTarget     The new target

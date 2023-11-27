@@ -25,5 +25,5 @@ public:
 
     void update(float deltaTime);
 
-    void draw();
+    void draw(int screenWidth, int screenHeight);
 };
