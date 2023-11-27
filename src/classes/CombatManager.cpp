@@ -221,7 +221,7 @@ void CombatManager::update(float deltaTime) {
 
         // If the powerup is not alive after updating, give the train its bonus and then delete it from the heap
         if (!(*powerUpIt)->getIsAlive()) {
-            this->train->receivePowerUp((*powerUpIt));
+            this->train->receivePowerUp(*powerUpIt);
             delete (*powerUpIt);
             powerUpIt = this->powerups.erase(powerUpIt);
         }

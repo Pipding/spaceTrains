@@ -75,8 +75,6 @@ int main(void)
     _assets.loadTexture("assets/textures/missile1_albedo.png", "missile1");
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
 
-    PowerUp pup({200.f, 0.f, 0.f}, _assets.getModel("duck"), _assets.getTexture("duck"), PowerUpType::HealthPack, 20);
-
     TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
 
     TrainCar carriage(
@@ -136,7 +134,6 @@ int main(void)
             train.update(deltaTime);
             followCam.update(deltaTime);
             combatManager.update(deltaTime);
-            pup.update(deltaTime);
         }
 
         if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused) {
@@ -147,7 +144,6 @@ int main(void)
             train.draw();
             followCam.draw();
             combatManager.draw();
-            pup.draw();
             DrawGrid(2000, 20.f);
             EndMode3D();
 
