@@ -21,8 +21,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Keep track of player's score (number of enemies killed)
- *      - Add shooting sound effects
  *      - Add powerups which drop when an enemy is defeated
  *      - Load a font
  *      - Add train models
