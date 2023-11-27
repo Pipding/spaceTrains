@@ -1,7 +1,7 @@
 #include "PowerUp.h"
 
-PowerUp::PowerUp(Model model, Texture2D texture, PowerUpType type, int magnitude)
-: Actor({0.f, 0.f, 0.f}, model, texture) {
+PowerUp::PowerUp(Vector3 position, Model model, Texture2D texture, PowerUpType type, int magnitude)
+: Actor(position, model, texture) {
     this->type = type;
     this->magnitude = magnitude;
 }
