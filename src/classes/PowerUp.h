@@ -17,7 +17,7 @@ private:
 
 public:
 
-    PowerUp(PowerUpType type, int magnitude);
+    PowerUp(Model model, Texture2D texture, PowerUpType type, int magnitude);
 
    void update(float deltaTime);
 
