@@ -13,6 +13,7 @@ private:
 
     std::map<std::string, Model> models;
     std::map<std::string, Texture2D> textures;
+    std::map<std::string, Sound> sounds;
 
 public:
 
@@ -43,6 +44,11 @@ public:
     Texture2D getTexture(const char* assetName);
 
     /**
+     * Gets a Sound from the sounds map
+    */
+    Sound getSound(const char* assetName);
+
+    /**
      * Loads a Model and stores it in the models map
      * @param filename      Filepath for the asset to load
      * @param assetName     A name for the asset, used as a key in the models map
@@ -67,6 +73,19 @@ public:
      * @param assetName     The name of the asset to be unloaded
     */
     void unloadTexture(const char* assetName);
+
+    /**
+     * Loads a Sound and stores it in the sounds map
+     * @param filename      Filepath for the asset to load
+     * @param assetName     A name for the asset, used as a key in the sounds map
+    */
+    void loadSound(const char* filename, const char* assetName);
+
+    /**
+     * Unloads the Sound for the given key if it exists in the sounds map
+     * @param assetName     The name of the asset to be unloaded
+    */
+    void unloadSound(const char* assetName);
 
     /**
      * Unloads all assets from all maps

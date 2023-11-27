@@ -2,6 +2,7 @@
 
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 static AssetManager& _assets = AssetManager::getInstance();
+static AudioManager& _audio = AudioManager::getInstance();
 
 CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scoreMan) {
     this->camera = camera;
@@ -242,6 +243,8 @@ void CombatManager::onKeyPressed(int key) {
     } else if (key == KEY_SPACE) {
         if (this->hasTarget() && this->targetLocked) {
             if (!this->train->canShoot()) return;
+
+            _audio.play("missile_fire");
 
             Projectile* firedProjectile = this->train->shoot(&this->getActiveTarget()->position);
             this->projectiles[this->getActiveTarget()].push_back(firedProjectile);
