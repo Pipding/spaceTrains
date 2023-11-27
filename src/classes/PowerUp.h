@@ -19,8 +19,8 @@ public:
 
     PowerUp(PowerUpType type, int magnitude);
 
-   void update();
+   void update(float deltaTime);
 
-   void draw(float deltaTime);
+   void draw();
 
 };

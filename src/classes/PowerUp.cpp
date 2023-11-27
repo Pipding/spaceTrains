@@ -5,10 +5,10 @@ PowerUp::PowerUp(PowerUpType type, int magnitude) {
     this->magnitude = magnitude;
 }
 
-void PowerUp::update() {
+void PowerUp::update(float deltaTime) {
     
 }
 
-void PowerUp::draw(float deltaTime) {
+void PowerUp::draw() {
 
 }
