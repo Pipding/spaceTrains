@@ -219,6 +219,12 @@ void CombatManager::update(float deltaTime) {
         // Update the powerup
         (*powerUpIt)->update(deltaTime);
 
+        // Check if the powerup is colliding with the player
+
+        if (CheckCollisionBoxes(this->train->head()->getBounds(), (*powerUpIt)->getBounds())) {
+            (*powerUpIt)->setIsAlive(false);
+        }
+
         // If the powerup is not alive after updating, give the train its bonus and then delete it from the heap
         if (!(*powerUpIt)->getIsAlive()) {
             this->train->receivePowerUp(*powerUpIt);

@@ -97,10 +97,10 @@ int Train::receiveDamage(int damageReceived) {
 void Train::receivePowerUp(PowerUp* pup) {
     switch (pup->getType()) {
         case PowerUpType::HealthPack:
-            if (this->currentHitpoints + pup->getMagnitude() > this->maxHitpoints) {
-                this->currentHitpoints += pup->getMagnitude();
-            } else {
+            if (this->currentHitpoints + pup->getMagnitude() >= this->maxHitpoints) {
                 this->currentHitpoints = this->maxHitpoints;
+            } else {
+                this->currentHitpoints += pup->getMagnitude();
             }
             break;
         case PowerUpType::SpeedBoost:
