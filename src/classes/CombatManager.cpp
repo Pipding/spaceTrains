@@ -26,6 +26,17 @@ CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scor
     );
 
     this->hostileTypes.push_back(hostile);
+
+    // Define the different PowerUps the CombatManager can spawn
+    PowerUp healthPackSmall(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        PowerUpType::HealthPack,
+        10
+    );
+
+    this->powerupTypes.push_back(healthPackSmall);
 }
 
 Train* CombatManager::getTrain() {
@@ -105,6 +116,20 @@ void CombatManager::spawnHostile() {
     this->projectiles[h] = std::vector<Projectile*>();
 }
 
+void CombatManager::spawnPowerup(Vector3 pos) {
+    // TODO: When there's more than 1 powerup, randomize which one gets spawned
+
+    PowerUp* p = new PowerUp(
+        pos,
+        *this->powerupTypes[0].getModel(),
+        *this->powerupTypes[0].getTexture(),
+        this->powerupTypes[0].getType(),
+        this->powerupTypes[0].getMagnitude()
+    );
+
+    this->powerups.push_back(p);
+}
+
 void CombatManager::update(float deltaTime) {
     if (this->hostiles.size() == 0) {
         this->spawnHostile();
@@ -150,6 +175,8 @@ void CombatManager::update(float deltaTime) {
             this->camera->unsetTarget();
             this->camera->parent = this->train->resetActiveComponent();
             this->camera->resetmouseRotationAdjustment();
+
+            this->spawnPowerup((*hostileIt)->position);
 
             delete (*hostileIt);
             hostileIt = this->hostiles.erase(hostileIt);

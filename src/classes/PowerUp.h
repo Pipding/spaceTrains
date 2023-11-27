@@ -19,6 +19,9 @@ public:
 
     PowerUp(Vector3 position, Model model, Texture2D texture, PowerUpType type, int magnitude);
 
+    PowerUpType getType();
+    int getMagnitude();
+
    void update(float deltaTime);
 
    void draw();

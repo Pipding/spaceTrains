@@ -5,6 +5,7 @@
 #include "ScoreManager.h"
 #include "src/classes/FollowCam.h"
 #include "src/classes/Hostile.h"
+#include "src/classes/PowerUp.h"
 #include "src/interfaces/ICombatant.h"
 #include "src/interfaces/IUpdatable.h"
 #include "src/classes/Train.h"
@@ -26,6 +27,9 @@ private:
     // Types of Hostiles the CombatManager can spawn
     std::vector<Hostile> hostileTypes;
 
+    // Types of PowerUp the CombatManager can spawn
+    std::vector<PowerUp> powerupTypes;
+
     // ==================================================
     // Targeting member variables
     // ==================================================
@@ -46,7 +50,11 @@ private:
     std::map<ICombatant*, std::vector<Projectile*>> projectiles;
     Train* train;
 
+    std::vector<PowerUp*> powerups;
+
     void spawnHostile();
+
+    void spawnPowerup(Vector3 pos);
 
 public:
     /**

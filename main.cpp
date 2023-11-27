@@ -75,7 +75,7 @@ int main(void)
     _assets.loadTexture("assets/textures/missile1_albedo.png", "missile1");
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
 
-    PowerUp pup(_assets.getModel("duck"), _assets.getTexture("duck"), PowerUpType::HealthPack, 20);
+    PowerUp pup({200.f, 0.f, 0.f}, _assets.getModel("duck"), _assets.getTexture("duck"), PowerUpType::HealthPack, 20);
 
     TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
 
