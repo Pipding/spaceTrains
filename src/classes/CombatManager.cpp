@@ -212,6 +212,23 @@ void CombatManager::update(float deltaTime) {
         }
     }
     
+    // Update any projectiles targeted at the player
+    std::vector<PowerUp*>::iterator powerUpIt = this->powerups.begin();
+
+    while (powerUpIt != this->powerups.end()) {
+        // Update the powerup
+        (*powerUpIt)->update(deltaTime);
+
+        // If the powerup is not alive after updating, give the train its bonus and then delete it from the heap
+        if (!(*powerUpIt)->getIsAlive()) {
+            this->train->receivePowerUp((*powerUpIt));
+            delete (*powerUpIt);
+            powerUpIt = this->powerups.erase(powerUpIt);
+        }
+        else {
+            ++powerUpIt;
+        }
+    }
 
     Ray targetRay = this->getTargetingRay();
 
@@ -243,6 +260,11 @@ void CombatManager::draw() {
 
     // Draw any projectiles targeted at the player
     for (std::vector<Projectile*>::iterator it = this->projectiles[this->train].begin(); it != this->projectiles[this->train].end(); ++it) {
+        (*it)->draw();
+    }
+
+    // Draw powerups
+    for (std::vector<PowerUp*>::iterator it = this->powerups.begin(); it != this->powerups.end(); ++it) {
         (*it)->draw();
     }
     
