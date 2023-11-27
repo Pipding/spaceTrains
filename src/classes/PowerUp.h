@@ -13,6 +13,8 @@ private:
     // The magnitude of the bonus granted. e.g. A powerup of type HealthPack with magnitude 50 will restore 50 health
     int magnitude;
 
+    bool isAlive = true;
+
     Direction rotationDirection = Direction::Right;
 
 public:
@@ -21,9 +23,12 @@ public:
 
     PowerUpType getType();
     int getMagnitude();
+    bool getIsAlive();
 
-   void update(float deltaTime);
+    void setIsAlive(bool value);
+    
+    void update(float deltaTime);
 
-   void draw();
+    void draw();
 
 };

@@ -14,6 +14,14 @@ int PowerUp::getMagnitude() {
     return this->magnitude;
 }
 
+bool PowerUp::getIsAlive() {
+    return this->isAlive;
+}
+
+void PowerUp::setIsAlive(bool value) {
+    this->isAlive = value;
+}
+
 void PowerUp::update(float deltaTime) {
 
     this->rotateBy( Vector3Scale({0.f, this->rotationDirection == Direction::Right ? -1.5f : 1.5f, 0.f}, deltaTime));
