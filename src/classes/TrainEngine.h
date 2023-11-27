@@ -1,7 +1,6 @@
 #pragma once
 #include "TrainComponent.h"
 #include "src/enums/Direction.h"
-#include "src/enums/Direction.h"
 #include "src/interfaces/IKeyboardListener.h"
 
 /**
