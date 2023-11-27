@@ -152,6 +152,9 @@ void CombatManager::update(float deltaTime) {
 
             delete (*hostileIt);
             hostileIt = this->hostiles.erase(hostileIt);
+
+            // Update player score
+            this->scoreManager->Add(1);
         }
         else {
             if ((*hostileIt)->canShoot()) {
