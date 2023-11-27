@@ -10,6 +10,11 @@ Texture2D AssetManager::getTexture(const char* assetName) {
     return this->textures[assetName];
 }
 
+// TODO: This could error out if a bad assetName is given
+Sound AssetManager::getSound(const char* assetName) {
+    return this->sounds[assetName];
+}
+
 void AssetManager::loadModel(const char* filename, const char* assetName){
     this->models[assetName] = LoadModel(filename);
 }
@@ -32,6 +37,17 @@ void AssetManager::unloadTexture(const char* assetName) {
     }
 }
 
+void AssetManager::loadSound(const char* filename, const char* assetName){
+    this->sounds[assetName] = LoadSound(filename);
+}
+
+void AssetManager::unloadSound(const char* assetName) {
+    // Elegant way to check if a key exists, found here: https://stackoverflow.com/a/11765524
+    if (this->sounds.count(assetName)) {
+        UnloadSound(sounds[assetName]);
+    }
+}
+
 void AssetManager::unloadAll() {
     // Found this loop structure here: https://favtutor.com/blogs/iterate-through-map-cpp
     for (auto keyValuePair : this->models) {
@@ -40,5 +56,9 @@ void AssetManager::unloadAll() {
 
     for (auto keyValuePair : this->textures) {
         UnloadTexture(keyValuePair.second);
+    }
+
+    for (auto keyValuePair : this->sounds) {
+        UnloadSound(keyValuePair.second);
     }
 }
