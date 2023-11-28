@@ -30,8 +30,8 @@ CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scor
     // Define the different PowerUps the CombatManager can spawn
     PowerUp healthPackSmall(
         {0.f, 0.f, 0.f},
-        _assets.getModel("duck"),
-        _assets.getTexture("duck"),
+        _assets.getModel("health_powerup"),
+        _assets.getTexture("health_powerup"),
         PowerUpType::HealthPack,
         10
     );
