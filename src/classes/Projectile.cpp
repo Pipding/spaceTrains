@@ -1,10 +1,12 @@
 #include "Projectile.h"
+#include "src/globals/AssetManager.h"
 
-Projectile::Projectile(Vector3 position, float speed, int damage, Vector3* destination, Model model, Texture2D texture)
-    :Actor(position, model, texture), destination(destination) {
-        this->speed = speed;
-        this->damage = damage;
-        this->alive = true;
+// TODO: This is a bit of a kludge. I don't think this class should necessarily be directly using the AssetManager
+// but until assets are properly passed around as pointers, this is more performant
+static AssetManager& _assets = AssetManager::getInstance();
+
+Projectile::Projectile(Vector3 position, float speed, int damage, Vector3* destination, Model model, Texture2D texture, const char* launchSFX, const char* destroySFX)
+    :Actor(position, model, texture), speed(speed), destination(destination), alive(true), damage(damage), launchSFX(launchSFX), destroySFX(destroySFX) {
 
         // TODO: This should really be a parameter but in the interest of time it's hard-coded for now
         this->scale = 8.f;

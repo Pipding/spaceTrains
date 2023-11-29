@@ -79,7 +79,7 @@ Projectile* Train::shoot(Vector3* targetPos) {
     int outgoingDamage = dynamic_cast<TrainCar*>(this->getActiveComponent())->shoot(); // Learned about dynamic_cast from StackOverflow: https://stackoverflow.com/a/307801
 
     // When a projectile is fired, create a new projectile on the heap using "new"
-    Projectile* p = new Projectile(this->getActiveComponent()->position, 1000.f, outgoingDamage, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture);
+    Projectile* p = new Projectile(this->getActiveComponent()->position, 1000.f, outgoingDamage, targetPos, this->getActiveComponent()->projectileModel, this->getActiveComponent()->projectileTexture, "missile_fire", "explosion");
     
     return p;
 }

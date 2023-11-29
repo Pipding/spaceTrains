@@ -93,7 +93,7 @@ bool Hostile::canShoot() {
 Projectile* Hostile::shoot(Vector3* targetPos) {
     if (!this->canShoot()) return nullptr;
 
-    Projectile* p = new Projectile(this->position, 1000.f, this->power, targetPos, this->projectileModel, this->projectileTexture);
+    Projectile* p = new Projectile(this->position, 1000.f, this->power, targetPos, this->projectileModel, this->projectileTexture, "missile_fire", "explosion");
 
     this->lastShot = std::chrono::steady_clock::now();
     this->reloading = true;

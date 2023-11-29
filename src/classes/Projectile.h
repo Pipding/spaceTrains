@@ -11,6 +11,8 @@ private:
     Vector3* destination;
     bool alive;
     int damage;
+    const char* launchSFX;
+    const char* destroySFX;
 
 public:
 
@@ -22,8 +24,10 @@ public:
      * @param destination   Where the projectile should end up
      * @param model         The 3D model which should represent the projectile
      * @param texture       The texture to be applied to the model
+     * @param launchSFX     The name of the sound effect to play when this projectile is launched
+     * @param destroySFX    The name of the sound effect to play when this projectile is destroyed
     */
-    Projectile(Vector3 position, float speed, int damage, Vector3* destination, Model model, Texture2D texture); // TODO: This should accept pointers to model/textures
+    Projectile(Vector3 position, float speed, int damage, Vector3* destination, Model model, Texture2D texture, const char* launchSFX, const char* destroySFX); // TODO: This should accept pointers to model/textures
 
     /**
      * Updates the projectile, moving it closer to its destination
