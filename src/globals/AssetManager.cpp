@@ -1,5 +1,14 @@
 #include "src/globals/AssetManager.h"
 
+// ==================================================
+// Getters
+// ==================================================
+
+// TODO: This could error out if a bad assetName is given
+Font AssetManager::getFont(const char* assetName) {
+    return this->fonts[assetName];
+}
+
 // TODO: This could error out if a bad assetName is given
 Model AssetManager::getModel(const char* assetName) {
     return this->models[assetName];
@@ -13,6 +22,22 @@ Texture2D AssetManager::getTexture(const char* assetName) {
 // TODO: This could error out if a bad assetName is given
 Sound AssetManager::getSound(const char* assetName) {
     return this->sounds[assetName];
+}
+
+
+// ==================================================
+// Loading & unloading
+// ==================================================
+
+void AssetManager::loadFont(const char* filename, const char* assetName){
+    this->fonts[assetName] = LoadFont(filename);
+}
+
+void AssetManager::unloadFont(const char* assetName) {
+    // Elegant way to check if a key exists, found here: https://stackoverflow.com/a/11765524
+    if (this->fonts.count(assetName)) {
+        UnloadFont(fonts[assetName]);
+    }
 }
 
 void AssetManager::loadModel(const char* filename, const char* assetName){

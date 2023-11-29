@@ -22,14 +22,21 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Load a font
+ *      - Add "Game Over" screen
+ *      - Implement more than one powerup type and have them randomly spawn
+ *      - Add sound effect when a projectile hits
+ *      - Add engine SFX
+ *      - Improve lock-on UI
+ *      - Make train component selection UI vertical
  *      - Add train models
  *      - Add turret models
  *      - Make turret models rotate to face the direction the camera faces
  *      - Improve enemy AI and shooting behaviour
- *      - TrainEngine.h needs comments
+ *      - Comments in all .h files
+ *      - Organise code
  * 
  *  SHOULD
+ *      - Limit rotation of the engine based on the car behind it
  *      - Limit lock-on by distance
  *      - ICombatant should be virtual/abstract in the same way IUpdatable is
  *      - Add some more rays for target detection so it's less finicky
@@ -70,13 +77,17 @@ int main(void)
     // Duck model & texture come from https://www.cgtrader.com/items/2033848/download-page
     _assets.loadModel("assets/models/ducky.obj", "duck");
     _assets.loadModel("assets/models/missile1.obj", "missile1");
+    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
+    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
+
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
     _assets.loadTexture("assets/textures/missile1_albedo.png", "missile1");
-    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
     _assets.loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
-    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
     _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
+
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
+
+    _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
 
     TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
 
@@ -111,7 +122,7 @@ int main(void)
     //==================================================
     ScoreManager scoreManager = ScoreManager();
     CombatManager combatManager = CombatManager(&followCam, &train, &scoreManager);
-    UIManager uiManager = UIManager(&combatManager, &scoreManager);
+    UIManager uiManager = UIManager(&combatManager, &scoreManager, _assets.getFont("space_wham"));
 
     // ==================================================
     // Register input listeners

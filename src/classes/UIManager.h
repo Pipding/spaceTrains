@@ -18,12 +18,13 @@ class UIManager: public IUpdatable {
 private:
    CombatManager* combatManager;
    ScoreManager* scoreManager;
+   Font font;
 
 public:
     /**
      * Constructor
     */
-    UIManager(CombatManager* combatManager, ScoreManager* scoreManager);
+    UIManager(CombatManager* combatManager, ScoreManager* scoreManager, Font font);
 
     void update(float deltaTime);
 
