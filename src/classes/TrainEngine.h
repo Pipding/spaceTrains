@@ -7,6 +7,11 @@
  * The front engine of a train. Driven by the player
 */
 class TrainEngine: public TrainComponent, public IKeyboardListener {
+private:
+    Music engineSound;
+    float engineVolume = 0.f;
+    float currentSpeed = 0.f;
+
 public:
     Vector3 velocity = {0.f, 0.f, 0.f};
     float accelerationRate = .2f;
@@ -25,4 +30,15 @@ public:
 
     void onKeyPressed(int);
     void onKeyReleased(int);
+
+    // ==================================================
+    // Getters
+    // ==================================================
+
+    /**
+     * The current speed of the train
+     * @return float value representing the curernt speed of the Train. Calculated
+     * by getting the length of its velocity vector
+    */
+    float getSpeed();
 };

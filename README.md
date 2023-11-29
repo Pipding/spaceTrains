@@ -3,6 +3,7 @@
 | Asset name        | Type      | Source                            | Link                                                                                                  |
 |-------------------|-----------|-----------------------------------|-------------------------------------------------------                                                |
 | bullet_fire.wav   | Audio     | freesound.org user MATRIXXX_      | https://freesound.org/people/MATRIXXX_/sounds/414885/                                                 |
+| engine.wav        | Audio     | freesound.org user starkadr       | https://freesound.org/people/Starkadr/sounds/641194/                                                  |
 | explosion.wav     | Audio     | freesound.org user V-ktor         | https://freesound.org/people/V-ktor/sounds/435413/                                                    |
 | laser_hit.wav     | Audio     | freesound.org user lavik89        | https://freesound.org/people/lavik89/sounds/168984/                                                   |
 | missile_fire.wav  | Audio     | freesound.org user MATRIXXX_      | https://freesound.org/people/MATRIXXX_/sounds/441373/                                                 |
@@ -14,7 +15,6 @@
 # TODO
 
 ## MUST
-- Add engine SFX
 - Improve lock-on UI
 - Make train component selection UI vertical
 - Add train models
