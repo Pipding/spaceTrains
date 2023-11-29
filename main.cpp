@@ -22,7 +22,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Add "Game Over" screen
  *      - Implement more than one powerup type and have them randomly spawn
  *      - Add sound effect when a projectile hits
  *      - Add engine SFX
@@ -34,6 +33,7 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
  *      - Improve enemy AI and shooting behaviour
  *      - Comments in all .h files
  *      - Organise code
+ *      - Improve "Game Over" screen
  * 
  *  SHOULD
  *      - Limit rotation of the engine based on the car behind it
