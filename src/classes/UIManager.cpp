@@ -60,3 +60,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
     }
 }
+
+void UIManager::drawTargetLockUI() {
+    
+}
