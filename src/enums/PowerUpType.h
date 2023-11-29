@@ -3,7 +3,7 @@
 /**
  * Types of powerups
 */
-enum class PowerUpType{
+enum class PowerupType{
     SpeedBoost,
     HealthPack,
     ReloadSpeedBoost

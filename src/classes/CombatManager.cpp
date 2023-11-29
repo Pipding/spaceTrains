@@ -97,7 +97,7 @@ void CombatManager::spawnHostile() {
 void CombatManager::spawnPowerup(Vector3 pos) {
     // TODO: When there's more than 1 powerup, randomize which one gets spawned
 
-    PowerUp* p = new PowerUp(
+    Powerup* p = new Powerup(
         pos,
         *this->powerupTypes[0].getModel(),
         *this->powerupTypes[0].getTexture(),
@@ -191,7 +191,7 @@ void CombatManager::update(float deltaTime) {
     }
     
     // Check for collision with powerups
-    std::vector<PowerUp*>::iterator powerUpIt = this->powerups.begin();
+    std::vector<Powerup*>::iterator powerUpIt = this->powerups.begin();
 
     while (powerUpIt != this->powerups.end()) {
         // Update the powerup
@@ -205,7 +205,7 @@ void CombatManager::update(float deltaTime) {
 
         // If the powerup is not alive after updating, give the train its bonus and then delete it from the heap
         if (!(*powerUpIt)->getIsAlive()) {
-            this->train->receivePowerUp(*powerUpIt);
+            this->train->receivePowerup(*powerUpIt);
             delete (*powerUpIt);
             powerUpIt = this->powerups.erase(powerUpIt);
         }
@@ -253,7 +253,7 @@ void CombatManager::draw() {
     }
 
     // Draw powerups
-    for (std::vector<PowerUp*>::iterator it = this->powerups.begin(); it != this->powerups.end(); ++it) {
+    for (std::vector<Powerup*>::iterator it = this->powerups.begin(); it != this->powerups.end(); ++it) {
         (*it)->draw();
     }
     
@@ -326,12 +326,12 @@ void CombatManager::populateHostileTypes() {
 
 void CombatManager::populatePowerupTypes() {
 
-    // Define the different PowerUps the CombatManager can spawn
-    PowerUp healthPackSmall(
+    // Define the different Powerups the CombatManager can spawn
+    Powerup healthPackSmall(
         {0.f, 0.f, 0.f},
         _assets.getModel("health_powerup"),
         _assets.getTexture("health_powerup"),
-        PowerUpType::HealthPack,
+        PowerupType::HealthPack,
         10
     );
 

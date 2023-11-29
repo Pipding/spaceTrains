@@ -103,16 +103,16 @@ bool Train::isAlive() {
     return this->alive;
 }
 
-void Train::receivePowerUp(PowerUp* pup) {
+void Train::receivePowerup(Powerup* pup) {
     switch (pup->getType()) {
-        case PowerUpType::HealthPack:
+        case PowerupType::HealthPack:
             if (this->currentHitpoints + pup->getMagnitude() >= this->maxHitpoints) {
                 this->currentHitpoints = this->maxHitpoints;
             } else {
                 this->currentHitpoints += pup->getMagnitude();
             }
             break;
-        case PowerUpType::SpeedBoost:
+        case PowerupType::SpeedBoost:
             this->head()->topSpeed += pup->getMagnitude();
             break;
         default:

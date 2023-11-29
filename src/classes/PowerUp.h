@@ -2,13 +2,13 @@
 
 #include "Actor.h"
 #include "src/enums/Direction.h"
-#include "src/enums/PowerUpType.h"
+#include "src/enums/PowerupType.h"
 
-class PowerUp: public Actor {
+class Powerup: public Actor {
 private:
 
     // The type of powerup
-    PowerUpType type;
+    PowerupType type;
 
     // The magnitude of the bonus granted. e.g. A powerup of type HealthPack with magnitude 50 will restore 50 health
     int magnitude;
@@ -19,9 +19,9 @@ private:
 
 public:
 
-    PowerUp(Vector3 position, Model model, Texture2D texture, PowerUpType type, int magnitude);
+    Powerup(Vector3 position, Model model, Texture2D texture, PowerupType type, int magnitude);
 
-    PowerUpType getType();
+    PowerupType getType();
     int getMagnitude();
     bool getIsAlive();
 

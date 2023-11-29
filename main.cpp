@@ -4,7 +4,7 @@
 #include "src/classes/CombatManager.h"
 #include "src/classes/Hostile.h"
 #include "src/classes/FollowCam.h"
-#include "src/classes/PowerUp.h"
+#include "src/classes/Powerup.h"
 #include "src/classes/TrainEngine.h"
 #include "src/classes/TrainCar.h"
 #include "src/classes/UIManager.h"

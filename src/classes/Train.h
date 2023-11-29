@@ -1,5 +1,5 @@
 #pragma once
-#include "PowerUp.h"
+#include "Powerup.h"
 #include "Projectile.h"
 #include "TrainEngine.h"
 #include "TrainCar.h"
@@ -133,7 +133,7 @@ public:
 
     /**
      * Applies the given powerup to the Train
-     * @param pup   The PowerUp to apply to the Train
+     * @param pup   The Powerup to apply to the Train
     */
-    void receivePowerUp(PowerUp* pup);
+    void receivePowerup(Powerup* pup);
 };

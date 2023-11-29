@@ -1,34 +1,34 @@
-#include "PowerUp.h"
+#include "Powerup.h"
 
-PowerUp::PowerUp(Vector3 position, Model model, Texture2D texture, PowerUpType type, int magnitude)
+Powerup::Powerup(Vector3 position, Model model, Texture2D texture, PowerupType type, int magnitude)
 : Actor(position, model, texture) {
     this->type = type;
     this->magnitude = magnitude;
 }
 
-PowerUpType PowerUp::getType() {
+PowerupType Powerup::getType() {
     return this->type;
 }
 
-int PowerUp::getMagnitude() {
+int Powerup::getMagnitude() {
     return this->magnitude;
 }
 
-bool PowerUp::getIsAlive() {
+bool Powerup::getIsAlive() {
     return this->isAlive;
 }
 
-void PowerUp::setIsAlive(bool value) {
+void Powerup::setIsAlive(bool value) {
     this->isAlive = value;
 }
 
-void PowerUp::update(float deltaTime) {
+void Powerup::update(float deltaTime) {
 
     this->rotateBy( Vector3Scale({0.f, this->rotationDirection == Direction::Right ? -1.5f : 1.5f, 0.f}, deltaTime));
 
     Actor::update();    
 }
 
-void PowerUp::draw() {
+void Powerup::draw() {
     Actor::draw();
 }
