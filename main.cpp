@@ -22,7 +22,6 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Add powerups which drop when an enemy is defeated
  *      - Load a font
  *      - Add train models
  *      - Add turret models
