@@ -11,6 +11,7 @@
 | ducky_albedo.png  | Texture   | cgtrader.com user CGStuffStudios  | https://www.cgtrader.com/free-3d-models/sports/toy/rubber-duck-b31f3585-0347-4532-bd92-7ddea6107d0d   |
 | ds_digi.ttf       | Font      | dafont.com user Dusit Supasawat   | https://www.dafont.com/ds-digital.font                                                                |
 | space_wham.ttf    | Font      | dafont.com user Zephram           | https://www.dafont.com/space-wham.font                                                                |
+| shift_key_icon    | Image     | flaticon.com                      | https://www.flaticon.com/free-icons/shift                                                             |
 
 
 # TODO
