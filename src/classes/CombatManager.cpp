@@ -238,7 +238,7 @@ void CombatManager::update(float deltaTime) {
     }
 
     // If the player is dead, set the game state to GameOVer
-    if ( train->isAlive() ) {
+    if ( !train->isAlive() ) {
         _gameStateManager.setState(GameState::GameOver);
     }
 
