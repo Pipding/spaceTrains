@@ -57,6 +57,7 @@ int main(void)
     _assets.loadSound("assets/sounds/laser_hit.wav", "laser_hit");
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
 
+    _assets.loadFont("assets/fonts/ds-digi.ttf", "ds_digi");
     _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
 
     //==================================================
