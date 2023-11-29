@@ -19,45 +19,6 @@ static AssetManager& _assets = AssetManager::getInstance();
 static InputManager& _inputManager = InputManager::getInstance();
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
-/**
- * TODO
- *  MUST
- *      - Implement more than one powerup type and have them randomly spawn
- *      - Add sound effect when a projectile hits
- *      - Add engine SFX
- *      - Improve lock-on UI
- *      - Make train component selection UI vertical
- *      - Add train models
- *      - Add turret models
- *      - Make turret models rotate to face the direction the camera faces
- *      - Improve enemy AI and shooting behaviour
- *      - Comments in all .h files
- *      - Organise code
- *      - Improve "Game Over" screen
- * 
- *  SHOULD
- *      - Limit rotation of the engine based on the car behind it
- *      - Limit lock-on by distance
- *      - ICombatant should be virtual/abstract in the same way IUpdatable is
- *      - Add some more rays for target detection so it's less finicky
- *      - Add UI to show when a target can be locked
- *      - Make repeat fire work if the fire button is held down
- *      - Update selected component UI so it's less confusing
- *      - Create IMouseListener so things can take mouse input properly
- *          - Update FollowCam to implement IMouseListener
- * 
- *  COULD
- *      - Add UI to show damage being dealt to enemies
- *      - Add UI to show damage being dealt to player
- *      - Add a health bar
- *      - Add a menu system
- *      - Implement an UpdateManager
- * 
- *  WON'T
- *      - Update target display UI to show a visual representation of the current target
- *      - Add DR and DT to Hostiles
- *      - Add DR and DT to the train
-*/
 
 int main(void)
 {
@@ -74,7 +35,6 @@ int main(void)
     //==================================================
     // Load assets
     //==================================================
-    // Duck model & texture come from https://www.cgtrader.com/items/2033848/download-page
     _assets.loadModel("assets/models/ducky.obj", "duck");
     _assets.loadModel("assets/models/missile1.obj", "missile1");
     _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
