@@ -75,6 +75,8 @@ int main(void)
     _assets.loadTexture("assets/textures/missile1_albedo.png", "missile1");
     _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
     _assets.loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
+    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
+    _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
 
     TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
