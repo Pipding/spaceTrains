@@ -305,7 +305,7 @@ void CombatManager::onKeyPressed(int key) {
         if (this->hasTarget() && this->targetLocked) {
             if (!this->train->canShoot()) return;
 
-            _audio.play("missile_fire");
+            _audio.play(*this->train->getActiveComponent()->getProjectileSFX());
 
             Projectile* firedProjectile = this->train->shoot(&this->getActiveTarget()->position);
             this->projectiles[this->getActiveTarget()].push_back(firedProjectile);
