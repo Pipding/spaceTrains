@@ -38,8 +38,9 @@ public:
      * @param reloadTime            Time in milliseconds between shots in combat
      * @param projectileModel       3D model representing the projectiles fired by this TrainComponent
      * @param projectileTexture     Texture to apply to the projectiles
+     * @param projectileSFX         Sound to play whenever a projectile is fired
     */
-    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture); // TODO: This should accept pointers to model/texture
+    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture, Sound projectileSFX); // TODO: This should accept pointers to model/texture
 
     /**
      * Update function
