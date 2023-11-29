@@ -3,13 +3,15 @@
 TrainCar::TrainCar(): TrainComponent() { }
 
 
-TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectileTexture)
+TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectileTexture, const char* projectileLaunchSFX, const char* projectileDestroySFX)
 : TrainComponent(position, model, texture, projectileModel, projectileTexture) {
     this->engine = engine;
     this->rotation = {0.f, 0.f, 0.f};
     this->power = power;
     this->reloadTime = reloadTime;
     this->canShoot = true;
+    this->projectileLaunchSFX = projectileLaunchSFX;
+    this->projectileDestroySFX = projectileDestroySFX;
 }
 
 /**

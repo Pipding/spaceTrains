@@ -11,6 +11,9 @@ public:
     // How much damage does this TrainCar deal when it shoots?
     int power;
 
+    const char* projectileLaunchSFX;
+    const char* projectileDestroySFX;
+
     bool canShoot;
 
     // How long between shots (milliseconds)
@@ -38,8 +41,10 @@ public:
      * @param reloadTime            Time in milliseconds between shots in combat
      * @param projectileModel       3D model representing the projectiles fired by this TrainComponent
      * @param projectileTexture     Texture to apply to the projectiles
+     * @param projectileLaunchSFX   Name of the Sound to play when a projectile is fired
+     * @param projectileDestroySFX  Name of the Sound to play when a projectile is destroyed
     */
-    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture); // TODO: This should accept pointers to model/texture
+    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture, const char* projectileLaunchSFX, const char* projectileDestroySFX); // TODO: This should accept pointers to model/texture
 
     /**
      * Update function
