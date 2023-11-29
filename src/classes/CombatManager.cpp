@@ -95,7 +95,7 @@ void CombatManager::spawnHostile() {
 }
 
 void CombatManager::spawnPowerup(Vector3 pos) {
-    int powerUpIndex = GetRandomValue(0, this->powerupTypes.size() );
+    int powerUpIndex = GetRandomValue(0, this->powerupTypes.size() - 1 );
 
     Powerup* p = new Powerup(
         pos,
