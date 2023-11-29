@@ -48,6 +48,7 @@ int main(void)
     _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
 
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
+    _assets.loadSound("assets/sounds/bullet_fire.wav", "bullet_fire");
 
     _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
 
@@ -67,7 +68,7 @@ int main(void)
         3000,
         _assets.getModel("missile1"),
         _assets.getTexture("missile1"),
-        _assets.getSound("bullet")
+        _assets.getSound("missile_fire")
     );
 
     TrainCar carriage2(
@@ -78,7 +79,7 @@ int main(void)
         200,
         _assets.getModel("bullet"),
         _assets.getTexture("bullet"),
-        _assets.getSound("bullet")
+        _assets.getSound("bullet_fire")
     );
 
     Train train({&engine, &carriage1, &carriage2}, 100);
