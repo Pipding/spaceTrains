@@ -13,6 +13,7 @@ public:
     // TODO: Make these private
     Model projectileModel;
     Texture2D projectileTexture;
+    Sound projectileSFX;
 
     /**
      * A component of a Train
@@ -22,5 +23,15 @@ public:
      * @param projectileModel       3D model representing the projectiles fired by this TrainComponent
      * @param projectileTexture     Texture to apply to the projectiles
     */
-    TrainComponent(Vector3 position, Model model, Texture2D texture, Model projectileModel, Texture2D projectiletexture); // TODO: This should accept pointers to model/texture
+    TrainComponent(Vector3 position, Model model, Texture2D texture, Model projectileModel, Texture2D projectiletexture, Sound projectileSound); // TODO: This should accept pointers to assets
+
+    // ==================================================
+    // Getters
+    // ==================================================
+
+    /**
+     * Get the sound to be played when this TrainComponent fires a projectile
+     * @return Pointer to a Sound
+    */
+    Sound* getProjectileSFX();
  };
