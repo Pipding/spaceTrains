@@ -37,7 +37,7 @@ public:
     /**
      * Gets a Font from the fonts map
     */
-    Model getFont(const char* assetName);
+    Font getFont(const char* assetName);
 
     /**
      * Gets a Model from the models map
