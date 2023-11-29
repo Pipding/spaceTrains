@@ -24,8 +24,6 @@ void UIManager::draw(int screenWidth, int screenHeight) {
 
     DrawTextEx(this->font, TextFormat("Score: %i", this->scoreManager->getScore()), {20, 20}, this->font.baseSize, 2, GREEN );
 
-    // DrawText(TextFormat("Score: %i", this->scoreManager->getScore()), 20, 20, 40, GREEN);
-
     DrawText(TextFormat("Speed: %f", this->combatManager->getTrain()->head()->getSpeed()), 20, screenHeight - 60, 40, GREEN);
     DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
 

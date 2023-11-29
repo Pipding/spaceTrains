@@ -14,7 +14,6 @@
 # TODO
 
 ## MUST
-- Add engine SFX
 - Improve lock-on UI
 - Make train component selection UI vertical
 - Add train models
