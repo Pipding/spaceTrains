@@ -2,14 +2,13 @@
 
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 
-UIManager::UIManager(CombatManager* combatMan, ScoreManager* scoreMan) {
+UIManager::UIManager(CombatManager* combatMan, ScoreManager* scoreMan, Font font) {
     this->combatManager = combatMan;
     this->scoreManager = scoreMan;
+    this->font = font;
 }
 
-void UIManager::update(float deltaTime) {
-    
-}
+void UIManager::update(float deltaTime) { }
 
 void UIManager::draw(int screenWidth, int screenHeight) {
 
@@ -18,7 +17,9 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         return;
     }
 
-    DrawText(TextFormat("Score: %i", this->scoreManager->getScore()), 20, 20, 40, GREEN);
+    DrawTextEx(this->font, TextFormat("Score: %i", this->scoreManager->getScore()), {20, 20}, this->font.baseSize, 2, GREEN );
+
+    // DrawText(TextFormat("Score: %i", this->scoreManager->getScore()), 20, 20, 40, GREEN);
 
     DrawText(TextFormat("Speed: %f", Vector3Length(this->combatManager->getTrain()->head()->velocity)), 20, screenHeight - 60, 40, GREEN);
     DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
