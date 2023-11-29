@@ -32,6 +32,8 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
+    SetRandomSeed((unsigned)time(NULL));
+
     //==================================================
     // Load assets
     //==================================================

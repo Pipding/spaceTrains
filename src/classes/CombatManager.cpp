@@ -95,14 +95,14 @@ void CombatManager::spawnHostile() {
 }
 
 void CombatManager::spawnPowerup(Vector3 pos) {
-    // TODO: When there's more than 1 powerup, randomize which one gets spawned
+    int powerUpIndex = GetRandomValue(0, this->powerupTypes.size() );
 
     Powerup* p = new Powerup(
         pos,
-        *this->powerupTypes[0].getModel(),
-        *this->powerupTypes[0].getTexture(),
-        this->powerupTypes[0].getType(),
-        this->powerupTypes[0].getMagnitude()
+        *this->powerupTypes[powerUpIndex].getModel(),
+        *this->powerupTypes[powerUpIndex].getTexture(),
+        this->powerupTypes[powerUpIndex].getType(),
+        this->powerupTypes[powerUpIndex].getMagnitude()
     );
 
     this->powerups.push_back(p);
