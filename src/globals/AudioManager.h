@@ -35,4 +35,10 @@ public:
      *  in the AssetManager, you'll probably crash
     */
     void play(const char* assetName);
+
+    /**
+     * Plays a sound
+     * @param sound A Raylib Sound to play
+    */
+    void play(Sound sound);
 };
