@@ -144,13 +144,14 @@ int main(void)
         // Take user input
         _inputManager.update(deltaTime);
 
+        // Only update gameplay objects during gameplay
         if (_gameStateManager.getState() == GameState::Gameplay) {
             train.update(deltaTime);
             followCam.update(deltaTime);
             combatManager.update(deltaTime);
         }
 
-        if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused) {
+        if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused || _gameStateManager.getState() == GameState::GameOver) {
             BeginDrawing();
             ClearBackground(RAYWHITE);
             
