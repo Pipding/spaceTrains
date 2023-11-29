@@ -40,5 +40,5 @@ public:
      * Plays a sound
      * @param sound A Raylib Sound to play
     */
-    void play(Sound sound);
+    void play(Sound* sound);
 };

@@ -6,6 +6,6 @@ void AudioManager::play(const char* assetName) {
     PlaySound(_assets.getSound(assetName));
 }
 
-void AudioManager::play(Sound sound) {
-    PlaySound(sound);
+void AudioManager::play(Sound* sound) {
+    PlaySound(*sound);
 }
