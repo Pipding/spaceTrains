@@ -30,4 +30,15 @@ public:
 
     void onKeyPressed(int);
     void onKeyReleased(int);
+
+    // ==================================================
+    // Getters
+    // ==================================================
+
+    /**
+     * The current speed of the train
+     * @return float value representing the curernt speed of the Train. Calculated
+     * by getting the length of its velocity vector
+    */
+    float getSpeed();
 };

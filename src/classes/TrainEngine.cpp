@@ -27,6 +27,10 @@ TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate,
     this->engineSound = LoadMusicStream("assets/sounds/engine.wav");
 }
 
+float TrainEngine::getSpeed() {
+    return this->currentSpeed;
+}
+
 void TrainEngine::update(float deltaTime) {
     
     // Update the audio stream for the engine sound

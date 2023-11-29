@@ -26,7 +26,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
 
     // DrawText(TextFormat("Score: %i", this->scoreManager->getScore()), 20, 20, 40, GREEN);
 
-    DrawText(TextFormat("Speed: %f", Vector3Length(this->combatManager->getTrain()->head()->velocity)), 20, screenHeight - 60, 40, GREEN);
+    DrawText(TextFormat("Speed: %f", this->combatManager->getTrain()->head()->getSpeed()), 20, screenHeight - 60, 40, GREEN);
     DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
 
     // ==================================================
