@@ -89,6 +89,7 @@ int Train::receiveDamage(int damageReceived) {
 
     if (currentHitpoints < 0) {
         currentHitpoints = 0;
+        this->alive = false;
     }
 
     return currentHitpoints;
