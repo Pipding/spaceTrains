@@ -335,5 +335,32 @@ void CombatManager::populatePowerupTypes() {
         10
     );
 
+    Powerup healthPackMedium(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("health_powerup"),
+        _assets.getTexture("health_powerup"),
+        PowerupType::HealthPack,
+        25
+    );
+
+    Powerup healthPackLarge(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("health_powerup"),
+        _assets.getTexture("health_powerup"),
+        PowerupType::HealthPack,
+        50
+    );
+
+    Powerup speedBoost(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("speed_powerup"),
+        _assets.getTexture("speed_powerup"),
+        PowerupType::SpeedBoost,
+        10
+    );
+
     this->powerupTypes.push_back(healthPackSmall);
+    this->powerupTypes.push_back(healthPackMedium);
+    this->powerupTypes.push_back(healthPackLarge);
+    this->powerupTypes.push_back(speedBoost);
 }
