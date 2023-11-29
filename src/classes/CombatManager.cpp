@@ -134,6 +134,7 @@ void CombatManager::update(float deltaTime) {
             if (!(*projectileIt)->isAlive()) {
                 // Assign damage
                 (*hostileIt)->receiveDamage((*projectileIt)->getDamage());
+                _audio.play((*projectileIt)->getdestroySFX());
                 delete (*projectileIt);
                 projectileIt = this->projectiles[*hostileIt].erase(projectileIt);
             }

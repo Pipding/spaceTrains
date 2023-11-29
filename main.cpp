@@ -51,6 +51,7 @@ int main(void)
 
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
     _assets.loadSound("assets/sounds/bullet_fire.wav", "bullet_fire");
+    _assets.loadSound("assets/sounds/8_bit_explosion.wav", "explosion");
 
     _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
 
