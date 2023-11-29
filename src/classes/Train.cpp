@@ -95,6 +95,10 @@ int Train::receiveDamage(int damageReceived) {
     return currentHitpoints;
 }
 
+bool Train::isAlive() {
+    return this->alive;
+}
+
 void Train::receivePowerUp(PowerUp* pup) {
     switch (pup->getType()) {
         case PowerUpType::HealthPack:

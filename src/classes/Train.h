@@ -126,6 +126,12 @@ public:
     int receiveDamage(int damageReceived);
 
     /**
+     * Is the Train alive?
+     * @return Returns true if the train is alive
+    */
+    bool isAlive();
+
+    /**
      * Applies the given powerup to the Train
      * @param pup   The PowerUp to apply to the Train
     */
