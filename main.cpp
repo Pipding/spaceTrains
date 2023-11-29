@@ -22,14 +22,21 @@ static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 /**
  * TODO
  *  MUST
- *      - Load a font
+ *      - Add "Game Over" screen
+ *      - Implement more than one powerup type and have them randomly spawn
+ *      - Add sound effect when a projectile hits
+ *      - Add engine SFX
+ *      - Improve lock-on UI
+ *      - Make train component selection UI vertical
  *      - Add train models
  *      - Add turret models
  *      - Make turret models rotate to face the direction the camera faces
  *      - Improve enemy AI and shooting behaviour
- *      - TrainEngine.h needs comments
+ *      - Comments in all .h files
+ *      - Organise code
  * 
  *  SHOULD
+ *      - Limit rotation of the engine based on the car behind it
  *      - Limit lock-on by distance
  *      - ICombatant should be virtual/abstract in the same way IUpdatable is
  *      - Add some more rays for target detection so it's less finicky
