@@ -22,8 +22,8 @@ CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scor
         200.f,
         400.f,
         150.f,
-        _assets.getModel("missile1"),
-        _assets.getTexture("missile1")
+        _assets.getModel("missile"),
+        _assets.getTexture("missile")
     );
 
     this->hostileTypes.push_back(hostile);
