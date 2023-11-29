@@ -11,6 +11,7 @@ class AssetManager {
 private:
     AssetManager() {}
 
+    std::map<std::string, Font> fonts;
     std::map<std::string, Model> models;
     std::map<std::string, Texture2D> textures;
     std::map<std::string, Sound> sounds;
@@ -30,8 +31,13 @@ public:
     void operator=(AssetManager const&)  = delete;
 
     // ==================================================
-    // Methods
+    // Getters
     // ==================================================
+
+    /**
+     * Gets a Font from the fonts map
+    */
+    Model getFont(const char* assetName);
 
     /**
      * Gets a Model from the models map
@@ -47,6 +53,23 @@ public:
      * Gets a Sound from the sounds map
     */
     Sound getSound(const char* assetName);
+
+    // ==================================================
+    // Loading & unloading
+    // ==================================================
+
+    /**
+     * Loads a Font and stores it in the fonts map
+     * @param filename      Filepath for the asset to load
+     * @param assetName     A name for the asset, used as a key in the models map
+    */
+    void loadFont(const char* filename, const char* assetName);
+
+    /**
+     * Unloads the Font for the given key if it exists in the fonts map
+     * @param assetName     The name of the asset to be unloaded
+    */
+    void unloadFont(const char* assetName);
 
     /**
      * Loads a Model and stores it in the models map
