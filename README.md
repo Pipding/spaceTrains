@@ -14,7 +14,6 @@
 # TODO
 
 ## MUST
-- Add sound effect when a projectile hits
 - Add engine SFX
 - Improve lock-on UI
 - Make train component selection UI vertical
