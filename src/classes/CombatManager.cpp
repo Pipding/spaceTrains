@@ -282,9 +282,8 @@ void CombatManager::onKeyPressed(int key) {
         if (this->hasTarget() && this->targetLocked) {
             if (!this->train->canShoot()) return;
 
-            _audio.play(this->train->getActiveComponent()->getProjectileSFX());
-
             Projectile* firedProjectile = this->train->shoot(&this->getActiveTarget()->position);
+            _audio.play(firedProjectile->getlaunchSFX());
             this->projectiles[this->getActiveTarget()].push_back(firedProjectile);
         }
     } else if (key == KEY_UP) {

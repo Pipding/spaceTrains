@@ -36,3 +36,11 @@ bool Projectile::isAlive() {
 int Projectile::getDamage() {
     return this->damage;
 }
+
+const char* Projectile::getlaunchSFX() {
+    return this->launchSFX;
+}
+
+const char*  Projectile::getdestroySFX() {
+    return this->destroySFX;
+}

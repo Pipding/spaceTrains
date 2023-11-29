@@ -16,7 +16,7 @@ TrainEngine::TrainEngine()
  * @param rotationRate      How quickly can the train yaw
 */
 TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate)
-: TrainComponent({0.f, 0.f, 0.f}, model, texture, model, texture, {}) { // TODO: passing model/texture for projectile fields here will make the train shoot miniature trains
+: TrainComponent({0.f, 0.f, 0.f}, model, texture, model, texture) { // TODO: passing model/texture for projectile fields here will make the train shoot miniature trains
     this->accelerationRate = accelerationRate;
     this->decelerationRate = decelerationRate;
     this->topSpeed = topSpeed;

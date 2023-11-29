@@ -38,5 +38,13 @@ public:
     // TODO: Comments
     bool isAlive();
 
+    // ==================================================
+    // Getters
+    // ==================================================
+
     int getDamage();
+
+    const char* getlaunchSFX();
+
+    const char* getdestroySFX();
 };

@@ -69,8 +69,7 @@ int main(void)
         20,
         3000,
         _assets.getModel("missile"),
-        _assets.getTexture("missile"),
-        _assets.getSound("missile_fire")
+        _assets.getTexture("missile")
     );
 
     TrainCar carriage2(
@@ -80,8 +79,7 @@ int main(void)
         5,
         200,
         _assets.getModel("bullet"),
-        _assets.getTexture("bullet"),
-        _assets.getSound("bullet_fire")
+        _assets.getTexture("bullet")
     );
 
     Train train({&engine, &carriage1, &carriage2}, 100);

@@ -2,13 +2,5 @@
 
 TrainComponent::TrainComponent() : Actor() {}
 
-TrainComponent::TrainComponent(Vector3 position, Model model, Texture2D texture, Model projectileModel, Texture2D projectileTexture, Sound projectileSound)
-    : Actor(position, model, texture), projectileModel(projectileModel), projectileTexture(projectileTexture), projectileSFX(projectileSound) {}
-
-// ==================================================
-// Getters
-// ==================================================
-
-Sound* TrainComponent::getProjectileSFX() {
-    return &this->projectileSFX;
-}
+TrainComponent::TrainComponent(Vector3 position, Model model, Texture2D texture, Model projectileModel, Texture2D projectileTexture)
+    : Actor(position, model, texture), projectileModel(projectileModel), projectileTexture(projectileTexture) {}
