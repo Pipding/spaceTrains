@@ -11,6 +11,7 @@
 #include "src/classes/Train.h"
 #include "src/globals/AssetManager.h"
 #include "src/globals/AudioManager.h"
+#include "src/globals/GameStateManager.h"
 #include <chrono>
 #include <map>
 #include <vector>
