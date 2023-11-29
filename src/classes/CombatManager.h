@@ -141,4 +141,21 @@ public:
      * @param key   The key which was released
     */
     void onKeyReleased(int key);
+
+    // =======================================================
+    // Convenience functions. Really just exctracting these
+    // for code readability
+    // =======================================================
+    
+    /**
+     * Defines all the hostiles the CombatManager can spawn
+     * and adds them to the hostileTypes map
+    */
+    void populateHostileTypes();
+
+    /**
+     * Defines all the powerups the CombatManager can spawn
+     * and adds them to the powerupTypes map
+    */
+    void populatePowerupTypes();
 };

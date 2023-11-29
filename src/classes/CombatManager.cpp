@@ -13,31 +13,8 @@ CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scor
 
     this->projectiles[train] = std::vector<Projectile*>();
 
-    // Define the different Hostile types the CombatManager can spawn
-    Hostile hostile(
-        {0.f, 0.f, 0.f},
-        _assets.getModel("duck"),
-        _assets.getTexture("duck"),
-        &this->train->head()->position,
-        200.f,
-        400.f,
-        150.f,
-        _assets.getModel("missile"),
-        _assets.getTexture("missile")
-    );
-
-    this->hostileTypes.push_back(hostile);
-
-    // Define the different PowerUps the CombatManager can spawn
-    PowerUp healthPackSmall(
-        {0.f, 0.f, 0.f},
-        _assets.getModel("health_powerup"),
-        _assets.getTexture("health_powerup"),
-        PowerUpType::HealthPack,
-        10
-    );
-
-    this->powerupTypes.push_back(healthPackSmall);
+    this->populateHostileTypes();
+    this->populatePowerupTypes();
 }
 
 Train* CombatManager::getTrain() {
@@ -322,3 +299,41 @@ void CombatManager::onKeyPressed(int key) {
 }
 
 void CombatManager::onKeyReleased(int key) { }
+
+
+// =======================================================
+// Convenience functions. Really just exctracting these
+// for code readability
+// =======================================================
+
+void CombatManager::populateHostileTypes() {
+
+    // Define the different Hostile types the CombatManager can spawn
+    Hostile hostile(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("duck"),
+        _assets.getTexture("duck"),
+        &this->train->head()->position,
+        200.f,
+        400.f,
+        150.f,
+        _assets.getModel("missile"),
+        _assets.getTexture("missile")
+    );
+
+    this->hostileTypes.push_back(hostile);
+}
+
+void CombatManager::populatePowerupTypes() {
+
+    // Define the different PowerUps the CombatManager can spawn
+    PowerUp healthPackSmall(
+        {0.f, 0.f, 0.f},
+        _assets.getModel("health_powerup"),
+        _assets.getTexture("health_powerup"),
+        PowerUpType::HealthPack,
+        10
+    );
+
+    this->powerupTypes.push_back(healthPackSmall);
+}
