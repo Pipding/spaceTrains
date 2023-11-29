@@ -85,13 +85,22 @@ Projectile* Train::shoot(Vector3* targetPos) {
 }
 
 int Train::receiveDamage(int damageReceived) {
-    this->currentHitpoints -= damageReceived;
 
-    if (currentHitpoints < 0) {
-        currentHitpoints = 0;
+    // Don't let currentHitpoints drop below 0
+    if ((this->currentHitpoints - damageReceived) <= 0) {
+        this->currentHitpoints = 0;
+        this->alive = false;
+    } else {
+        this->currentHitpoints -= damageReceived;
     }
 
-    return currentHitpoints;
+    this->currentHitpoints -= damageReceived;
+
+    return this->currentHitpoints;
+}
+
+bool Train::isAlive() {
+    return this->alive;
 }
 
 void Train::receivePowerUp(PowerUp* pup) {

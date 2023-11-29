@@ -1,8 +1,9 @@
 #include "CombatManager.h"
 
-static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 static AssetManager& _assets = AssetManager::getInstance();
 static AudioManager& _audio = AudioManager::getInstance();
+static GameStateManager& _gameStateManager = GameStateManager::getInstance();
+static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
 CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scoreMan) {
     this->camera = camera;
@@ -212,7 +213,7 @@ void CombatManager::update(float deltaTime) {
         }
     }
     
-    // Update any projectiles targeted at the player
+    // Check for collision with powerups
     std::vector<PowerUp*>::iterator powerUpIt = this->powerups.begin();
 
     while (powerUpIt != this->powerups.end()) {
@@ -234,6 +235,11 @@ void CombatManager::update(float deltaTime) {
         else {
             ++powerUpIt;
         }
+    }
+
+    // If the player is dead, set the game state to GameOVer
+    if ( !train->isAlive() ) {
+        _gameStateManager.setState(GameState::GameOver);
     }
 
     Ray targetRay = this->getTargetingRay();

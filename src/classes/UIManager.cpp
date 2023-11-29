@@ -12,6 +12,11 @@ void UIManager::update(float deltaTime) { }
 
 void UIManager::draw(int screenWidth, int screenHeight) {
 
+    if (_gameStateManager.getState() == GameState::GameOver) {
+        DrawText("GameOver", 600, 340, 40, GREEN);
+        return;
+    }
+
     if (_gameStateManager.getState() == GameState::Paused) {
         DrawText("Paused", 600, 340, 40, GREEN);
         return;

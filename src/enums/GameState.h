@@ -7,5 +7,6 @@ enum class GameState {
     Stateless,
     MainMenu,
     Paused,
-    Gameplay
+    Gameplay,
+    GameOver
 };
