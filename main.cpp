@@ -36,13 +36,13 @@ int main(void)
     // Load assets
     //==================================================
     _assets.loadModel("assets/models/ducky.obj", "duck");
-    _assets.loadModel("assets/models/missile.obj", "missile1");
+    _assets.loadModel("assets/models/missile.obj", "missile");
     _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
     _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
     _assets.loadModel("assets/models/bullet.obj", "bullet");
 
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
-    _assets.loadTexture("assets/textures/missile_albedo.png", "missile1");
+    _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
     _assets.loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
     _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
     _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
@@ -66,8 +66,8 @@ int main(void)
         {-50.f, 0.f, 0.f},
         20,
         3000,
-        _assets.getModel("missile1"),
-        _assets.getTexture("missile1"),
+        _assets.getModel("missile"),
+        _assets.getTexture("missile"),
         _assets.getSound("missile_fire")
     );
 
