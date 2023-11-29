@@ -52,6 +52,7 @@ int main(void)
     _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
     _assets.loadSound("assets/sounds/bullet_fire.wav", "bullet_fire");
     _assets.loadSound("assets/sounds/8_bit_explosion.wav", "explosion");
+    _assets.loadSound("assets/sounds/laser_hit.wav", "laser_hit");
 
     _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
 
@@ -84,7 +85,7 @@ int main(void)
         _assets.getModel("bullet"),
         _assets.getTexture("bullet"),
         "bullet_fire",
-        "explosion"
+        "laser_hit"
     );
 
     Train train({&engine, &carriage1, &carriage2}, 100);
