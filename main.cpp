@@ -32,6 +32,7 @@ int main(void)
     SetTargetFPS(60);
     DisableCursor();
 
+    // Method for generating a random seed taken from StackOverflow: https://stackoverflow.com/a/11765384
     SetRandomSeed((unsigned)time(NULL));
 
     //==================================================

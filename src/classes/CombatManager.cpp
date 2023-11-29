@@ -113,17 +113,16 @@ void CombatManager::update(float deltaTime) {
         this->spawnHostile();
     }
 
-    // Update hostiles. This isn't the typical for loop because hostiles are stored on the heap
+    // Update hostiles. This isn't a typical 'for' loop because hostiles are stored on the heap
     // and therefore we're responsible for deleting them. If we delete them without removing them
     // from the hostiles vector, we'll crash. If we remove something from the projectiles vector
-    // in a for loop, we'll skip an element
-    // This loop sourced from StackOverflow: https://stackoverflow.com/a/13102374
+    // in a for loop, we'll skip an element. Therefore we use a while loop instead
+    // This form of loop sourced from StackOverflow: https://stackoverflow.com/a/13102374
     std::vector<Hostile*>::iterator hostileIt = this->hostiles.begin();
 
     while (hostileIt != this->hostiles.end()) {
 
         // Update any projectiles heading for this hostile
-        // Update projectiles
         std::vector<Projectile*>::iterator projectileIt = this->projectiles[*hostileIt].begin();
 
         while (projectileIt != this->projectiles[*hostileIt].end()) {
@@ -143,13 +142,9 @@ void CombatManager::update(float deltaTime) {
             }
         }
 
-        // TODO: Hostile shouldn't update if it's dead
-        // Update the hostile
-        (*hostileIt)->update(deltaTime);
-
-        // If the Hostile is not alive after updating, delete it from heap and vector
+        // If the Hostile is not alive, delete it from heap and vector
         if (!(*hostileIt)->isAlive()) {
-            // TODO: Unsetting target needs cleaning up
+            // TODO: Unsetting target needs a general cleanup
             this->targetLocked = false;
             this->camera->unsetTarget();
             this->camera->parent = this->train->resetActiveComponent();
@@ -164,8 +159,10 @@ void CombatManager::update(float deltaTime) {
             this->scoreManager->Add(1);
         }
         else {
+            (*hostileIt)->update(deltaTime);
             if ((*hostileIt)->canShoot()) {
                 Projectile* firedProjectile = (*hostileIt)->shoot(&this->train->head()->position);
+                _audio.play(firedProjectile->getlaunchSFX());
                 this->projectiles[this->train].push_back(firedProjectile);
             }
             ++hostileIt;
@@ -183,6 +180,7 @@ void CombatManager::update(float deltaTime) {
         if (!(*it)->isAlive()) {
             // Assign damage
             this->train->receiveDamage((*it)->getDamage());
+            _audio.play((*it)->getdestroySFX());
             delete (*it);
             it = this->projectiles[this->train].erase(it);
         }
