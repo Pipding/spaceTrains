@@ -16,19 +16,46 @@ TrainEngine::TrainEngine()
  * @param rotationRate      How quickly can the train yaw
 */
 TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate, float decelerationRate, float topSpeed, float rotationRate)
-: TrainComponent({0.f, 0.f, 0.f}, model, texture, model, texture) { // TODO: passing model/texture for projectile fields here will make the train shoot miniature trains
+: TrainComponent({0.f, 0.f, 0.f}, model, texture, model, texture) {
     this->accelerationRate = accelerationRate;
     this->decelerationRate = decelerationRate;
     this->topSpeed = topSpeed;
     this->rotationRate = rotationRate;
+
+    // Instantiate a Music stream to play the engine sound. Raylib doesn't support looping audio
+    // TODO: Ideally this should be handled through the AudioManager
+    this->engineSound = LoadMusicStream("assets/sounds/engine.wav");
 }
 
 void TrainEngine::update(float deltaTime) {
+    
+    // Update the audio stream for the engine sound
+    UpdateMusicStream(this->engineSound);
+
     if (this->accelerationDirection == Direction::None) {
         // Not accelerating forward or back, so velocity should decay
         this->decayAcceleration(deltaTime);
+
+        // If the Train isn't accelerating, the volume of the engine should drop off gradually but quickly
+        if (this->engineVolume > 0.f) {
+            if (this->engineVolume < 0.05f) {
+                this->engineVolume = 0.f;
+            } else {
+                this->engineVolume -= (deltaTime);
+                SetMusicVolume(this->engineSound, this->engineVolume);
+            }
+        }
     } else {
         this->accelerate(deltaTime, this->accelerationDirection == Direction::Forward);
+
+        // Make sure the engine SFX is playing
+        if (!IsMusicStreamPlaying(this->engineSound)) {
+            PlayMusicStream(this->engineSound);
+        }
+
+        // Set engine volume to be proportional to the current speed (in relation to top speed)
+        this->engineVolume = (this->currentSpeed / this->topSpeed);
+        SetMusicVolume(this->engineSound, this->engineVolume);
     }
 
     if (this->rotationDirection != Direction::None) {
@@ -40,6 +67,7 @@ void TrainEngine::update(float deltaTime) {
     }
 
     this->position = Vector3Add(this->position, this->velocity);
+    this->currentSpeed = Vector3Length(this->velocity);
 
     Actor::update();
 }
@@ -82,6 +110,11 @@ void TrainEngine::decayAcceleration(float deltaTime) {
         if (abs(this->velocity.z) > 0) {
             this->velocity.z *= decelerationFactor;
         }
+    }
+
+    // Decay the engine audio volume
+    if (IsMusicStreamPlaying(this->engineSound)) {
+        SetMusicVolume(this->engineSound, 0.f);
     }
 }
 
