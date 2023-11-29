@@ -1,3 +1,4 @@
+#pragma once
 #include "raylib.h"
 #include "src/globals/AssetManager.h"
 
@@ -21,7 +22,6 @@ public:
     // ==================================================
     static AudioManager& getInstance()
     {
-        InitAudioDevice();
         static AudioManager instance;
         return instance;
     }

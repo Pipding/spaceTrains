@@ -29,6 +29,7 @@ int main(void)
     const int screenHeight = 720;
 
     InitWindow(screenWidth, screenHeight, "SPACE TRAIN");
+    InitAudioDevice();
     SetTargetFPS(60);
     DisableCursor();
 

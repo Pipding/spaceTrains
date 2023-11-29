@@ -1,3 +1,4 @@
+#pragma once
 #include "raylib.h"
 #include "src/globals/GameStateManager.h"
 #include "src/interfaces/IKeyboardListener.h"

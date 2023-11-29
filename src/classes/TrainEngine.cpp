@@ -24,8 +24,6 @@ TrainEngine::TrainEngine(Model model, Texture2D texture, float accelerationRate,
 }
 
 void TrainEngine::update(float deltaTime) {
-    // TODO: Implement deltaTime
-
     if (this->accelerationDirection == Direction::None) {
         // Not accelerating forward or back, so velocity should decay
         this->decayAcceleration(deltaTime);
