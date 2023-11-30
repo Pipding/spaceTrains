@@ -69,6 +69,22 @@ Ray CombatManager::getTargetingRay() {
     return {{this->train->head()->position.x, 0.5f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
 }
 
+std::vector<Ray> CombatManager::getTargetingRays(int count, float spacing) {
+    std::vector<Ray> rays(count);
+    rays[0] = this->getTargetingRay();
+    Vector3 right = Vector3CrossProduct(rays[0].direction, {0.f, 1.f, 0.f});
+
+    for (int i = 1; i < count; i++ ) {
+        if (i % 2 == 0) {
+            rays[i] = {Vector3Add(rays[0].position, Vector3Scale(right, (i * spacing))), rays[0].direction};
+        } else {
+            rays[i] = {Vector3Subtract(rays[0].position, Vector3Scale(right, (i * spacing))), rays[0].direction};
+        }
+    }
+
+    return rays;
+}
+
 int CombatManager::getPlayerHealth() {
     return this->train->getHealth();
 }
@@ -218,19 +234,33 @@ void CombatManager::update(float deltaTime) {
         _gameStateManager.setState(GameState::GameOver);
     }
 
-    Ray targetRay = this->getTargetingRay();
+    // Ray targetRay = this->getTargetingRay();
+    std::vector<Ray> targetRays = this->getTargetingRays(7, 8.f);
 
     // Don't bother scanning for new targets if there's already a locked target
     if (!targetLocked) {
-        // Iterate through all hostiles and check if the targeting ray is hitting one of them
-        for (Hostile* hostile : this->hostiles ) {
-            RayCollision coll = GetRayCollisionBox(targetRay, hostile->getBounds());
 
-            if (coll.hit) {
-                this->setTarget(hostile);
-            } else {
-                this->unsetTarget();
+        std::vector<Ray>::iterator rayIt = targetRays.begin();
+
+        Hostile* hit = nullptr;
+
+        // Iterate through all rtargeting rays to check for collisions
+        while (rayIt != targetRays.end() && hit == nullptr) {
+            // Iterate through all hostiles and check if the targeting ray is hitting one of them
+            for (Hostile* hostile : this->hostiles ) {
+                RayCollision coll = GetRayCollisionBox((*rayIt), hostile->getBounds());
+
+                if (coll.hit) {
+                    hit = hostile;
+                }
             }
+            ++rayIt;
+        }
+
+        if (hit == nullptr) {
+            this->unsetTarget();
+        } else {
+            this->setTarget(hit);
         }
     }
 }
@@ -263,6 +293,13 @@ void CombatManager::draw() {
     }
 
     DrawLine3D(this->getTargetingRay().position, Vector3Add(this->getTargetingRay().position, Vector3Scale(this->getTargetingRay().direction, 300.f)), this->hasTarget() ? RED : GREEN);
+
+    std::vector<Ray> targetRays = this->getTargetingRays(7, 8.f);
+
+    for (std::vector<Ray>::iterator it = targetRays.begin(); it != targetRays.end(); ++it) {
+        DrawLine3D(it->position, Vector3Add(it->position, Vector3Scale(it->direction, 300.f)), BLUE);
+    }
+
 }
 
 void CombatManager::onKeyPressed(int key) {
