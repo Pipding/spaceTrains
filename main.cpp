@@ -51,6 +51,10 @@ int main(void)
     _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
     _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
 
+    _assets.loadTexture("assets/ui/no_target_ui.png", "no_target_ui");
+    _assets.loadTexture("assets/ui/target_available_ui.png", "target_available_ui");
+    _assets.loadTexture("assets/ui/target_locked_ui.png", "target_locked_ui");
+
     _assets.loadSound("assets/sounds/8_bit_explosion.wav", "explosion");
     _assets.loadSound("assets/sounds/bullet_fire.wav", "bullet_fire");
     _assets.loadSound("assets/sounds/engine.wav", "engine");
