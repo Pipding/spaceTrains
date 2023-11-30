@@ -114,6 +114,14 @@ public:
     Ray getTargetingRay();
 
     /**
+     * Gets an array of targeting rays which can be used to scan for targets
+     * @param count     The number of rays which should be in the array
+     * @param spacing   The amount of space between adjacent rays
+     * @return Returns a vector of Rays
+    */
+    std::vector<Ray> getTargetingRays(int count, float spacing);
+
+    /**
      * Returns the current health of the player
     */
     int getPlayerHealth();

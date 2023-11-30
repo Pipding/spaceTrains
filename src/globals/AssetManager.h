@@ -50,6 +50,11 @@ public:
     Texture2D getTexture(const char* assetName);
 
     /**
+     * Gets a pointer to a Texture2D from the textures map
+    */
+    Texture2D* getTextureRef(const char* assetName);
+
+    /**
      * Gets a Sound from the sounds map
     */
     Sound getSound(const char* assetName);

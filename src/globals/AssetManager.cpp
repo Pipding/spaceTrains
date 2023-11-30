@@ -20,6 +20,11 @@ Texture2D AssetManager::getTexture(const char* assetName) {
 }
 
 // TODO: This could error out if a bad assetName is given
+Texture2D* AssetManager::getTextureRef(const char* assetName) {
+    return &this->textures[assetName];
+}
+
+// TODO: This could error out if a bad assetName is given
 Sound AssetManager::getSound(const char* assetName) {
     return this->sounds[assetName];
 }

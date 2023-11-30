@@ -78,6 +78,11 @@ public:
     Vector3 getForwardVector();
 
     /**
+     * Get the right vector of this Actor
+    */
+    Vector3 getRightVector();
+
+    /**
      * Calculates a Vector3 which points from this Actor to the target Vector3. Normalized by default but normalization can be skipped by using the normalized parameter
      * @param target        Vector3 which the generated Vector3 should point toward
      * @param normalized    Optional, defaults to true. If true the returned vector will be normalized
