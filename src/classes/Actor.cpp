@@ -54,6 +54,10 @@ Vector3 Actor::getForwardVector() {
     return Vector3Transform({1.f, 0.f, 0.f}, this->transform);
 }
 
+Vector3 Actor::getRightVector() {
+    return Vector3CrossProduct(this->getForwardVector(), {0, 1, 0});
+}
+
 Vector3 Actor::getVectorTowardTarget(Vector3 target, bool normalized) {
     Vector3 vectorToTarget = Vector3Subtract(target, this->position);
 
