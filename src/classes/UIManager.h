@@ -3,6 +3,7 @@
 #include "CombatManager.h"
 #include "ScoreManager.h"
 #include "src/globals/GameStateManager.h"
+#include "src/globals/AssetManager.h"
 
 class UIManager: public IUpdatable {
 
