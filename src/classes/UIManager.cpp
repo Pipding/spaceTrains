@@ -1,6 +1,7 @@
 #include "UIManager.h"
 
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
+static AssetManager& _assets = AssetManager::getInstance();
 
 UIManager::UIManager(CombatManager* combatMan, ScoreManager* scoreMan, Font font) {
     this->combatManager = combatMan;
@@ -27,14 +28,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
     DrawText(TextFormat("Speed: %f", this->combatManager->getTrain()->head()->getSpeed()), 20, screenHeight - 60, 40, GREEN);
     DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
 
-    // ==================================================
-    // Target box
-    // ==================================================
-    DrawRectangle(0.f, 200.f, 200.f, 200.f, WHITE);
-    DrawText(TextFormat("Target"), 0.f, 200.f, 30, BLUE);
-    if (this->combatManager->hasTarget()) {
-        DrawText(TextFormat("%i", this->combatManager->getActiveTarget()), 0.f, 300.f, 30, this->combatManager->getTargetLocked() ? RED : GREEN);
-    }
+    this->drawTargetLockUI();
 
     // ==================================================
     // Train UI
@@ -62,5 +56,15 @@ void UIManager::draw(int screenWidth, int screenHeight) {
 }
 
 void UIManager::drawTargetLockUI() {
-    
+
+    if (!this->combatManager->hasTarget()) {
+        DrawTexture(*_assets.getTextureRef("no_target_ui"), 0.f, 200.f, WHITE);
+        return;
+    }
+
+    if(this->combatManager->getTargetLocked()) {
+        DrawTexture(*_assets.getTextureRef("target_locked_ui"), 0.f, 200.f, WHITE);
+    } else {
+        DrawTexture(*_assets.getTextureRef("target_available_ui"), 0.f, 200.f, WHITE);
+    }
 }
