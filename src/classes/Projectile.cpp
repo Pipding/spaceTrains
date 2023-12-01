@@ -9,7 +9,7 @@ Projectile::Projectile(Vector3 position, float speed, int damage, Vector3* desti
     :Actor(position, model, texture), speed(speed), destination(destination), alive(true), damage(damage), launchSFX(launchSFX), destroySFX(destroySFX) {
 
         // TODO: This should really be a parameter but in the interest of time it's hard-coded for now
-        this->scale = 8.f;
+        this->scale = 0.8f;
     }
 
 void Projectile::update(float deltaTime) {

@@ -66,7 +66,7 @@ Ray CombatManager::getTargetingRay() {
     // The ray needs to be a little bit off the ground. If the Y position
     // is 0, the ray doesn't intersect with bounding boxes which are 
     // on the ground. Hence 0.5f
-    return {{this->train->head()->position.x, 0.5f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
+    return {{this->train->head()->position.x, 2.f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
 }
 
 std::vector<Ray> CombatManager::getTargetingRays(int count, float spacing) {
@@ -92,7 +92,7 @@ int CombatManager::getPlayerHealth() {
 void CombatManager::spawnHostile() {
     // TODO: When there's more than 1 hostile, maybe randomize the type of hostile spawned
 
-    Vector3 newHostilePos = {1000.f, 0.f, 1000.f};
+    Vector3 newHostilePos = {100.f, 0.f, 100.f};
 
     Hostile* h = new Hostile(
         newHostilePos,
@@ -235,7 +235,7 @@ void CombatManager::update(float deltaTime) {
     }
 
     // Ray targetRay = this->getTargetingRay();
-    std::vector<Ray> targetRays = this->getTargetingRays(7, 8.f);
+    std::vector<Ray> targetRays = this->getTargetingRays(7, .8f);
 
     // Don't bother scanning for new targets if there's already a locked target
     if (!targetLocked) {
@@ -346,12 +346,12 @@ void CombatManager::populateHostileTypes() {
     // Define the different Hostile types the CombatManager can spawn
     Hostile hostile(
         {0.f, 0.f, 0.f},
-        _assets.getModel("duck"),
-        _assets.getTexture("duck"),
+        _assets.getModel("ufo"),
+        _assets.getTexture("ufo"),
         &this->train->head()->position,
-        200.f,
-        400.f,
-        150.f,
+        20.f,
+        40.f,
+        15.f,
         _assets.getModel("missile"),
         _assets.getTexture("missile")
     );

@@ -9,9 +9,11 @@
 | missile_fire.wav          | Audio     | freesound.org user MATRIXXX_      | https://freesound.org/people/MATRIXXX_/sounds/441373/                                                 |
 | ducky.obj                 | Model     | cgtrader.com user CGStuffStudios  | https://www.cgtrader.com/free-3d-models/sports/toy/rubber-duck-b31f3585-0347-4532-bd92-7ddea6107d0d   |
 | train_engine.obj          | Model     | cgtrader.com user PixelYards      | https://www.cgtrader.com/3d-models/vehicle/train/historic-steam-train                                 |
+| ufo.obj                   | Model     | Turbosquid user JonLundy3D        | https://www.turbosquid.com/3d-models/free-3ds-model-flying-saucer/1081073                             |
 | wagon.obj                 | Model     | Turbosquid user mieszas           | https://www.turbosquid.com/3d-models/3d-wooden-train-cars-model/1066200                               |
 | ducky_albedo.png          | Texture   | cgtrader.com user CGStuffStudios  | https://www.cgtrader.com/free-3d-models/sports/toy/rubber-duck-b31f3585-0347-4532-bd92-7ddea6107d0d   |
 | train_engine_specular.png | Texture   | cgtrader.com user PixelYards      | https://www.cgtrader.com/3d-models/vehicle/train/historic-steam-train                                 |
+| ufo.obj                   | Texture   | Turbosquid user JonLundy3D        | https://www.turbosquid.com/3d-models/free-3ds-model-flying-saucer/1081073                             |
 | wagon_albedo.obj          | Texture   | Turbosquid user mieszas           | https://www.turbosquid.com/3d-models/3d-wooden-train-cars-model/1066200                               |
 | ds_digi.ttf               | Font      | dafont.com user Dusit Supasawat   | https://www.dafont.com/ds-digital.font                                                                |
 | space_wham.ttf            | Font      | dafont.com user Zephram           | https://www.dafont.com/space-wham.font                                                                |
@@ -29,6 +31,8 @@
 - Organise code
 
 ## SHOULD
+- Resize textures
+- Play a sound effect when the player collects a powerup
 - Make train component selection UI vertical
 - Make a diffuse map for the train engine model
 - Limit rotation of the engine based on the car behind it

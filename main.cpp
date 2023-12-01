@@ -43,8 +43,10 @@ int main(void)
     _assets.loadModel("assets/models/ducky.obj", "duck");
     _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
     _assets.loadModel("assets/models/missile.obj", "missile");
+    _assets.loadModel("assets/models/plane.obj", "plane");
     _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
     _assets.loadModel("assets/models/train_engine.obj", "train_engine");
+    _assets.loadModel("assets/models/ufo.obj", "ufo");
     _assets.loadModel("assets/models/wagon.obj", "train_wagon");
 
     _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
@@ -53,7 +55,10 @@ int main(void)
     _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
     _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
     _assets.loadTexture("assets/textures/train_engine_specular.png", "train_engine");
+    _assets.loadTexture("assets/textures/ufo_albedo.png", "ufo");
     _assets.loadTexture("assets/textures/wagon_albedo.png", "wagon");
+
+    _assets.loadTexture("assets/textures/galaxy_background_transparent.png", "galaxy");
 
     _assets.loadTexture("assets/ui/no_target_ui.png", "no_target_ui");
     _assets.loadTexture("assets/ui/target_available_ui.png", "target_available_ui");
@@ -68,18 +73,21 @@ int main(void)
     _assets.loadFont("assets/fonts/ds-digi.ttf", "ds_digi");
     _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
 
+    Model galaxyBg = _assets.getModel("plane");
+    galaxyBg.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *_assets.getTextureRef("galaxy");
+
     //==================================================
     // Create the Train (player character) by creating a 
     // TrainEngine and some TrainCars. Then use them to 
     // create a Train
     //==================================================
-    TrainEngine engine(_assets.getModel("train_engine"), _assets.getTexture("train_engine"), 10.f, 80.f, 20.f, 2.5f);
+    TrainEngine engine(_assets.getModel("train_engine"), _assets.getTexture("train_engine"), 0.1f, 16.f, 2.f, 2.5f);
 
     TrainCar carriage1(
         _assets.getModel("train_wagon"),
         _assets.getTexture("wagon"),
         &engine,
-        120.f,
+        12.f,
         20,
         3000,
         _assets.getModel("missile"),
@@ -92,7 +100,7 @@ int main(void)
         _assets.getModel("train_wagon"),
         _assets.getTexture("wagon"),
         &carriage1,
-        110.f,
+        10.5f,
         5,
         200,
         _assets.getModel("bullet"),
@@ -106,7 +114,7 @@ int main(void)
     //==================================================
     // Camera which follows the player character
     //==================================================
-    FollowCam followCam(&engine, {-150.0f, 100.f, 0.0f});
+    FollowCam followCam(&engine, {-17.5f, 12.5f, 0.0f});
 
     //==================================================
     // Managers
@@ -151,13 +159,19 @@ int main(void)
         if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused || _gameStateManager.getState() == GameState::GameOver) {
             BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(BLACK);
             
             BeginMode3D(followCam.camera);
                 train.draw();
                 followCam.draw();
                 combatManager.draw();
-                DrawGrid(2000, 20.f);
+
+                if (_debug.getDrawBoundingBoxes()) {
+                    DrawGrid(2000, 2.f);
+                }
+
+                DrawModel(_assets.getModel("plane"), {engine.position.x + (engine.position.x * -1 / 50) , -200.f, engine.position.z + engine.position.z * -1 / 50}, 1.f, WHITE);
+                DrawModel(_assets.getModel("plane"), {engine.position.x + (engine.position.x * -1 / 25) , -100.f, engine.position.z + engine.position.z * -1 / 25}, 1.f, WHITE);
             EndMode3D();
 
             // UI needs to be drawn outside of 3D mode
