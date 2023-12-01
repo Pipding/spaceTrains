@@ -45,8 +45,8 @@ int main(void)
     _assets.loadModel("assets/models/missile.obj", "missile");
     _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
     _assets.loadModel("assets/models/train_engine.obj", "train_engine");
-    _assets.loadModel("assets/models/wagon.obj", "train_wagon");
     _assets.loadModel("assets/models/ufo.obj", "ufo");
+    _assets.loadModel("assets/models/wagon.obj", "train_wagon");
 
     _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
@@ -54,8 +54,8 @@ int main(void)
     _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
     _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
     _assets.loadTexture("assets/textures/train_engine_specular.png", "train_engine");
-    _assets.loadTexture("assets/textures/wagon_albedo.png", "wagon");
     _assets.loadTexture("assets/textures/ufo_albedo.png", "ufo");
+    _assets.loadTexture("assets/textures/wagon_albedo.png", "wagon");
 
     _assets.loadTexture("assets/ui/no_target_ui.png", "no_target_ui");
     _assets.loadTexture("assets/ui/target_available_ui.png", "target_available_ui");
