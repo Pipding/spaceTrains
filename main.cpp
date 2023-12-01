@@ -39,11 +39,13 @@ int main(void)
     //==================================================
     // Load assets
     //==================================================
-    _assets.loadModel("assets/models/ducky.obj", "duck");
-    _assets.loadModel("assets/models/missile.obj", "missile");
-    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
-    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
     _assets.loadModel("assets/models/bullet.obj", "bullet");
+    _assets.loadModel("assets/models/ducky.obj", "duck");
+    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
+    _assets.loadModel("assets/models/missile.obj", "missile");
+    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
+    _assets.loadModel("assets/models/train_engine.obj", "train_engine");
+    _assets.loadModel("assets/models/wagon.obj", "train_wagon");
 
     _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
     _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
@@ -69,13 +71,13 @@ int main(void)
     // TrainEngine and some TrainCars. Then use them to 
     // create a Train
     //==================================================
-    TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
+    TrainEngine engine(_assets.getModel("train_engine"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
 
     TrainCar carriage1(
-        _assets.getModel("duck"),
+        _assets.getModel("train_wagon"),
         _assets.getTexture("duck"),
         &engine,
-        {-50.f, 0.f, 0.f},
+        150.f,
         20,
         3000,
         _assets.getModel("missile"),
@@ -85,9 +87,10 @@ int main(void)
     );
 
     TrainCar carriage2(
-        _assets.getModel("duck"),
+        _assets.getModel("train_wagon"),
         _assets.getTexture("duck"),
-        &carriage1, {-100.f, 0.f, 0.f},
+        &carriage1,
+        150.f,
         5,
         200,
         _assets.getModel("bullet"),
