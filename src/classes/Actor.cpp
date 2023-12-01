@@ -13,7 +13,14 @@ Actor::Actor(Vector3 position, Model model, Texture2D texture) {
     this->position = position;
     this->model = model;
     this->setTexture(texture);
+
+    // Bounding boxes need to account for scale
+    this->bounds.min = Vector3Scale(this->bounds.min, this->scale);
+    this->bounds.max = Vector3Scale(this->bounds.max, this->scale);
+
     this->boundsOrigin = GetMeshBoundingBox(this->model.meshes[0]);
+    this->boundsOrigin.min = Vector3Scale(this->boundsOrigin.min, this->scale);
+    this->boundsOrigin.max = Vector3Scale(this->boundsOrigin.max, this->scale);
 }
 
 
