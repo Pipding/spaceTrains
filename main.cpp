@@ -39,17 +39,21 @@ int main(void)
     //==================================================
     // Load assets
     //==================================================
-    _assets.loadModel("assets/models/ducky.obj", "duck");
-    _assets.loadModel("assets/models/missile.obj", "missile");
-    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
-    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
     _assets.loadModel("assets/models/bullet.obj", "bullet");
+    _assets.loadModel("assets/models/ducky.obj", "duck");
+    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
+    _assets.loadModel("assets/models/missile.obj", "missile");
+    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
+    _assets.loadModel("assets/models/train_engine.obj", "train_engine");
+    _assets.loadModel("assets/models/wagon.obj", "train_wagon");
 
-    _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
-    _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
-    _assets.loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
-    _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
     _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
+    _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
+    _assets.loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
+    _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
+    _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
+    _assets.loadTexture("assets/textures/train_engine_specular.png", "train_engine");
+    _assets.loadTexture("assets/textures/wagon_albedo.png", "wagon");
 
     _assets.loadTexture("assets/ui/no_target_ui.png", "no_target_ui");
     _assets.loadTexture("assets/ui/target_available_ui.png", "target_available_ui");
@@ -69,13 +73,13 @@ int main(void)
     // TrainEngine and some TrainCars. Then use them to 
     // create a Train
     //==================================================
-    TrainEngine engine(_assets.getModel("duck"), _assets.getTexture("duck"), 10.f, 80.f, 20.f, 2.5f);
+    TrainEngine engine(_assets.getModel("train_engine"), _assets.getTexture("train_engine"), 10.f, 80.f, 20.f, 2.5f);
 
     TrainCar carriage1(
-        _assets.getModel("duck"),
-        _assets.getTexture("duck"),
+        _assets.getModel("train_wagon"),
+        _assets.getTexture("wagon"),
         &engine,
-        {-50.f, 0.f, 0.f},
+        120.f,
         20,
         3000,
         _assets.getModel("missile"),
@@ -85,9 +89,10 @@ int main(void)
     );
 
     TrainCar carriage2(
-        _assets.getModel("duck"),
-        _assets.getTexture("duck"),
-        &carriage1, {-100.f, 0.f, 0.f},
+        _assets.getModel("train_wagon"),
+        _assets.getTexture("wagon"),
+        &carriage1,
+        110.f,
         5,
         200,
         _assets.getModel("bullet"),

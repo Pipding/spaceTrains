@@ -8,6 +8,9 @@ public:
     // TODO: Rename
     TrainComponent* engine;
 
+    // The distance at which this TrainCar follows the TrainComponent ahead of it
+    float followDistance;
+
     // How much damage does this TrainCar deal when it shoots?
     int power;
 
@@ -36,7 +39,7 @@ public:
      * @param model                 The 3D model representing the TrainCar in the world
      * @param texture               The texture to be applied to model
      * @param engine                Pointer to a TrainComponent which this car will follow
-     * @param position              Initial position of the train car
+     * @param followDist            Distance at which this TrainCar follows the TrainComponent given as the engine param
      * @param power                 How much damage the TrainComponent deals in combat
      * @param reloadTime            Time in milliseconds between shots in combat
      * @param projectileModel       3D model representing the projectiles fired by this TrainComponent
@@ -44,7 +47,7 @@ public:
      * @param projectileLaunchSFX   Name of the Sound to play when a projectile is fired
      * @param projectileDestroySFX  Name of the Sound to play when a projectile is destroyed
     */
-    TrainCar(Model model, Texture2D texture, TrainComponent* engine, Vector3 position, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture, const char* projectileLaunchSFX, const char* projectileDestroySFX); // TODO: This should accept pointers to model/texture
+    TrainCar(Model model, Texture2D texture, TrainComponent* engine, float followDist, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture, const char* projectileLaunchSFX, const char* projectileDestroySFX); // TODO: This should accept pointers to model/texture
 
     /**
      * Update function
