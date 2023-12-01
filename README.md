@@ -29,6 +29,7 @@
 - Organise code
 
 ## SHOULD
+- Resize textures
 - Play a sound effect when the player collects a powerup
 - Make train component selection UI vertical
 - Make a diffuse map for the train engine model
