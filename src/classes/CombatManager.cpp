@@ -66,7 +66,7 @@ Ray CombatManager::getTargetingRay() {
     // The ray needs to be a little bit off the ground. If the Y position
     // is 0, the ray doesn't intersect with bounding boxes which are 
     // on the ground. Hence 0.5f
-    return {{this->train->head()->position.x, 0.5f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
+    return {{this->train->head()->position.x, 20.f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
 }
 
 std::vector<Ray> CombatManager::getTargetingRays(int count, float spacing) {
@@ -346,8 +346,8 @@ void CombatManager::populateHostileTypes() {
     // Define the different Hostile types the CombatManager can spawn
     Hostile hostile(
         {0.f, 0.f, 0.f},
-        _assets.getModel("duck"),
-        _assets.getTexture("duck"),
+        _assets.getModel("ufo"),
+        _assets.getTexture("ufo"),
         &this->train->head()->position,
         200.f,
         400.f,
