@@ -29,6 +29,11 @@ private:
     */
     void drawTargetLockUI();
 
+    /**
+     * Draws the game over screen with the player's score
+    */
+    void drawGameOverBox();
+
 public:
     /**
     * Constructor
