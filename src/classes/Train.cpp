@@ -120,7 +120,7 @@ void Train::receivePowerup(Powerup* pup) {
             }
             break;
         case PowerupType::SpeedBoost:
-            this->head()->accelerate += pup->getMagnitude();
+            this->head()->accelerationRate += pup->getMagnitude();
             break;
         default:
             break;
