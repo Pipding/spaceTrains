@@ -9,7 +9,7 @@
 class ParallaxBackground: public IUpdatable {
 private:
     int layerCount;
-    std::vector<Model*> layerModels;
+    std::vector<Model> layerModels;
     std::vector<Texture2D*> layerTextures;
     std::vector<Vector2> layerOffsets;
 
@@ -19,15 +19,15 @@ private:
 public:
     /**
      * Constructs a ParallaxBackround with a number of layers, each one using the same
-     * Model and Texture2D and witha  default offset. To change the model and texture for individual layers
+     * Texture2D and with a  default offset. To change the texture for individual layers
      * use ParallaxBackground::setLayer(). To change offsets, use ParallaxBackground::setLayerOffset()
     */
-    ParallaxBackground(Vector3* parent, int layers, Model* model, Texture2D* texture);
+    ParallaxBackground(Vector3* parent, int layers, Texture2D* texture);
 
     /**
-     * Change the Model and/or Texture2D used for a given layer
+     * Change the Texture2D used for a given layer
     */
-    void setLayer(int layer, Model* model, Texture2D* texture);
+    void setLayer(int layer, Texture2D* texture);
 
     /**
      * Change the offset of the given layer
