@@ -391,7 +391,7 @@ void CombatManager::populatePowerupTypes() {
         _assets.getModel("speed_powerup"),
         _assets.getTexture("speed_powerup"),
         PowerupType::SpeedBoost,
-        10
+        0.1f
     );
 
     this->powerupTypes.push_back(healthPackSmall);

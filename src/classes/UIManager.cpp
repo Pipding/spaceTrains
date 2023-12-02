@@ -18,6 +18,8 @@ UIManager::UIManager(int screenWidth, int screenHeight, CombatManager* combatMan
 
 void UIManager::update(float deltaTime) {
     this->scoreText = TextFormat("SCORE: %i", this->scoreManager->getScore());
+    this->speedText = TextFormat("VELOCITY: %.2f KM/S", this->combatManager->getTrain()->head()->getSpeed());
+    this->healthText = TextFormat("HEALTH: %i/%i ", this->combatManager->getTrain()->getHealth(), this->combatManager->getTrain()->getMaxHealth());
 }
 
 void UIManager::draw(int screenWidth, int screenHeight) {
@@ -32,10 +34,10 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         return;
     }
 
+    // Draw score, speed and health
     DrawTextEx(this->font, this->scoreText, {20, 20}, this->font.baseSize, 2, GREEN );
-
-    DrawText(TextFormat("Speed: %f", this->combatManager->getTrain()->head()->getSpeed()), 20, screenHeight - 60, 40, GREEN);
-    DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
+    DrawTextEx(this->font, this->speedText, {20, (float)this->screenHeight - 60}, 40, 2, GREEN );
+    DrawTextEx(this->font, this->healthText, {20, (float)this->screenHeight - 120}, 40, 2, RED );
 
     this->drawTargetLockUI();
 

@@ -40,6 +40,10 @@ int Train::getHealth() {
     return this->currentHitpoints;
 }
 
+int Train::getMaxHealth() {
+    return this->maxHitpoints;
+}
+
 TrainComponent* Train::getActiveComponent() {
     return this->train[this->activeComponentIndex];
 }
@@ -120,7 +124,7 @@ void Train::receivePowerup(Powerup* pup) {
             }
             break;
         case PowerupType::SpeedBoost:
-            this->head()->topSpeed += pup->getMagnitude();
+            this->head()->accelerationRate += pup->getMagnitude();
             break;
         default:
             break;
