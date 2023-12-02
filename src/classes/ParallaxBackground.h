@@ -32,7 +32,7 @@ public:
     /**
      * Change the offset of the given layer
     */
-    void setLayerOffset(int layer, Model* model, Texture2D* texture);
+    void setLayerOffset(int layer, Vector2 offset);
 
     // Update the ParallaxBackground
     void update(float deltaTime);
