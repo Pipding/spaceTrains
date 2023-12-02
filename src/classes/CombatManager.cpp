@@ -47,19 +47,14 @@ bool CombatManager::getTargetLocked() {
 }
 
 Vector3 CombatManager::calculateNormalizedTargetLocationVector() {
-    // TODO: Clean up this function
-
-    // How to work out the vector for detecting targets;
-    // Grounded position of camera
-    // Subtract position of player from above
-    // Normalize
-
-    // Get the vector from the camera to its target
+    /**
+     * 1. Get the position of the camera, minus the vertical component
+     * 2. Subtract the position of the Train from the position calculated in step 1
+     *      This gives you a vector facing the same direction as the camera
+     * 3. Normalize and return
+    */
     Vector3 groundedCameraPos = {this->camera->camera.position.x, 0.f, this->camera->camera.position.z};
-
-    Vector3 normalizedTargetingVector = Vector3Normalize(Vector3Subtract(this->train->head()->position, groundedCameraPos));
-
-    return normalizedTargetingVector;
+    return Vector3Normalize(Vector3Subtract(this->train->head()->position, groundedCameraPos));
 }
 
 Ray CombatManager::getTargetingRay() {
