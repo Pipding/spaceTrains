@@ -70,6 +70,12 @@ public:
     */
     int getHealth();
 
+    /**
+     * Gets the max hitpoints of the Train
+     * @return int max Train health
+    */
+    int getMaxHealth();
+
     // ==================================================
     // Functions for handling the active Train component
     // ==================================================
