@@ -39,39 +39,7 @@ int main(void)
     //==================================================
     // Load assets
     //==================================================
-    _assets.loadModel("assets/models/bullet.obj", "bullet");
-    _assets.loadModel("assets/models/ducky.obj", "duck");
-    _assets.loadModel("assets/models/health_powerup.obj", "health_powerup");
-    _assets.loadModel("assets/models/missile.obj", "missile");
-    _assets.loadModel("assets/models/plane.obj", "plane");
-    _assets.loadModel("assets/models/speed_powerup.obj", "speed_powerup");
-    _assets.loadModel("assets/models/train_engine.obj", "train_engine");
-    _assets.loadModel("assets/models/ufo.obj", "ufo");
-    _assets.loadModel("assets/models/wagon.obj", "train_wagon");
-
-    _assets.loadTexture("assets/textures/bullet_albedo.png", "bullet");
-    _assets.loadTexture("assets/textures/ducky_albedo.png", "duck");
-    _assets.loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
-    _assets.loadTexture("assets/textures/missile_albedo.png", "missile");
-    _assets.loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
-    _assets.loadTexture("assets/textures/train_engine_specular.png", "train_engine");
-    _assets.loadTexture("assets/textures/ufo_albedo.png", "ufo");
-    _assets.loadTexture("assets/textures/wagon_albedo.png", "wagon");
-
-    _assets.loadTexture("assets/textures/galaxy_background_transparent.png", "galaxy");
-
-    _assets.loadTexture("assets/ui/no_target_ui.png", "no_target_ui");
-    _assets.loadTexture("assets/ui/target_available_ui.png", "target_available_ui");
-    _assets.loadTexture("assets/ui/target_locked_ui.png", "target_locked_ui");
-
-    _assets.loadSound("assets/sounds/8_bit_explosion.wav", "explosion");
-    _assets.loadSound("assets/sounds/bullet_fire.wav", "bullet_fire");
-    _assets.loadSound("assets/sounds/engine.wav", "engine");
-    _assets.loadSound("assets/sounds/laser_hit.wav", "laser_hit");
-    _assets.loadSound("assets/sounds/missile_fire.wav", "missile_fire");
-
-    _assets.loadFont("assets/fonts/ds-digi.ttf", "ds_digi");
-    _assets.loadFont("assets/fonts/space-wham.ttf", "space_wham");
+    _assets.loadAssets();
 
     Model galaxyBg = _assets.getModel("plane");
     galaxyBg.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *_assets.getTextureRef("galaxy");

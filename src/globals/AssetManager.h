@@ -64,6 +64,12 @@ public:
     // ==================================================
 
     /**
+     * Utility function for loading all assets which will be used in the game
+     * This function needs to be updated as new assets are added
+    */
+    void loadAssets();
+
+    /**
      * Loads a Font and stores it in the fonts map
      * @param filename      Filepath for the asset to load
      * @param assetName     A name for the asset, used as a key in the models map
