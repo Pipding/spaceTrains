@@ -154,6 +154,7 @@ int main(void)
             train.update(deltaTime);
             followCam.update(deltaTime);
             combatManager.update(deltaTime);
+            uiManager.update(deltaTime);
         }
 
         if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused || _gameStateManager.getState() == GameState::GameOver) {
