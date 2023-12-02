@@ -40,7 +40,14 @@ int main(void)
      * Here we instantiate a TrainEngine and some TrainCars and use them to
      * construct a train
     */
-    TrainEngine engine(_assets.getModel("train_engine"), _assets.getTexture("train_engine"), 0.1f, 16.f, 2.f, 2.5f);
+    TrainEngine engine(
+        _assets.getModel("train_engine"),       // Model
+        _assets.getTexture("train_engine"),     // Texture
+        0.5f,                                   // Acceleration
+        16.f,                                   // Deceleration
+        2.f,                                    // Top speed
+        2.5f                                    // Rotation rate
+    );
 
     TrainCar carriage1(
         _assets.getModel("train_wagon"),

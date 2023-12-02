@@ -95,11 +95,11 @@ void TrainEngine::decayAcceleration(float deltaTime) {
     if (this->velocity.x != 0.f || this->velocity.z != 0.f) {
 
         // If the velocity in either X or Z axis is close to 0, just set it to 0
-        if (this->velocity.x != 0.f && abs(this->velocity.x) < 0.1f) {
+        if (this->velocity.x != 0.f && abs(this->velocity.x) < 0.01f) {
             this->velocity.x = 0.f;
         }
 
-        if (this->velocity.z != 0.f && abs(this->velocity.z) < 0.1f) {
+        if (this->velocity.z != 0.f && abs(this->velocity.z) < 0.01f) {
             this->velocity.z = 0.f;
         }
 
