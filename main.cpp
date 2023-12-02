@@ -43,7 +43,7 @@ int main(void)
     TrainEngine engine(
         _assets.getModel("train_engine"),       // Model
         _assets.getTexture("train_engine"),     // Texture
-        0.5f,                                   // Acceleration
+        0.2f,                                   // Acceleration
         16.f,                                   // Deceleration
         2.f,                                    // Top speed
         2.5f                                    // Rotation rate
