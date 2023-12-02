@@ -23,14 +23,16 @@
 # TODO
 
 ## MUST
-- Improve "Game Over" screen
-- Add some graphics to make it look like space
 - Improve enemy AI and shooting behaviour
-- Make projectiles fire from turrets
+    - Hostiles either shouldn't get too far away or there should be an indicator showing where they are
+- Fix train acceleration & rotation
+- Add multiple hostiles
 - Comments in all .h files
 - Organise code
 
 ## SHOULD
+- Update the target lock UI to be drawn in the same way the game over screen is
+- Round the speed shown in the UI to some sensible number
 - Resize textures
 - Play a sound effect when the player collects a powerup
 - Make train component selection UI vertical
