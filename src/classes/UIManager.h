@@ -22,6 +22,7 @@ private:
     Rectangle gameOverRect;
 
     const char* gameOverText = "GAME OVER";
+    const char* speedText = "VELOCITY: ";
     const char* scoreText = "";
 
     /**
