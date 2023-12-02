@@ -63,10 +63,11 @@ Vector3 CombatManager::calculateNormalizedTargetLocationVector() {
 }
 
 Ray CombatManager::getTargetingRay() {
-    // The ray needs to be a little bit off the ground. If the Y position
-    // is 0, the ray doesn't intersect with bounding boxes which are 
-    // on the ground. Hence 0.5f
-    return {{this->train->head()->position.x, 2.f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
+    /**
+     * Since the game is played on a 2D plane we only need rays to be cast at a height
+     * which intersects the enemies, so the Y coordinate is hard-coded at 5.f
+    */
+    return {{this->train->head()->position.x, 5.f, this->train->head()->position.z}, this->calculateNormalizedTargetLocationVector()};
 }
 
 std::vector<Ray> CombatManager::getTargetingRays(int count, float spacing) {
@@ -234,7 +235,6 @@ void CombatManager::update(float deltaTime) {
         _gameState.setState(GameState::GameOver);
     }
 
-    // Ray targetRay = this->getTargetingRay();
     std::vector<Ray> targetRays = this->getTargetingRays(7, .8f);
 
     // Don't bother scanning for new targets if there's already a locked target
@@ -286,20 +286,16 @@ void CombatManager::draw() {
         (*it)->draw();
     }
     
-
     // Everything below here should only be drawn if debug is enabled
     if (!_debug.getDrawBoundingBoxes()) {
         return;
     }
 
-    DrawLine3D(this->getTargetingRay().position, Vector3Add(this->getTargetingRay().position, Vector3Scale(this->getTargetingRay().direction, 300.f)), this->hasTarget() ? RED : GREEN);
-
-    std::vector<Ray> targetRays = this->getTargetingRays(7, 8.f);
+    std::vector<Ray> targetRays = this->getTargetingRays(7, .8f);
 
     for (std::vector<Ray>::iterator it = targetRays.begin(); it != targetRays.end(); ++it) {
-        DrawLine3D(it->position, Vector3Add(it->position, Vector3Scale(it->direction, 300.f)), BLUE);
+        DrawLine3D(it->position, Vector3Add(it->position, Vector3Scale(it->direction, 300.f)), this->hasTarget() ? RED : GREEN);
     }
-
 }
 
 void CombatManager::onKeyPressed(int key) {
