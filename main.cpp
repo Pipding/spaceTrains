@@ -121,7 +121,7 @@ int main(void)
     //==================================================
     ScoreManager scoreManager = ScoreManager();
     CombatManager combatManager = CombatManager(&followCam, &train, &scoreManager);
-    UIManager uiManager = UIManager(&combatManager, &scoreManager, _assets.getFont("space_wham"));
+    UIManager uiManager = UIManager(screenWidth, screenHeight, &combatManager, &scoreManager, _assets.getFont("space_wham"));
 
     // ==================================================
     // Register input listeners. These are game objects
