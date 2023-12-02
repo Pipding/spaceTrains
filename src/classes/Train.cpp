@@ -103,8 +103,6 @@ int Train::receiveDamage(int damageReceived) {
         this->currentHitpoints -= damageReceived;
     }
 
-    this->currentHitpoints -= damageReceived;
-
     return this->currentHitpoints;
 }
 
