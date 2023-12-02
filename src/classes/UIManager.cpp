@@ -24,7 +24,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
 
     if (_gameStateManager.getState() == GameState::GameOver) {
         // Draw the outline of the Game Over box
-        DrawRectangleRounded(this->gameOverRect, 0.15f, 3, WHITE);
+        DrawRectangleRounded(this->gameOverRect, 0.15f, 3, LIGHTGRAY);
         DrawRectangleRoundedLines(this->gameOverRect, 0.15f, 3, 4.f, BLACK);
 
         // To keep text centered, check the dimensions of the rendered text and use that to inform
@@ -38,7 +38,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
             {this->screenWidthCentre - (gameOverTextSize.x / 2), this->screenHeightCentre - (this->gameOverRectHeight / 3)}, // position
             this->font.baseSize,
             0,
-            GREEN
+            DARKGREEN
         );
 
         DrawTextEx(
@@ -47,7 +47,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
             {this->screenWidthCentre - (scoreTextSize.x / 2), this->screenHeightCentre}, // position
             this->font.baseSize,
             0,
-            GREEN
+            DARKGREEN
         );
 
         return;
