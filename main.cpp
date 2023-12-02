@@ -16,9 +16,8 @@
 // Setting up singletons
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 static AssetManager& _assets = AssetManager::getInstance();
-static InputManager& _inputManager = InputManager::getInstance();
-static GameStateManager& _gameStateManager = GameStateManager::getInstance();
-
+static InputManager& _input = InputManager::getInstance();
+static GameStateManager& _gameState = GameStateManager::getInstance();
 
 int main(void)
 {
@@ -32,9 +31,7 @@ int main(void)
     InitAudioDevice();
     SetTargetFPS(60);
     DisableCursor();
-
-    // Method for generating a random seed taken from StackOverflow: https://stackoverflow.com/a/11765384
-    SetRandomSeed((unsigned)time(NULL));
+    SetRandomSeed((unsigned)time(NULL)); // Method for generating a random seed taken from StackOverflow: https://stackoverflow.com/a/11765384
 
     //==================================================
     // Load assets
@@ -96,16 +93,16 @@ int main(void)
     // which need to react to user input
     // ==================================================
     // TODO: Bit redundant to have both addListener and addListeners. Maybe overload addListeners
-    _inputManager.addListener(&_debug, KEY_M, GameState::Stateless);
-    _inputManager.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
-    _inputManager.addListener(&followCam, KEY_R, GameState::Gameplay);
-    _inputManager.addListener(&_gameStateManager, KEY_P, GameState::Stateless);
-    _inputManager.addListeners(&combatManager, {KEY_LEFT_SHIFT, KEY_SPACE, KEY_UP, KEY_DOWN}, GameState::Gameplay);
+    _input.addListener(&_debug, KEY_M, GameState::Stateless);
+    _input.addListeners(&engine, {KEY_W, KEY_S, KEY_A, KEY_D}, GameState::Gameplay);
+    _input.addListener(&followCam, KEY_R, GameState::Gameplay);
+    _input.addListener(&_gameState, KEY_P, GameState::Stateless);
+    _input.addListeners(&combatManager, {KEY_LEFT_SHIFT, KEY_SPACE, KEY_UP, KEY_DOWN}, GameState::Gameplay);
 
     // ==================================================
     // Set the initial game state
     // ==================================================
-    _gameStateManager.setState(GameState::Gameplay);
+    _gameState.setState(GameState::Gameplay);
 
     // ==================================================
     // Main game loop
@@ -115,21 +112,23 @@ int main(void)
         const float deltaTime = GetFrameTime();
 
         // Take user input
-        _inputManager.update(deltaTime);
+        _input.update(deltaTime);
+        uiManager.update(deltaTime);
 
         // Only update gameplay objects during gameplay
-        if (_gameStateManager.getState() == GameState::Gameplay) {
+        if (_gameState.getState() == GameState::Gameplay) {
             train.update(deltaTime);
             followCam.update(deltaTime);
             combatManager.update(deltaTime);
-            uiManager.update(deltaTime);
         }
 
-        if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused || _gameStateManager.getState() == GameState::GameOver) {
-            BeginDrawing();
+        // Start drawing
+        BeginDrawing();
+        ClearBackground(BLACK);
 
-            ClearBackground(BLACK);
-            
+        // Draw the game world only when the game is in a state where it should be visible, e.g. not at the main menu
+        // In practice this means all game states because main menu is not implemented
+        if (_gameState.getState() == GameState::Gameplay || _gameState.getState() == GameState::Paused || _gameState.getState() == GameState::GameOver) {
             BeginMode3D(followCam.camera);
                 train.draw();
                 followCam.draw();
@@ -142,12 +141,13 @@ int main(void)
                 DrawModel(_assets.getModel("plane"), {engine.position.x + (engine.position.x * -1 / 50) , -200.f, engine.position.z + engine.position.z * -1 / 50}, 1.f, WHITE);
                 DrawModel(_assets.getModel("plane"), {engine.position.x + (engine.position.x * -1 / 25) , -100.f, engine.position.z + engine.position.z * -1 / 25}, 1.f, WHITE);
             EndMode3D();
-
-            // UI needs to be drawn outside of 3D mode
-            uiManager.draw(screenWidth, screenHeight);
-
-            EndDrawing();
         }
+
+        // UI needs to be drawn outside of 3D mode and regardless of game state
+        // because UIManager does its own internal checks for game state
+        uiManager.draw(screenWidth, screenHeight);
+
+        EndDrawing();
     }
 
     _assets.unloadAll();
