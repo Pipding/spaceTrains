@@ -9,6 +9,8 @@ ParallaxBackground::ParallaxBackground(Vector3* parent, int layers, Texture2D* t
             this->layerModels.push_back(_assets.getModel("plane"));
             this->layerTextures.push_back(texture);
             this->layerOffsets.push_back((Vector2){i * 25, i * 25});
+
+            this->layerModels[i].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *texture;
         }
 }
 
