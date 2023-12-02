@@ -2,7 +2,7 @@
 
 static AssetManager& _assets = AssetManager::getInstance();
 static AudioManager& _audio = AudioManager::getInstance();
-static GameStateManager& _gameStateManager = GameStateManager::getInstance();
+static GameStateManager& _gameState = GameStateManager::getInstance();
 static SpaceTrainDebug& _debug = SpaceTrainDebug::getInstance();
 
 CombatManager::CombatManager(FollowCam* camera, Train* train, ScoreManager* scoreMan) {
@@ -231,7 +231,7 @@ void CombatManager::update(float deltaTime) {
 
     // If the player is dead, set the game state to GameOVer
     if ( !train->isAlive() ) {
-        _gameStateManager.setState(GameState::GameOver);
+        _gameState.setState(GameState::GameOver);
     }
 
     // Ray targetRay = this->getTargetingRay();

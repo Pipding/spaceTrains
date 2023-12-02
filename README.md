@@ -23,13 +23,13 @@
 # TODO
 
 ## MUST
-- Clean up unused includes
+- Fix train acceleration & rotation
 - Improve enemy AI and shooting behaviour
     - Hostiles either shouldn't get too far away or there should be an indicator showing where they are
-- Fix train acceleration & rotation
 - Add multiple hostiles
 - Comments in all .h files
 - Organise code
+- Clean up unused includes
 
 ## SHOULD
 - Update the target lock UI to be drawn in the same way the game over screen is
