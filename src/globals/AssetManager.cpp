@@ -15,6 +15,11 @@ Model AssetManager::getModel(const char* assetName) {
 }
 
 // TODO: This could error out if a bad assetName is given
+Model* AssetManager::getModelRef(const char* assetName) {
+    return &this->models[assetName];
+}
+
+// TODO: This could error out if a bad assetName is given
 Texture2D AssetManager::getTexture(const char* assetName) {
     return this->textures[assetName];
 }
