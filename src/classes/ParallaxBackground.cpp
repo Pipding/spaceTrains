@@ -25,5 +25,13 @@ void ParallaxBackground::setLayerOffset(int layer, Vector2 offset) {
 void ParallaxBackground::update(float deltaTime) { }
 
 void ParallaxBackground::draw() {
-    
+
+    for(int i = 0; i < this->layerCount; i++) {
+        DrawModel(
+            this->layerModels[i],
+            { this->parent->x + (this->parent->x * -1 / this->layerOffsets[i].x) , -200.f, this->parent->z + this->parent->z * -1 / this->layerOffsets[i].y},
+            1.f,
+            WHITE
+        );
+    }
 }
