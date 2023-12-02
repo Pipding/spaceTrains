@@ -13,6 +13,7 @@ Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target
     this->projectileTexture = projectileTexture;
     this->reloadTime = 2000;
     this->power = 10;
+    this->scale = 0.2f;
 }
 
 bool Hostile::getIsFleeing() {

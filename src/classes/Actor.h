@@ -42,6 +42,30 @@ public:
     */
     Actor(Vector3 position, Model model, Texture2D texture);
 
+    // ==================================================
+    // Getters & setters
+    // ==================================================
+
+    /**
+     * Gets the Texture2D applied to the Model for this Actor
+    */
+    Texture2D* getTexture();
+
+    /**
+     * Gets the Model used for this Actor
+    */
+    Model* getModel();
+
+    /**
+     * Get the collision bounds of the Actor
+    */
+    BoundingBox getBounds();
+
+    /**
+     * Sets the scale of the Actor and updates its bounds accordingly
+     * @param scale The new scale of the Actor
+    */
+    void setScale(float scale);
 
     /**
      * Update the texture applied to the model of the Actor
@@ -49,28 +73,21 @@ public:
      */
     void setTexture(Texture2D texture);
 
-    // TODO: Comments
-    Texture2D* getTexture();
-
-    // TODO: Comments
-    Model* getModel();
-
     /**
     * Set the rotation of the Actor
     * @param rotation   Vector3 of angles in radians in x, y and z
     */
     void setRotation(Vector3 rotation);
 
+    // ==================================================
+    // Methods for calculating & updating things
+    // ==================================================
+
     /**
     * Rotate the Actor by the given rotation vector
     * @param rotation   Vector3 of angles in radians in x, y and z
     */
     void rotateBy(Vector3 rotation);
-
-    /**
-     * Get the collision bounds of the Actor
-    */
-    BoundingBox getBounds();
 
     /**
      * Get the forward vector of this Actor
@@ -104,9 +121,4 @@ public:
      * Draw the Actor by calling the raylib DrawModel function using the member variables of this Actor
      */
     void draw();
-
-    /**
-     * Unloads the texture and model used by this Actor from memory
-    */
-    void unload();
 };

@@ -9,29 +9,17 @@ Actor::Actor() { }
 
 Actor::Actor(Model model, Texture2D texture) : Actor({0, 0, 0}, model, texture) { } // This is a delegated constructor https://en.wikipedia.org/wiki/C++11#Object_construction_improvement
 
-Actor::Actor(Vector3 position, Model model, Texture2D texture) {
-    this->position = position;
-    this->model = model;
+Actor::Actor(Vector3 position, Model model, Texture2D texture)
+    : position(position), model(model) {
+
     this->setTexture(texture);
-
-    // Bounding boxes need to account for scale
-    this->bounds.min = Vector3Scale(this->bounds.min, this->scale);
-    this->bounds.max = Vector3Scale(this->bounds.max, this->scale);
-
-    this->boundsOrigin = GetMeshBoundingBox(this->model.meshes[0]);
-    this->boundsOrigin.min = Vector3Scale(this->boundsOrigin.min, this->scale);
-    this->boundsOrigin.max = Vector3Scale(this->boundsOrigin.max, this->scale);
+    this->setScale(scale);
 }
 
 
 // ==================================================
-// Setters & changers
+// Setters & getters
 // ==================================================
-void Actor::setTexture(Texture2D texture) {
-    this->texture = texture;
-    this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
-}
-
 Texture2D* Actor::getTexture() {
     return &this->texture;
 }
@@ -40,21 +28,38 @@ Model* Actor::getModel() {
     return &this->model;
 }
 
+BoundingBox Actor::getBounds() {
+    return this->bounds;
+}
+
+void Actor::setTexture(Texture2D texture) {
+    this->texture = texture;
+    this->model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this->texture;
+}
+
+void Actor::setScale(float scale) {
+    this->scale = scale;
+
+    this->bounds.min = Vector3Scale(this->bounds.min, this->scale);
+    this->bounds.max = Vector3Scale(this->bounds.max, this->scale);
+
+    this->boundsOrigin = GetMeshBoundingBox(this->model.meshes[0]);
+    this->boundsOrigin.min = Vector3Scale(this->boundsOrigin.min, this->scale);
+    this->boundsOrigin.max = Vector3Scale(this->boundsOrigin.max, this->scale);
+}
+
 void Actor::setRotation(Vector3 rotation) {
     this->rotation = rotation;
     this->transform = MatrixRotateXYZ(this->rotation);
     this->model.transform = this->transform;
 }
 
+// ==================================================
+// Methods for calculating & updating things
+// ==================================================
+
 void Actor::rotateBy(Vector3 rotation) {
     this->setRotation(Vector3Add(this->rotation, rotation));
-}
-
-// ==================================================
-// Getters & calculators
-// ==================================================
-BoundingBox Actor::getBounds() {
-    return this->bounds;
 }
 
 Vector3 Actor::getForwardVector() {
@@ -93,17 +98,10 @@ void Actor::update() {
     this->bounds.max = Vector3Add(this->position, this->boundsOrigin.max);
 }
 
-
 void Actor::draw() {
     DrawModel(this->model, this->position, this->scale, this->color);
 
     if (_debug.getDrawBoundingBoxes()) {
         DrawBoundingBox(this->getBounds(), GREEN);
     }
-}
-
-// TODO: This can cause a segfault if the texture or model has already been unloaded
-void Actor::unload() {
-    UnloadTexture(this->texture);
-    UnloadModel(this->model);
 }
