@@ -3,7 +3,6 @@
 #include "src/classes/CombatManager.h"
 #include "src/classes/FollowCam.h"
 #include "src/classes/ParallaxBackground.h"
-#include "src/classes/Powerup.h"
 #include "src/classes/UIManager.h"
 #include "src/globals/AssetManager.h"
 #include "src/globals/GameStateManager.h"
@@ -30,7 +29,9 @@ int main(void)
     DisableCursor();
     SetRandomSeed((unsigned)time(NULL)); // Method for generating a random seed taken from StackOverflow: https://stackoverflow.com/a/11765384
 
-    // Load assets
+    // Assets are loaded through a custom AssetManager singleton class. There is only one instance 
+    // of this class across the entire application and it can be referenced wherever needed. It has
+    // a utility function which loads all the assets required for the game
     _assets.loadAssets();
 
     /**
