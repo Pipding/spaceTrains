@@ -3,18 +3,27 @@
 static GameStateManager& _gameStateManager = GameStateManager::getInstance();
 static AssetManager& _assets = AssetManager::getInstance();
 
-UIManager::UIManager(CombatManager* combatMan, ScoreManager* scoreMan, Font font) {
-    this->combatManager = combatMan;
-    this->scoreManager = scoreMan;
-    this->font = font;
+UIManager::UIManager(int screenWidth, int screenHeight, CombatManager* combatMan, ScoreManager* scoreMan, Font font)
+    : screenWidth(screenWidth), screenHeight(screenHeight), combatManager(combatMan), scoreManager(scoreMan), font(font) {
+        this->screenWidthCentre = screenWidth / 2;
+        this->screenHeightCentre = screenHeight / 2;
+
+        this->gameOverRect = {
+                                this->screenWidthCentre - (this->gameOverRectWidth / 2),
+                                this->screenHeightCentre - (this->gameOverRectHeight / 2),
+                                (float)this->gameOverRectWidth,
+                                (float)this->gameOverRectHeight
+                            };
 }
 
-void UIManager::update(float deltaTime) { }
+void UIManager::update(float deltaTime) {
+    this->scoreText = TextFormat("SCORE: %i", this->scoreManager->getScore());
+}
 
 void UIManager::draw(int screenWidth, int screenHeight) {
 
     if (_gameStateManager.getState() == GameState::GameOver) {
-        DrawText("GameOver", 600, 340, 40, GREEN);
+        this->drawGameOverBox();
         return;
     }
 
@@ -23,7 +32,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         return;
     }
 
-    DrawTextEx(this->font, TextFormat("Score: %i", this->scoreManager->getScore()), {20, 20}, this->font.baseSize, 2, GREEN );
+    DrawTextEx(this->font, this->scoreText, {20, 20}, this->font.baseSize, 2, GREEN );
 
     DrawText(TextFormat("Speed: %f", this->combatManager->getTrain()->head()->getSpeed()), 20, screenHeight - 60, 40, GREEN);
     DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
@@ -67,4 +76,33 @@ void UIManager::drawTargetLockUI() {
     } else {
         DrawTexture(*_assets.getTextureRef("target_available_ui"), 0.f, 200.f, WHITE);
     }
+}
+
+void UIManager::drawGameOverBox() {
+    // Draw the outline of the Game Over box
+    DrawRectangleRounded(this->gameOverRect, 0.15f, 3, LIGHTGRAY);
+    DrawRectangleRoundedLines(this->gameOverRect, 0.15f, 3, 4.f, BLACK);
+
+    // To keep text centered, check the dimensions of the rendered text and use that to inform
+    // where it will be drawn when calling DrawTextEx
+    Vector2 gameOverTextSize = MeasureTextEx(this->font, this->gameOverText, this->font.baseSize, 0.f);
+    Vector2 scoreTextSize = MeasureTextEx(this->font, this->scoreText, this->font.baseSize, 0.f);
+
+    DrawTextEx(
+        this->font,
+        this->gameOverText,
+        {this->screenWidthCentre - (gameOverTextSize.x / 2), this->screenHeightCentre - (this->gameOverRectHeight / 3)}, // position
+        this->font.baseSize,
+        0,
+        DARKGREEN
+    );
+
+    DrawTextEx(
+        this->font,
+        this->scoreText,
+        {this->screenWidthCentre - (scoreTextSize.x / 2), this->screenHeightCentre}, // position
+        this->font.baseSize,
+        0,
+        DARKGREEN
+    );
 }

@@ -121,7 +121,7 @@ int main(void)
     //==================================================
     ScoreManager scoreManager = ScoreManager();
     CombatManager combatManager = CombatManager(&followCam, &train, &scoreManager);
-    UIManager uiManager = UIManager(&combatManager, &scoreManager, _assets.getFont("space_wham"));
+    UIManager uiManager = UIManager(screenWidth, screenHeight, &combatManager, &scoreManager, _assets.getFont("space_wham"));
 
     // ==================================================
     // Register input listeners. These are game objects
@@ -154,6 +154,7 @@ int main(void)
             train.update(deltaTime);
             followCam.update(deltaTime);
             combatManager.update(deltaTime);
+            uiManager.update(deltaTime);
         }
 
         if (_gameStateManager.getState() == GameState::Gameplay || _gameStateManager.getState() == GameState::Paused || _gameStateManager.getState() == GameState::GameOver) {
