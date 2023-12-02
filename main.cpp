@@ -1,12 +1,9 @@
 #include "raylib.h"
 #include "raymath.h"
-#include "src/classes/Actor.h"
 #include "src/classes/CombatManager.h"
-#include "src/classes/Hostile.h"
 #include "src/classes/FollowCam.h"
+#include "src/classes/ParallaxBackground.h"
 #include "src/classes/Powerup.h"
-#include "src/classes/TrainEngine.h"
-#include "src/classes/TrainCar.h"
 #include "src/classes/UIManager.h"
 #include "src/globals/AssetManager.h"
 #include "src/globals/GameStateManager.h"
@@ -33,19 +30,15 @@ int main(void)
     DisableCursor();
     SetRandomSeed((unsigned)time(NULL)); // Method for generating a random seed taken from StackOverflow: https://stackoverflow.com/a/11765384
 
-    //==================================================
     // Load assets
-    //==================================================
     _assets.loadAssets();
 
-    Model galaxyBg = _assets.getModel("plane");
-    galaxyBg.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *_assets.getTextureRef("galaxy");
-
-    //==================================================
-    // Create the Train (player character) by creating a 
-    // TrainEngine and some TrainCars. Then use them to 
-    // create a Train
-    //==================================================
+    /**
+     * The Train is the player character. The Train consists of a collection of
+     * TrainComponents (1 TrainEngine and n TrainCars)
+     * Here we instantiate a TrainEngine and some TrainCars and use them to
+     * construct a train
+    */
     TrainEngine engine(_assets.getModel("train_engine"), _assets.getTexture("train_engine"), 0.1f, 16.f, 2.f, 2.5f);
 
     TrainCar carriage1(
@@ -74,11 +67,14 @@ int main(void)
         "laser_hit"
     );
 
-    Train train({&engine, &carriage1, &carriage2}, 100);
+    Train train({&engine, &carriage1, &carriage2}, 100); // The player character
 
-    //==================================================
+    // Create a parallax background
+    ParallaxBackground background(&train.head()->position, 2, _assets.getTextureRef("galaxy"));
+    background.setLayerOffset(0, {1.f, 1.f});
+    background.setLayerOffset(1, {5.f, 5.f});
+
     // Camera which follows the player character
-    //==================================================
     FollowCam followCam(&engine, {-17.5f, 12.5f, 0.0f});
 
     //==================================================
@@ -99,9 +95,8 @@ int main(void)
     _input.addListener(&_gameState, KEY_P, GameState::Stateless);
     _input.addListeners(&combatManager, {KEY_LEFT_SHIFT, KEY_SPACE, KEY_UP, KEY_DOWN}, GameState::Gameplay);
 
-    // ==================================================
-    // Set the initial game state
-    // ==================================================
+    // Set the initial game state. This acts as a loading screen of sorts. Game logic will not
+    // be updated until GameState has been set here
     _gameState.setState(GameState::Gameplay);
 
     // ==================================================
@@ -111,7 +106,7 @@ int main(void)
     {
         const float deltaTime = GetFrameTime();
 
-        // Take user input
+        // Take user input and update the UI
         _input.update(deltaTime);
         uiManager.update(deltaTime);
 
@@ -124,28 +119,27 @@ int main(void)
 
         // Start drawing
         BeginDrawing();
-        ClearBackground(BLACK);
+            ClearBackground(BLACK);
 
-        // Draw the game world only when the game is in a state where it should be visible, e.g. not at the main menu
-        // In practice this means all game states because main menu is not implemented
-        if (_gameState.getState() == GameState::Gameplay || _gameState.getState() == GameState::Paused || _gameState.getState() == GameState::GameOver) {
-            BeginMode3D(followCam.camera);
-                train.draw();
-                followCam.draw();
-                combatManager.draw();
+            // Draw the game world only when the game is in a state where it should be visible, e.g. not at the main menu
+            // In practice this means all game states because main menu is not implemented
+            if (_gameState.getState() == GameState::Gameplay || _gameState.getState() == GameState::Paused || _gameState.getState() == GameState::GameOver) {
+                BeginMode3D(followCam.camera);
+                    train.draw();
+                    followCam.draw();
+                    combatManager.draw();
+                    background.draw();
 
-                if (_debug.getDrawBoundingBoxes()) {
-                    DrawGrid(2000, 2.f);
-                }
+                    if (_debug.getDrawBoundingBoxes()) {
+                        DrawGrid(2000, 2.f);
+                    }
 
-                DrawModel(_assets.getModel("plane"), {engine.position.x + (engine.position.x * -1 / 50) , -200.f, engine.position.z + engine.position.z * -1 / 50}, 1.f, WHITE);
-                DrawModel(_assets.getModel("plane"), {engine.position.x + (engine.position.x * -1 / 25) , -100.f, engine.position.z + engine.position.z * -1 / 25}, 1.f, WHITE);
-            EndMode3D();
-        }
+                EndMode3D();
+            }
 
-        // UI needs to be drawn outside of 3D mode and regardless of game state
-        // because UIManager does its own internal checks for game state
-        uiManager.draw(screenWidth, screenHeight);
+            // UI needs to be drawn outside of 3D mode and regardless of game state
+            // because UIManager does its own internal checks for game state
+            uiManager.draw(screenWidth, screenHeight);
 
         EndDrawing();
     }
