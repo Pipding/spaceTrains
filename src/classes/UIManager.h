@@ -22,7 +22,7 @@ private:
     Rectangle gameOverRect;
 
     const char* gameOverText = "GAME OVER";
-    const char* scoreText;
+    const char* scoreText = "";
 
     /**
      * Draws the UI for the targeting system
