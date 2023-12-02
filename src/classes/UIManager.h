@@ -8,20 +8,32 @@
 class UIManager: public IUpdatable {
 
 private:
-   CombatManager* combatManager;
-   ScoreManager* scoreManager;
-   Font font;
+    int screenWidth;
+    int screenHeight;
+    float screenWidthCentre;
+    float screenHeightCentre;
+    CombatManager* combatManager;
+    ScoreManager* scoreManager;
+    Font font;
+
+    int gameOverRectWidth = 640;
+    int gameOverRectHeight = 360;
+
+    Rectangle gameOverRect;
+
+    const char* gameOverText = "GAME OVER";
+    const char* scoreText;
 
     /**
      * Draws the UI for the targeting system
     */
-   void drawTargetLockUI();
+    void drawTargetLockUI();
 
 public:
     /**
-     * Constructor
+    * Constructor
     */
-    UIManager(CombatManager* combatManager, ScoreManager* scoreManager, Font font);
+    UIManager(int screenWidth, int screenHeight, CombatManager* combatManager, ScoreManager* scoreManager, Font font);
 
     void update(float deltaTime);
 
