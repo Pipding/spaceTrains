@@ -49,6 +49,7 @@
 - Make turret models rotate to face the direction the camera faces
 
 ## COULD
+- Add nametags to enemies to make them easier to spot
 - Add UI to show damage being dealt to enemies
 - Add UI to show damage being dealt to player
 - Add a health bar
