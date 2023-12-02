@@ -16,7 +16,9 @@ UIManager::UIManager(int screenWidth, int screenHeight, CombatManager* combatMan
                             };
 }
 
-void UIManager::update(float deltaTime) { }
+void UIManager::update(float deltaTime) {
+    this->scoreText = TextFormat("SCORE: %i", this->scoreManager->getScore());
+}
 
 void UIManager::draw(int screenWidth, int screenHeight) {
 
@@ -28,15 +30,26 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         // To keep text centered, check the dimensions of the rendered text and use that to inform
         // where it will be drawn when calling DrawTextEx
         Vector2 gameOverTextSize = MeasureTextEx(this->font, this->gameOverText, this->font.baseSize, 0.f);
+        Vector2 scoreTextSize = MeasureTextEx(this->font, this->scoreText, this->font.baseSize, 0.f);
 
         DrawTextEx(
             this->font,
-            "GAME OVER",
+            this->gameOverText,
             {this->screenWidthCentre - (gameOverTextSize.x / 2), this->screenHeightCentre - (this->gameOverRectHeight / 3)}, // position
             this->font.baseSize,
             0,
             GREEN
         );
+
+        DrawTextEx(
+            this->font,
+            this->scoreText,
+            {this->screenWidthCentre - (scoreTextSize.x / 2), this->screenHeightCentre}, // position
+            this->font.baseSize,
+            0,
+            GREEN
+        );
+
         return;
     }
 
@@ -45,7 +58,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
         return;
     }
 
-    DrawTextEx(this->font, TextFormat("Score: %i", this->scoreManager->getScore()), {20, 20}, this->font.baseSize, 2, GREEN );
+    DrawTextEx(this->font, this->scoreText, {20, 20}, this->font.baseSize, 2, GREEN );
 
     DrawText(TextFormat("Speed: %f", this->combatManager->getTrain()->head()->getSpeed()), 20, screenHeight - 60, 40, GREEN);
     DrawText(TextFormat("Health: %i", this->combatManager->getPlayerHealth()), 20, screenHeight - 120, 40, RED);
