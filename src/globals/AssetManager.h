@@ -45,6 +45,11 @@ public:
     Model getModel(const char* assetName);
 
     /**
+     * Gets a pointer to a Model from the models map
+    */
+    Model* getModelRef(const char* assetName);
+
+    /**
      * Gets a Texture2D from the textures map
     */
     Texture2D getTexture(const char* assetName);
