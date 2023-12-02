@@ -5,13 +5,13 @@ static AssetManager& _assets = AssetManager::getInstance();
 ParallaxBackground::ParallaxBackground(Vector3* parent, int layers, Texture2D* texture)
     : layerCount(layers), parent(parent) {
 
-        for (int i = 0; i < layers; i++) {
-            this->layerModels.push_back(_assets.getModel("plane"));
-            this->layerTextures.push_back(texture);
-            this->layerOffsets.push_back((Vector2){i * 25, i * 25});
+    for (int i = 0; i < layers; i++) {
+        this->layerModels.push_back(_assets.getModel("plane"));
+        this->layerTextures.push_back(texture);
+        this->layerOffsets.push_back((Vector2){i * 25.f, i * 25.f});
 
-            this->layerModels[i].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *texture;
-        }
+        this->layerModels[i].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *texture;
+    }
 }
 
 void ParallaxBackground::setLayer(int layer, Texture2D* texture) {
