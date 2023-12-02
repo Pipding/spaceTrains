@@ -127,4 +127,8 @@ void AssetManager::unloadAll() {
     for (auto keyValuePair : this->sounds) {
         UnloadSound(keyValuePair.second);
     }
+
+    for (auto keyValuePair : this->fonts) {
+        UnloadFont(keyValuePair.second);
+    }
 }
