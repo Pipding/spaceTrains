@@ -1,8 +1,31 @@
 # Class hierarchy and interfaces
+## The Actor class
 There's a relatively simple class hierarchy in this game, with most in-game objects inheriting from the `Actor` class.
 `Actor` is analogous to the class of the same name in Unreal Engine in that it represents anything which can be spawned in the world.
 Here's the class hierarchy for `Actor`
 ![Actor class hierarchy](diagrams/actor_class_hierarchy.jpg)
+
+## Interfaces
+Besides inheritence, this game also makes use of a number of interfaces. Classes which implement these interfaces can be treated
+interchangeably as those interfaces.
+<br>
+For example, the `Train` class contains a vector of `TrainComponents`. When `Train::update()` is called, each of the `TrainComponents` in this vector are updated.
+This presents a problem, because a `TrainComponent` doesn't have an update function. This would mean when we want to update each `TrainComponent`, we would
+first need to check whether it's a `TrainEngine` or a `TrainCar` and the call the relevant update method.
+<br>
+With the `IUpdatable` interface, we can simply have `TrainComponent` inherit from `IUpdatable, which in turn causes `TrainEngine` and `TrainCar` to inherit from
+`IUpdatable`. All classes which inherit from `IUpdatable` must have an `update()` method, so at runtime we can cast all `TrainComponents` to `IUpdatables` and
+invoke their `update()` method.
+
+Interfaces are described seperately from regular classes in the [interfaces](src/interfaces/) folder.
+<br>
+Here's a list of the interfaces, what they do and which classes inherit from them:
+
+| Interface         | Purpose                                                                                                       | Implementors                                                                                                      |
+|-------------------|---------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| ICombatant        | Defines combat-related variables and functionality                                                            | Hostile.h, Train.h                                                                                                |
+| IKeyboardListener | Used in conjunction with [InputManager](src/globals/InputManager.h) to allow classes to accept keyboard input | CombatManager.h, FollowCam.h, TrainEngine.h, GameStateManager.h, SpaceTrainDebug.h                                |
+| IUpdatable        | Used to make give a class an update method                                                                    | CombatManager.h, FollowCam.h, Hostile.h, ParallaxBackground.h, Projectile.h, Train.h, TrainComponent.h, UIManager.h, InputManager.h   |
 
 # Asset credits
 
