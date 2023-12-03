@@ -30,10 +30,9 @@ void TrainCar::update(float deltaTime) {
    Vector3* parentAnchor = this->engine->getRearAttachmentPoint();
 
     // Update the train car to be pointing towards and following the TrainComponent assigned to the engine parameter
-    // Vector3 directionToParent = this->getVectorTowardTarget(this->engine->position);
     Vector3 directionToParent = this->getVectorTowardTarget(*parentAnchor);
-    Vector3 scaledInvertedPulledDirection = Vector3Scale(Vector3Negate(directionToParent), this->followDistance);
-    this->position = Vector3Add(*parentAnchor, scaledInvertedPulledDirection);
+    Vector3 followPosition = Vector3Scale(Vector3Negate(directionToParent), this->followDistance); // The position the TrainComponent needs to be at to follow its parent at followDistance
+    this->position = Vector3Add(*parentAnchor, followPosition);
     this->setRotation({0, this->angleToVector(*parentAnchor), 0});
 
     // Calculate how long is left until this car can shoot again
