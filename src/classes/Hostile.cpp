@@ -1,7 +1,7 @@
 #include "Hostile.h"
 
 Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed, int power, int reloadTime, int maxHitpoints, Model projectileModel, Texture2D projectileTexture)
-:Actor(position, model, texture) {
+    :Actor(position, model, texture) {
     this->maxSpeed = maxSpeed;
     this->currentSpeed = maxSpeed; //TODO: Need to implement acceleration and deceleration for hostiles
     this->target = target;
@@ -15,6 +15,22 @@ Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target
     this->power = power;
     this->setScale(0.2f);
 }
+
+Hostile::Hostile(Vector3 position, Vector3* target, Hostile* hostile) :
+    Hostile(
+        position,
+        *hostile->getModel(),
+        *hostile->getTexture(),
+        target,
+        hostile->getMinEngagementDistance(),
+        hostile->getMaxEngagementDistance(),
+        hostile->getMaxSpeed(),
+        hostile->getPower(),
+        hostile->getReloadTime(),
+        hostile->getMaxHitpoints(),
+        hostile->getProjectileModel(),
+        hostile->getProjectileTexture()
+    ) { }
 
 bool Hostile::getIsFleeing() {
     return this->isFleeing;

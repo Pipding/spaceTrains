@@ -62,7 +62,15 @@ private:
 public:
     Vector3* target;
 
+    /**
+     * Full constructor for a Hostile
+    */
     Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed, int power, int reloadTime, int maxHitpoints, Model projectileModel, Texture2D projectileTexture);
+
+    /**
+     * Constructor which creates a copy of the given Hostile with a new location and target
+    */
+    Hostile(Vector3 position, Vector3* target, Hostile* hostile);
 
     /**
      * Update method
