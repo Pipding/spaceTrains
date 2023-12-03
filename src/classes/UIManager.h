@@ -38,8 +38,10 @@ private:
 
     /**
      * Draws the train component selection UI
+     * @param vertical  Defaults to true. If true, the UI is drawn vertically at the right side of the screen.
+     *                  If false, it's drawn horizontally at the bottom
     */
-    void drawTrainComponentSelectionUI();
+    void drawTrainComponentSelectionUI(bool vertical = true);
 
 public:
     /**

@@ -86,25 +86,40 @@ void UIManager::drawGameOverBox() {
     );
 }
 
-void UIManager::drawTrainComponentSelectionUI() {
+void UIManager::drawTrainComponentSelectionUI(bool vertical) {
     // How many boxes to draw
     int trainBoxesCount = this->combatManager->getTrain()->size();
     float trainBoxesWidth = 80.f;
     float gapBetweenBoxes = 20.f;
     float trainBoxesHeight = 40.f;
     float totalTrainUIWidth = (trainBoxesWidth * trainBoxesCount) + (gapBetweenBoxes * (trainBoxesCount - 1));
+    float totalTrainUIHeight = (trainBoxesHeight * trainBoxesCount) + (gapBetweenBoxes * (trainBoxesCount - 1));
     float trainUIStartX = (screenWidth - totalTrainUIWidth) / 2;
+    float trainUIStartY = (screenHeight - totalTrainUIHeight) / 2;
 
     for (int i = 0; i < trainBoxesCount; i++) {
-        DrawRectangle(trainUIStartX, screenHeight - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, this->combatManager->getTrain()->getActiveComponentIndex() == i ? GREEN : WHITE);
+
+        if (vertical) {
+            DrawRectangle(screenWidth - (trainBoxesWidth * 2), trainUIStartY, trainBoxesWidth, trainBoxesHeight, this->combatManager->getTrain()->getActiveComponentIndex() == i ? GREEN : WHITE);
+        } else {
+            DrawRectangle(trainUIStartX, screenHeight - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, this->combatManager->getTrain()->getActiveComponentIndex() == i ? GREEN : WHITE);
+        }
 
         if (i != 0) {
             TrainCar* car = dynamic_cast<TrainCar*>(this->combatManager->getTrain()->getComponent(i));
             if (!car->getCanShoot()) {
-                DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, screenHeight - trainBoxesWidth, 30, BLACK);
+                if (vertical) {
+                    DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, screenHeight - trainBoxesWidth, 30, BLACK);
+                } else {
+                    DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), screenWidth - (trainBoxesWidth * 2), trainUIStartY, 30, BLACK);
+                }
             }
         }
 
-        trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
+        if (vertical) {
+            trainUIStartY += (trainBoxesHeight + gapBetweenBoxes);
+        } else {
+            trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
+        }
     }
 }
