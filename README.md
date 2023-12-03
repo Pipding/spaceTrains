@@ -1,3 +1,6 @@
+# Screencast
+https://youtu.be/jCESNKPmUB0
+
 # Controls
 
 | Key       | Action                                                |
@@ -14,9 +17,6 @@
 |R          | Reset camera (outside combat)                         |
 |P          | Pause game                                            |
 |M          | Enable debug view                                     |
-
-# Screencast
-https://youtu.be/jCESNKPmUB0
 
 # Class hierarchy and interfaces
 ## The Actor class
