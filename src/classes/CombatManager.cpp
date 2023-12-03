@@ -113,7 +113,7 @@ void CombatManager::spawnPowerup(Vector3 pos) {
 }
 
 void CombatManager::update(float deltaTime) {
-    if (this->hostiles.size() == 0) {
+    if (this->hostiles.size() < 3) {
         this->spawnHostile();
     }
 
