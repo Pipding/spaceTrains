@@ -23,9 +23,6 @@
 # TODO
 
 ## MUST
-- Improve enemy AI and shooting behaviour
-    - Hostiles either shouldn't get too far away or there should be an indicator showing where they are
-- Add multiple hostiles
 - Fix train rotation
 - Comments in all .h files
 - Organise code
