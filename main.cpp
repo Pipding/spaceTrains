@@ -75,7 +75,6 @@ int main(void)
         "laser_hit"
     );
 
-    // Train train({&engine, &carriage1, &carriage2}, 100); // The player character
     Train train({&engine, &carriage1, &carriage2}, 100); // The player character
 
     // Create a parallax background

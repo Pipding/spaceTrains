@@ -16,7 +16,9 @@ TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, float
 
     // Initialize the position of the TrainCar based on its "engine"
     Vector3 engineBack = Vector3Negate(this->engine->getForwardVector());
-    this->position = Vector3Add(*this->engine->getRearAttachmentPoint(), Vector3Scale(engineBack, this->followDistance));
+    // TODO: The distance the car initially spawns behind its parent is multiplied by 5 to prevent them from intersecting on spawn
+    // Come up with a cleaner way to handle this
+    this->position = Vector3Add(*this->engine->getRearAttachmentPoint(), Vector3Scale(engineBack, this->followDistance * 5));
 }
 
 /**
