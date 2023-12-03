@@ -41,6 +41,7 @@ Model Hostile::getProjectileModel() {
 }
 
 void Hostile::update(float deltaTime) {
+
     // Calculate where your target is
     Vector3 vectorToTarget = this->getVectorTowardTarget(*this->target, false);
     this->distanceToTarget = Vector3Length(vectorToTarget);
@@ -56,8 +57,15 @@ void Hostile::update(float deltaTime) {
         }
     }
 
-    // If you're reloading or in the "fleeing" state, try to get away from the player
-    if (this->isFleeing || this->reloading) {
+    if (this->isFleeing) {
+        // If can shoot, random chance to exit the "fleeing" state
+        if (this->canShoot() && (GetRandomValue(0, 100) * deltaTime) < 0.1f) {
+            this->isFleeing = false;
+        }
+    }
+
+    // Try to get away from the player if hostile is reloading, hostile is fleeing or hostile is too close to target (closer than minimum engagement distance)
+    if (this->isFleeing || this->reloading || this->distanceToTarget < this->minEngagementDistance) {
 
         // Calculate a vector which is in the exact opposite direction of the player
         Vector3 fleeVector = Vector3Add(this->position, Vector3Scale(Vector3Negate(this->directionToTarget), 100.f));
@@ -65,17 +73,11 @@ void Hostile::update(float deltaTime) {
         // Turn away from the player and run
         this->setRotation({0, this->angleToVector(fleeVector), 0});
         this->position = Vector3Add(this->position, Vector3Scale(this->getVectorTowardTarget(fleeVector), this->currentSpeed * deltaTime));
-
-    } else {
-
-        // Try to get closer to the target
-        if (this->distanceToTarget > this->minEngagementDistance) {
-            this->position = Vector3Add(this->position, Vector3Scale(this->directionToTarget, this->currentSpeed * deltaTime));
-            this->setRotation({0, this->angleToVector(*this->target), 0});
-        } else if (this->distanceToTarget < this->minEngagementDistance) {
-            // try to get away
-        }
-
+        
+    } else if (this->distanceToTarget > this->minEngagementDistance) {
+        // Too far away to engage, get closer
+        this->position = Vector3Add(this->position, Vector3Scale(this->directionToTarget, this->currentSpeed * deltaTime));
+        this->setRotation({0, this->angleToVector(*this->target), 0});
     }
 
     Actor::update();
