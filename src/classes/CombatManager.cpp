@@ -86,15 +86,13 @@ int CombatManager::getPlayerHealth() {
 }
 
 void CombatManager::spawnHostile() {
-    // TODO: When there's more than 1 hostile type, maybe randomize the type of hostile spawned
-
     // Spawn the new hostile 200 units away from the player in a random-ish direction
     bool positiveX = GetRandomValue(0, 10) % 2 == 0;
     bool positiveY = GetRandomValue(0, 10) % 2 == 0;
-
     Vector3 newHostilePos = {positiveX ? 200.f : -200.f, 0.f, positiveY ? 200.f : -200.f};
 
-    Hostile* h = new Hostile(newHostilePos, &this->train->head()->position, &this->hostileTypes[0]);
+    // Pick a random enemy type to spawn
+    Hostile* h = new Hostile(newHostilePos, &this->train->head()->position, &this->hostileTypes[GetRandomValue(0, this->hostileTypes.size() - 1)]);
 
     this->hostiles.push_back(h);
     this->projectiles[h] = std::vector<Projectile*>();
@@ -329,22 +327,58 @@ void CombatManager::onKeyReleased(int key) { }
 void CombatManager::populateHostileTypes() {
 
     // Define the different Hostile types the CombatManager can spawn
-    Hostile hostile(
+
+    // This one is slow & strong. High damage, high reload time
+    Hostile bomber(
+        {0.f, 0.f, 0.f},                // Position
+        _assets.getModel("ufo"),        // Model
+        _assets.getTexture("ufo"),      // Texture
+        &this->train->head()->position, // Target
+        60.f,                           // Min engagement distance
+        80.f,                           // Max engagement distance
+        20.f,                           // Max speed
+        20,                             // Power (damage dealt on hit)
+        5000,                           // ReloadTime (milliseconds)
+        80,                             // Max hitpoints
+        _assets.getModel("missile"),    // Projectile model
+        _assets.getTexture("missile")   // Projectile texture
+    );
+
+    // This one is fast & weak. Gets in and peppers the player with shots
+    Hostile scout(
+        {0.f, 0.f, 0.f},                // Position
+        _assets.getModel("ufo"),        // Model
+        _assets.getTexture("ufo"),      // Texture
+        &this->train->head()->position, // Target
+        20.f,                           // Min engagement distance
+        40.f,                           // Max engagement distance
+        80.f,                           // Max speed
+        2,                              // Power (damage dealt on hit)
+        1000,                           // ReloadTime (milliseconds)
+        25,                             // Max hitpoints
+        _assets.getModel("bullet"),     // Projectile model
+        _assets.getTexture("bullet")    // Projectile texture
+    );
+
+    // This one is middle of the road
+    Hostile interceptor(
         {0.f, 0.f, 0.f},                // Position
         _assets.getModel("ufo"),        // Model
         _assets.getTexture("ufo"),      // Texture
         &this->train->head()->position, // Target
         40.f,                           // Min engagement distance
         80.f,                           // Max engagement distance
-        30.f,                           // Max speed
-        15,                             // Power (damage dealt on hit)
-        5000,                           // ReloadTime (milliseconds)
-        80,                            // Max hitpoints
+        35.f,                           // Max speed
+        10,                              // Power (damage dealt on hit)
+        2000,                           // ReloadTime (milliseconds)
+        100,                             // Max hitpoints
         _assets.getModel("missile"),    // Projectile model
         _assets.getTexture("missile")   // Projectile texture
     );
 
-    this->hostileTypes.push_back(hostile);
+    this->hostileTypes.push_back(bomber);
+    this->hostileTypes.push_back(scout);
+    this->hostileTypes.push_back(interceptor);
 }
 
 void CombatManager::populatePowerupTypes() {
