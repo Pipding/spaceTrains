@@ -32,7 +32,7 @@ private:
     std::vector<Powerup> powerupTypes;
 
     // Types of TrainCar
-    std::vector<TrainCar> trainCarTypes;
+    std::map<const char*, TrainCar> trainCarTypes;
 
     // ==================================================
     // Targeting member variables

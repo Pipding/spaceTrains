@@ -449,6 +449,6 @@ void CombatManager::populateTraincarTypes() {
         "laser_hit"                             // Name of the sound to play when a projectile fired by this TrainCar is destroyed
     );
 
-    trainCarTypes.push_back(missileCar);
-    trainCarTypes.push_back(laserCar);
+    trainCarTypes["missile_car"] = missileCar;
+    trainCarTypes["laser_car"] = laserCar;
 }
