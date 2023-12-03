@@ -109,9 +109,9 @@ void UIManager::drawTrainComponentSelectionUI(bool vertical) {
             TrainCar* car = dynamic_cast<TrainCar*>(this->combatManager->getTrain()->getComponent(i));
             if (!car->getCanShoot()) {
                 if (vertical) {
-                    DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, screenHeight - trainBoxesWidth, 30, BLACK);
-                } else {
                     DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), screenWidth - (trainBoxesWidth * 2), trainUIStartY, 30, BLACK);
+                } else {
+                    DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, screenHeight - trainBoxesWidth, 30, BLACK);
                 }
             }
         }

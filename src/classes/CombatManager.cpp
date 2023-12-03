@@ -305,11 +305,11 @@ void CombatManager::onKeyPressed(int key) {
             _audio.play(firedProjectile->getlaunchSFX());
             this->projectiles[this->getActiveTarget()].push_back(firedProjectile);
         }
-    } else if (key == KEY_UP) {
+    } else if (key == KEY_DOWN) {
         if (this->targetLocked) {
             this->camera->parent = this->train->incrementActiveComponent();
         }
-    } else if (key == KEY_DOWN) {
+    } else if (key == KEY_UP) {
         if (this->targetLocked) {
             this->camera->parent = this->train->decrementActiveComponent();
         }
