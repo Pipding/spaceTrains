@@ -76,7 +76,7 @@ int main(void)
     );
 
     // Train train({&engine, &carriage1, &carriage2}, 100); // The player character
-    Train train({&engine, &carriage1}, 100); // The player character
+    Train train({&engine, &carriage1, &carriage2}, 100); // The player character
 
     // Create a parallax background
     ParallaxBackground background(&train.head()->position, 2, _assets.getTextureRef("galaxy"));
