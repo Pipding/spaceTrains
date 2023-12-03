@@ -1,18 +1,18 @@
 # Controls
 
-| Key       | Action                                        |
-|-----------|-----------------------------------------------|
-|W          | Accelerate                                    |
-|S          | Decelerate                                    |
-|A          | Turn locomotive left                          |
-|D          | Turn locomotive right                         |
-|Mouse      | Move camera (outside combat)                  |
-|Shift      | Lock on to target (when prompted)             |
-|Up arrow   | Cycle active train carriage up (in combat)    |
-|Down arrow | Cycle active train carriage up (in combat)    |
-|Spacebar   | Shoot (in combat)                             |
-|R          | Reset camera (outside combat)                 |
-|M          | Enable debug view                             |
+| Key       | Action                                                |
+|-----------|-------------------------------------------------------|
+|W          | Accelerate                                            |
+|S          | Decelerate                                            |
+|A          | Turn locomotive left                                  |
+|D          | Turn locomotive right                                 |
+|Mouse      | Move camera (outside combat)                          |
+|Shift      | Lock on to target (when prompted)                     |
+|Up arrow   | Cycle active train carriage up (when target locked)   |
+|Down arrow | Cycle active train carriage up (when target locked)   |
+|Spacebar   | Shoot (when target locked)                            |
+|R          | Reset camera (outside combat)                         |
+|M          | Enable debug view                                     |
 
 # Class hierarchy and interfaces
 ## The Actor class
