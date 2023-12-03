@@ -58,9 +58,9 @@ void Hostile::update(float deltaTime) {
     }
 
     if (this->isFleeing) {
-        // If can shoot, random chance to exit the "fleeing" state
-        if (this->canShoot() && (GetRandomValue(0, 100) * deltaTime) < 0.1f) {
-            this->isFleeing = false;
+        // If can shoot and far enough away, random chance to exit the "fleeing" state        
+        if (!this->reloading && this->distanceToTarget >= this->maxEngagementDistance) {
+            this->isFleeing = GetRandomValue(1, (10000 * deltaTime)) > (100 * deltaTime);
         }
     }
 
@@ -73,7 +73,7 @@ void Hostile::update(float deltaTime) {
         // Turn away from the player and run
         this->setRotation({0, this->angleToVector(fleeVector), 0});
         this->position = Vector3Add(this->position, Vector3Scale(this->getVectorTowardTarget(fleeVector), this->currentSpeed * deltaTime));
-        
+
     } else if (this->distanceToTarget > this->minEngagementDistance) {
         // Too far away to engage, get closer
         this->position = Vector3Add(this->position, Vector3Scale(this->directionToTarget, this->currentSpeed * deltaTime));
