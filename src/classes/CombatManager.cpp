@@ -86,9 +86,13 @@ int CombatManager::getPlayerHealth() {
 }
 
 void CombatManager::spawnHostile() {
-    // TODO: When there's more than 1 hostile, maybe randomize the type of hostile spawned
+    // TODO: When there's more than 1 hostile type, maybe randomize the type of hostile spawned
 
-    Vector3 newHostilePos = {100.f, 0.f, 100.f};
+    // Spawn the new hostile 200 units away from the player in a random-ish direction
+    bool positiveX = GetRandomValue(0, 10) % 2 == 0;
+    bool positiveY = GetRandomValue(0, 10) % 2 == 0;
+
+    Vector3 newHostilePos = {positiveX ? 200.f : -200.f, 0.f, positiveY ? 200.f : -200.f};
 
     Hostile* h = new Hostile(
         newHostilePos,
