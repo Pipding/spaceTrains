@@ -421,3 +421,34 @@ void CombatManager::populatePowerupTypes() {
     this->powerupTypes.push_back(healthPackLarge);
     this->powerupTypes.push_back(speedBoost);
 }
+
+void CombatManager::populateTraincarTypes() {
+    TrainCar missileCar(
+        _assets.getModel("train_wagon"),        // Model
+        _assets.getTexture("wagon"),            // Texture
+        nullptr,                                // Pointer to "parent" TrainComponent
+        3.f,                                    // Follow distance - how close this component gets to its parent
+        20,                                     // Power - How much damage this TrainCar deals
+        3000,                                   // ReloadTime (milliseconds)
+        _assets.getModel("missile"),            // Model used by projectiles fired by this TrainCar
+        _assets.getTexture("missile"),          // Texture used by projectiles fired by this TrainCar
+        "missile_fire",                         // Name of the sound to play when this TrainCar fires a projectile
+        "explosion"                             // Name of the sound to play when a projectile fired by this TrainCar is destroyed
+    );
+
+    TrainCar laserCar(
+        _assets.getModel("train_wagon"),        // Model
+        _assets.getTexture("wagon"),            // Texture
+        nullptr,                                // Pointer to "parent" TrainComponent
+        7.5f,                                   // Follow distance - how close this component gets to its parent
+        5,                                      // Power - How much damage this TrainCar deals
+        200,                                    // ReloadTime (milliseconds)
+        _assets.getModel("bullet"),             // Model used by projectiles fired by this TrainCar
+        _assets.getTexture("bullet"),           // Texture used by projectiles fired by this TrainCar
+        "bullet_fire",                          // Name of the sound to play when this TrainCar fires a projectile
+        "laser_hit"                             // Name of the sound to play when a projectile fired by this TrainCar is destroyed
+    );
+
+    trainCarTypes.push_back(missileCar);
+    trainCarTypes.push_back(laserCar);
+}

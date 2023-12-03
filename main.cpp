@@ -49,7 +49,6 @@ int main(void)
         2.5f                                    // Rotation rate
     );
 
-    // Model model, Texture2D texture, TrainComponent* engine, float followDist, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture, const char* projectileLaunchSFX, const char* projectileDestroySFX
     TrainCar carriage1(
         _assets.getModel("train_wagon"),        // Model
         _assets.getTexture("wagon"),            // Texture

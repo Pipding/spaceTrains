@@ -31,6 +31,9 @@ private:
     // Types of Powerup the CombatManager can spawn
     std::vector<Powerup> powerupTypes;
 
+    // Types of TrainCar
+    std::vector<TrainCar> trainCarTypes;
+
     // ==================================================
     // Targeting member variables
     // ==================================================
@@ -166,4 +169,10 @@ public:
      * and adds them to the powerupTypes map
     */
     void populatePowerupTypes();
+
+    /**
+     * Defines all the types of TrainCar the player train can have
+     * and adds them to the trainCarTypes map
+    */
+    void populateTraincarTypes();
 };
