@@ -102,6 +102,9 @@ void CombatManager::spawnHostile() {
         this->hostileTypes[0].getMinEngagementDistance(),
         this->hostileTypes[0].getMaxEngagementDistance(),
         this->hostileTypes[0].getMaxSpeed(),
+        this->hostileTypes[0].getPower(),
+        this->hostileTypes[0].getReloadTime(),
+        this->hostileTypes[0].getMaxHitpoints(),
         this->hostileTypes[0].getProjectileModel(),
         this->hostileTypes[0].getProjectileTexture()
     );
@@ -347,6 +350,9 @@ void CombatManager::populateHostileTypes() {
         40.f,                           // Min engagement distance
         80.f,                           // Max engagement distance
         30.f,                           // Max speed
+        15,                             // Power (damage dealt on hit)
+        5000,                           // ReloadTime (milliseconds)
+        80,                            // Max hitpoints
         _assets.getModel("missile"),    // Projectile model
         _assets.getTexture("missile")   // Projectile texture
     );

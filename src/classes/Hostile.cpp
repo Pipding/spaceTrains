@@ -1,18 +1,18 @@
 #include "Hostile.h"
 
-Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed, Model projectileModel, Texture2D projectileTexture)
+Hostile::Hostile(Vector3 position, Model model, Texture texture, Vector3* target, float minEngagementDistance, float maxEngagementDistance, float maxSpeed, int power, int reloadTime, int maxHitpoints, Model projectileModel, Texture2D projectileTexture)
 :Actor(position, model, texture) {
     this->maxSpeed = maxSpeed;
     this->currentSpeed = maxSpeed; //TODO: Need to implement acceleration and deceleration for hostiles
     this->target = target;
     this->minEngagementDistance = minEngagementDistance;
     this->maxEngagementDistance = maxEngagementDistance;
-    this->maxHitpoints = 100;
-    this->currentHitpoints = 100;
+    this->maxHitpoints = maxHitpoints;
+    this->currentHitpoints = maxHitpoints;
     this->projectileModel = projectileModel;
     this->projectileTexture = projectileTexture;
-    this->reloadTime = 2000;
-    this->power = 10;
+    this->reloadTime = reloadTime;
+    this->power = power;
     this->setScale(0.2f);
 }
 
@@ -30,6 +30,18 @@ float Hostile::getMaxEngagementDistance() {
 
 float Hostile::getMaxSpeed() {
     return this->maxSpeed;
+}
+
+int Hostile::getPower() {
+    return this->power;
+}
+
+int Hostile::getReloadTime() {
+    return this->reloadTime;
+}
+
+int Hostile::getMaxHitpoints() {
+    return this->maxHitpoints;
 }
 
 Texture2D Hostile::getProjectileTexture() {
