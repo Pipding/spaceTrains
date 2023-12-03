@@ -49,30 +49,31 @@ int main(void)
         2.5f                                    // Rotation rate
     );
 
+    // Model model, Texture2D texture, TrainComponent* engine, float followDist, int power, int reloadTime, Model projectileModel, Texture2D projectiletexture, const char* projectileLaunchSFX, const char* projectileDestroySFX
     TrainCar carriage1(
-        _assets.getModel("train_wagon"),
-        _assets.getTexture("wagon"),
-        &engine,
-        6.f,
-        20,
-        3000,
-        _assets.getModel("missile"),
-        _assets.getTexture("missile"),
-        "missile_fire",
-        "explosion"
+        _assets.getModel("train_wagon"),        // Model
+        _assets.getTexture("wagon"),            // Texture
+        &engine,                                // Pointer to "parent" TrainComponent
+        6.f,                                    // Follow distance - how close this component gets to its parent
+        20,                                     // Power - How much damage this TrainCar deals
+        3000,                                   // ReloadTime (milliseconds)
+        _assets.getModel("missile"),            // Model used by projectiles fired by this TrainCar
+        _assets.getTexture("missile"),          // Texture used by projectiles fired by this TrainCar
+        "missile_fire",                         // Name of the sound to play when this TrainCar fires a projectile
+        "explosion"                             // Name of the sound to play when a projectile fired by this TrainCar is destroyed
     );
 
-    TrainCar carriage2(
-        _assets.getModel("train_wagon"),
-        _assets.getTexture("wagon"),
-        &carriage1,
-        10.5f,
-        5,
-        200,
-        _assets.getModel("bullet"),
-        _assets.getTexture("bullet"),
-        "bullet_fire",
-        "laser_hit"
+    TrainCar carriage2(                         
+        _assets.getModel("train_wagon"),        // Model
+        _assets.getTexture("wagon"),            // Texture
+        &carriage1,                             // Pointer to "parent" TrainComponent
+        10.5f,                                  // Follow distance - how close this component gets to its parent
+        5,                                      // Power - How much damage this TrainCar deals
+        200,                                    // ReloadTime (milliseconds)
+        _assets.getModel("bullet"),             // Model used by projectiles fired by this TrainCar
+        _assets.getTexture("bullet"),           // Texture used by projectiles fired by this TrainCar
+        "bullet_fire",                          // Name of the sound to play when this TrainCar fires a projectile
+        "laser_hit"                             // Name of the sound to play when a projectile fired by this TrainCar is destroyed
     );
 
     Train train({&engine, &carriage1, &carriage2}, 100); // The player character
