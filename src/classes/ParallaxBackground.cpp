@@ -16,6 +16,7 @@ ParallaxBackground::ParallaxBackground(Vector3* parent, int layers, Texture2D* t
 
 void ParallaxBackground::setLayer(int layer, Texture2D* texture) {
     this->layerTextures[layer] = texture;
+    this->layerModels[layer].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = *texture;
 }
 
 void ParallaxBackground::setLayerOffset(int layer, Vector2 offset) {
