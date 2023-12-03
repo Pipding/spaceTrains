@@ -94,20 +94,7 @@ void CombatManager::spawnHostile() {
 
     Vector3 newHostilePos = {positiveX ? 200.f : -200.f, 0.f, positiveY ? 200.f : -200.f};
 
-    Hostile* h = new Hostile(
-        newHostilePos,
-        *this->hostileTypes[0].getModel(),
-        *this->hostileTypes[0].getTexture(),
-        &this->train->head()->position,
-        this->hostileTypes[0].getMinEngagementDistance(),
-        this->hostileTypes[0].getMaxEngagementDistance(),
-        this->hostileTypes[0].getMaxSpeed(),
-        this->hostileTypes[0].getPower(),
-        this->hostileTypes[0].getReloadTime(),
-        this->hostileTypes[0].getMaxHitpoints(),
-        this->hostileTypes[0].getProjectileModel(),
-        this->hostileTypes[0].getProjectileTexture()
-    );
+    Hostile* h = new Hostile(newHostilePos, &this->train->head()->position, &this->hostileTypes[0]);
 
     this->hostiles.push_back(h);
     this->projectiles[h] = std::vector<Projectile*>();
