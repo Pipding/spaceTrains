@@ -25,7 +25,6 @@
 ## MUST
 - Colour in the locomotive
 - Comments in all .h files
-- Move the carriage selection UI
 - Organise code
 - Clean up unused includes
 
