@@ -66,9 +66,9 @@ Here's a list of the interfaces, what they do and which classes inherit from the
 
 
 # TODO
+This TODO list uses the "MoSCoW method" of prioritization, i.e. items are divided into `Must`, `Should`, `Could` and `Won't` (or `Would`)
 
 ## MUST
-- Colour in the locomotive
 - Comments in all .h files
 - Organise code
 - Clean up unused includes
