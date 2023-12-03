@@ -2,7 +2,7 @@
 There's a relatively simple class hierarchy in this game, with most in-game objects inheriting from the `Actor` class.
 `Actor` is analogous to the class of the same name in Unreal Engine in that it represents anything which can be spawned in the world.
 Here's the class hierarchy for `Actor`
-![[diagrams/actor_class_hierarchy.jpg]]
+![Actor class hierarchy](diagrams/actor_class_hierarchy.jpg)
 
 # Asset credits
 
