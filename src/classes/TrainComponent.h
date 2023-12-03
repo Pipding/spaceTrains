@@ -4,6 +4,9 @@
 #include "src/interfaces/IUpdatable.h"
 
 class TrainComponent : public Actor, public IUpdatable {
+private:
+    Vector3 rearAttachmentPoint;
+
 public:
     /**
      * Default constructor
@@ -24,4 +27,9 @@ public:
      * @param projectileTexture     Texture to apply to the projectiles
     */
     TrainComponent(Vector3 position, Model model, Texture2D texture, Model projectileModel, Texture2D projectiletexture); // TODO: This should accept pointers to assets
+
+    /**
+     * Returns the value of the rearAttachmentPoint member
+    */
+    Vector3* getRearAttachmentPoint();
  };
