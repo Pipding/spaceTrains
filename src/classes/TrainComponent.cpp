@@ -6,5 +6,5 @@ TrainComponent::TrainComponent(Vector3 position, Model model, Texture2D texture,
     : Actor(position, model, texture), projectileModel(projectileModel), projectileTexture(projectileTexture) {}
 
 Vector3* TrainComponent::getRearAttachmentPoint() {
-    return this->rearAttachmentPoint;
+    return &this->rearAttachmentPoint;
 }
