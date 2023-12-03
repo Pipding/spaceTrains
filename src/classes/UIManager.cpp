@@ -40,30 +40,7 @@ void UIManager::draw(int screenWidth, int screenHeight) {
     DrawTextEx(this->font, this->healthText, {20, (float)this->screenHeight - 120}, 40, 2, RED );
 
     this->drawTargetLockUI();
-
-    // ==================================================
-    // Train UI
-    // ==================================================
-    // How many boxes to draw
-    int trainBoxesCount = this->combatManager->getTrain()->size();
-    float trainBoxesWidth = 80.f;
-    float gapBetweenBoxes = 20.f;
-    float trainBoxesHeight = 40.f;
-    float totalTrainUIWidth = (trainBoxesWidth * trainBoxesCount) + (gapBetweenBoxes * (trainBoxesCount - 1));
-    float trainUIStartX = (screenWidth - totalTrainUIWidth) / 2;
-
-    for (int i = 0; i < trainBoxesCount; i++) {
-        DrawRectangle(trainUIStartX, screenHeight - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, this->combatManager->getTrain()->getActiveComponentIndex() == i ? GREEN : WHITE);
-
-        if (i != 0) {
-            TrainCar* car = dynamic_cast<TrainCar*>(this->combatManager->getTrain()->getComponent(i));
-            if (!car->getCanShoot()) {
-                DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, screenHeight - trainBoxesWidth, 30, BLACK);
-            }
-        }
-
-        trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
-    }
+    this->drawTrainComponentSelectionUI();
 }
 
 void UIManager::drawTargetLockUI() {
@@ -107,4 +84,27 @@ void UIManager::drawGameOverBox() {
         0,
         DARKGREEN
     );
+}
+
+void UIManager::drawTrainComponentSelectionUI() {
+    // How many boxes to draw
+    int trainBoxesCount = this->combatManager->getTrain()->size();
+    float trainBoxesWidth = 80.f;
+    float gapBetweenBoxes = 20.f;
+    float trainBoxesHeight = 40.f;
+    float totalTrainUIWidth = (trainBoxesWidth * trainBoxesCount) + (gapBetweenBoxes * (trainBoxesCount - 1));
+    float trainUIStartX = (screenWidth - totalTrainUIWidth) / 2;
+
+    for (int i = 0; i < trainBoxesCount; i++) {
+        DrawRectangle(trainUIStartX, screenHeight - trainBoxesWidth, trainBoxesWidth, trainBoxesHeight, this->combatManager->getTrain()->getActiveComponentIndex() == i ? GREEN : WHITE);
+
+        if (i != 0) {
+            TrainCar* car = dynamic_cast<TrainCar*>(this->combatManager->getTrain()->getComponent(i));
+            if (!car->getCanShoot()) {
+                DrawText(TextFormat("%i", (car->getTimeUntilReloaded() / 100)), trainUIStartX, screenHeight - trainBoxesWidth, 30, BLACK);
+            }
+        }
+
+        trainUIStartX += (trainBoxesWidth + gapBetweenBoxes);
+    }
 }

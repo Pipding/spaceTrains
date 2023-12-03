@@ -36,6 +36,11 @@ private:
     */
     void drawGameOverBox();
 
+    /**
+     * Draws the train component selection UI
+    */
+    void drawTrainComponentSelectionUI();
+
 public:
     /**
     * Constructor
