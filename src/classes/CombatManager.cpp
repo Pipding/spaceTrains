@@ -336,15 +336,15 @@ void CombatManager::populateHostileTypes() {
 
     // Define the different Hostile types the CombatManager can spawn
     Hostile hostile(
-        {0.f, 0.f, 0.f},
-        _assets.getModel("ufo"),
-        _assets.getTexture("ufo"),
-        &this->train->head()->position,
-        20.f,
-        40.f,
-        15.f,
-        _assets.getModel("missile"),
-        _assets.getTexture("missile")
+        {0.f, 0.f, 0.f},                // Position
+        _assets.getModel("ufo"),        // Model
+        _assets.getTexture("ufo"),      // Texture
+        &this->train->head()->position, // Target
+        40.f,                           // Min engagement distance
+        80.f,                           // Max engagement distance
+        30.f,                           // Max speed
+        _assets.getModel("missile"),    // Projectile model
+        _assets.getTexture("missile")   // Projectile texture
     );
 
     this->hostileTypes.push_back(hostile);
