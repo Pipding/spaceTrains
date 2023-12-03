@@ -53,7 +53,7 @@ int main(void)
         _assets.getModel("train_wagon"),
         _assets.getTexture("wagon"),
         &engine,
-        12.f,
+        6.f,
         20,
         3000,
         _assets.getModel("missile"),
@@ -75,7 +75,8 @@ int main(void)
         "laser_hit"
     );
 
-    Train train({&engine, &carriage1, &carriage2}, 100); // The player character
+    // Train train({&engine, &carriage1, &carriage2}, 100); // The player character
+    Train train({&engine, &carriage1}, 100); // The player character
 
     // Create a parallax background
     ParallaxBackground background(&train.head()->position, 2, _assets.getTextureRef("galaxy"));

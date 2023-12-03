@@ -1,4 +1,5 @@
 #include "TrainEngine.h"
+#include <iostream>
 
 /**
  * Default TrainEngine constructor
@@ -32,6 +33,10 @@ float TrainEngine::getSpeed() {
 }
 
 void TrainEngine::update(float deltaTime) {
+    this->rearAttachmentPoint = Vector3Subtract(this->position, Vector3Scale(this->getForwardVector(), 8.f));
+
+    std::cout << "Position: " << this->position.x << ", " << this->position.z << std::endl;
+    std::cout << "Anchor: " << this->rearAttachmentPoint.x << ", " << this->rearAttachmentPoint.z << std::endl;
     
     // Update the audio stream for the engine sound
     UpdateMusicStream(this->engineSound);

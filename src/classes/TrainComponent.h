@@ -4,7 +4,7 @@
 #include "src/interfaces/IUpdatable.h"
 
 class TrainComponent : public Actor, public IUpdatable {
-private:
+protected:
     Vector3 rearAttachmentPoint;
 
 public:
