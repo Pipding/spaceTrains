@@ -55,7 +55,7 @@ void AssetManager::loadAssets() {
     this->loadTexture("assets/textures/health_powerup_albedo.png", "health_powerup");
     this->loadTexture("assets/textures/missile_albedo.png", "missile");
     this->loadTexture("assets/textures/speed_powerup_albedo.png", "speed_powerup");
-    this->loadTexture("assets/textures/train_engine_specular.png", "train_engine");
+    this->loadTexture("assets/textures/train_engine_albedo.png", "train_engine");
     this->loadTexture("assets/textures/ufo_albedo.png", "ufo");
     this->loadTexture("assets/textures/wagon_albedo.png", "wagon");
 
