@@ -12,7 +12,11 @@
 |Down arrow | Cycle active train carriage up (when target locked)   |
 |Spacebar   | Shoot (when target locked)                            |
 |R          | Reset camera (outside combat)                         |
+|P          | Pause game                                            |
 |M          | Enable debug view                                     |
+
+# Screencast
+https://youtu.be/jCESNKPmUB0
 
 # Class hierarchy and interfaces
 ## The Actor class
