@@ -23,12 +23,14 @@
 # TODO
 
 ## MUST
-- Fix train rotation
+- Colour in the locomotive
 - Comments in all .h files
+- Move the carriage selection UI
 - Organise code
 - Clean up unused includes
 
 ## SHOULD
+- Change the lock-on UI to work like the game over screen
 - Update the target lock UI to be drawn in the same way the game over screen is
 - Round the speed shown in the UI to some sensible number
 - Resize textures
