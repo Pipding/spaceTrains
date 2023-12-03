@@ -54,7 +54,7 @@ int main(void)
         _assets.getModel("train_wagon"),        // Model
         _assets.getTexture("wagon"),            // Texture
         &engine,                                // Pointer to "parent" TrainComponent
-        6.f,                                    // Follow distance - how close this component gets to its parent
+        3.f,                                    // Follow distance - how close this component gets to its parent
         20,                                     // Power - How much damage this TrainCar deals
         3000,                                   // ReloadTime (milliseconds)
         _assets.getModel("missile"),            // Model used by projectiles fired by this TrainCar
@@ -67,7 +67,7 @@ int main(void)
         _assets.getModel("train_wagon"),        // Model
         _assets.getTexture("wagon"),            // Texture
         &carriage1,                             // Pointer to "parent" TrainComponent
-        10.5f,                                  // Follow distance - how close this component gets to its parent
+        7.5f,                                   // Follow distance - how close this component gets to its parent
         5,                                      // Power - How much damage this TrainCar deals
         200,                                    // ReloadTime (milliseconds)
         _assets.getModel("bullet"),             // Model used by projectiles fired by this TrainCar
