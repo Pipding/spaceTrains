@@ -32,6 +32,7 @@ float TrainEngine::getSpeed() {
 }
 
 void TrainEngine::update(float deltaTime) {
+    this->rearAttachmentPoint = Vector3Subtract(this->position, Vector3Scale(this->getForwardVector(), 8.f));
     
     // Update the audio stream for the engine sound
     UpdateMusicStream(this->engineSound);

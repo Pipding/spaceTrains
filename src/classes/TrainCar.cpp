@@ -16,7 +16,9 @@ TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, float
 
     // Initialize the position of the TrainCar based on its "engine"
     Vector3 engineBack = Vector3Negate(this->engine->getForwardVector());
-    this->position = Vector3Add(this->engine->position, Vector3Scale(engineBack, this->followDistance));
+    // TODO: The distance the car initially spawns behind its parent is multiplied by 5 to prevent them from intersecting on spawn
+    // Come up with a cleaner way to handle this
+    this->position = Vector3Add(*this->engine->getRearAttachmentPoint(), Vector3Scale(engineBack, this->followDistance * 5));
 }
 
 /**
@@ -24,12 +26,16 @@ TrainCar::TrainCar(Model model, Texture2D texture, TrainComponent* engine, float
  * @param deltaTime Time in seconds for last frame drawn
 */
 void TrainCar::update(float deltaTime) {
+    this->rearAttachmentPoint = Vector3Subtract(this->position, Vector3Scale(this->getForwardVector(), 2.f));
+
+   // Get rear attachment point of parent
+   Vector3* parentAnchor = this->engine->getRearAttachmentPoint();
+
     // Update the train car to be pointing towards and following the TrainComponent assigned to the engine parameter
-    Vector3 pulledDirection = this->getVectorTowardTarget(this->engine->position);
-    Vector3 invertedPulledDirection = Vector3Negate(pulledDirection);
-    Vector3 scaledInvertedPulledDirection = Vector3Scale(invertedPulledDirection, this->followDistance);
-    this->position = Vector3Add(this->engine->position, scaledInvertedPulledDirection);
-    this->setRotation({0, this->angleToVector(this->engine->position), 0});
+    Vector3 directionToParent = this->getVectorTowardTarget(*parentAnchor);
+    Vector3 followPosition = Vector3Scale(Vector3Negate(directionToParent), this->followDistance); // The position the TrainComponent needs to be at to follow its parent at followDistance
+    this->position = Vector3Add(*parentAnchor, followPosition);
+    this->setRotation({0, this->angleToVector(*parentAnchor), 0});
 
     // Calculate how long is left until this car can shoot again
     if (!this->canShoot) {
@@ -44,6 +50,8 @@ void TrainCar::update(float deltaTime) {
 
     Actor::update();
 }
+
+
 
 int TrainCar::shoot() {
     this->canShoot = false;
