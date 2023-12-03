@@ -112,8 +112,8 @@ int Hostile::receiveDamage(int damageReceived) {
         this->currentHitpoints -= damageReceived;
 
         // If hitpoints have dropped below 20%, start fleeing
-        // TODO: Give hostiles a random chance to start fleeing instead of a definite threshold
-        if ((this->currentHitpoints / this->maxHitpoints) <= 0.2f) {
+        // Multiplication by 1.f here prevents the value from being converted to an int during calculation
+        if ((this->currentHitpoints * 1.f / this->maxHitpoints) <= 0.2f) {
             this->isFleeing = true;
         }
     }

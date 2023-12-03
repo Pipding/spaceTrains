@@ -55,6 +55,7 @@
 - Add a health bar
 - Add a menu system
 - Implement an UpdateManager
+- Give Hostiles a "morale" attribute which would determine how easily they enter the flee state and how soon they get back into combat
 
 ## WON'T
 - Update target display UI to show a visual representation of the current target
